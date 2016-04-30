@@ -1,57 +1,13 @@
-.sanserif{
-    font-family: Verdana, Helvetica, sans-serif;
+body{
+    background: url("images/ancientPaperBody.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
-header{
-    text-align: left;
-    color: cornflowerblue;
-    border-bottom: solid;
-    border-color: cornflowerblue;
-    margin-left: 50px;
-}
-
-li{
-    margin-left: 50px;
-    margin-top: 20px;
-    list-style-type: none;
-}
-
-article {
-    margin-left: 50px;
-}
-
-article h2{
-    color: cornflowerblue;
-}
-
-article table {
-    border-top: solid;
-    border-bottom: solid;
-    border-color: cornflowerblue;
-
-}
-
-.parti td{
-    border-color: cornflowerblue;
-    border-bottom: solid;
-    border-left: solid;
-    border-right: solid;
-    border-width: 1px;
-    color: cornflowerblue;
-}
-
-td{
-    border-left: solid;
-    border-right: solid;
-    border-color: cornflowerblue;
-    border-width: 1px;
-    color: black;
-}
-
-article section h1{
-    color: cornflowerblue;
-}
-
-article section p{
-    color: black;
+article{
+    background-color: white;
+    width: 1000px;
+    margin: 0 auto;
 }
