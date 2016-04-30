@@ -12,7 +12,9 @@ body{
     border: 2px solid goldenrod;
     color: goldenrod;
     border-radius: 4px;
-    font-size: 60px;
+    width: 350px;
+    height: 70px;
+    font-size: 40px;
     font-family: "Times New Roman";
     position: relative;
     left: 1250px;
@@ -26,10 +28,12 @@ body{
     border: 2px solid goldenrod;
     color: goldenrod;
     border-radius: 4px;
-    font-size: 60px;
+    width: 350px;
+    height: 70px;
+    font-size: 50px;
     font-family: "Times New Roman";
     position: relative;
-    left: 400px;
+    left: 300px;
     top: 460px;
     transition-duration: 0,4s;
 }
@@ -37,9 +41,13 @@ body{
 .button-d1:hover{
     background-color: goldenrod;
     color: saddlebrown;
+    cursor: pointer;
+    cursor: hand;
 }
 
 .button-enter:hover{
     background-color: goldenrod;
     color: saddlebrown;
+    cursor: pointer;
+    cursor: hand;
 }
