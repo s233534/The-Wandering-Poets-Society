@@ -6,8 +6,51 @@ body{
     background-size: cover;
 }
 
+
+
+.D1_title{
+    font-family: "Edwardian Script ITC";
+    font-size: 150px;
+    text-align: center;
+}
+
+.title_project{
+    font-family: "Times New Roman";
+    text-align: center;
+}
+
 article{
-    background-color: white;
     width: 1000px;
     margin: 0 auto;
+    padding-top: 50px;
 }
+
+article section h1{
+    font-family: "Times New Roman";
+    text-align: center;
+}
+
+footer{
+    text-align: center;
+    font-family: "Times New Roman";
+    margin-top: 150px;
+    -webkit-tab-size: 20;
+    -moz-tab-size: 20; /* Code for Firefox */
+    -o-tab-size: 20; /* Code for Opera 10.6-12.1 */
+    tab-size: 20;
+}
+
+footer span{
+    font-size: 15px;
+}
+
+.realizedBy {
+    font-size: 24px;
+    line-height: 2px;
+}
+
+footer li{
+    list-style-type: none;
+    font-size: 15px;
+}
+
