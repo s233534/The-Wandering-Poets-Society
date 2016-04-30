@@ -7,3 +7,27 @@ body{
 
 }
 
+.button-d1{
+    background-color: transparent;
+    border: 2px solid goldenrod;
+    color: goldenrod;
+    border-radius: 4px;
+    font-size: 60px;
+    font: "Times New Roman";
+    position: relative;
+    left: 1250px;
+    top: 380px;
+
+}
+
+.button-enter{
+    background-color: transparent;
+    border: 2px solid goldenrod;
+    color: goldenrod;
+    border-radius: 4px;
+    font-size: 60px;
+    font: "Times New Roman";
+    position: relative;
+    left: 400px;
+    top: 460px;
+}
