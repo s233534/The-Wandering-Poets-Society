@@ -13,10 +13,11 @@ body{
     color: goldenrod;
     border-radius: 4px;
     font-size: 60px;
-    font: "Times New Roman";
+    font-family: "Times New Roman";
     position: relative;
     left: 1250px;
     top: 380px;
+    transition-duration: 0,4s;
 
 }
 
@@ -26,8 +27,19 @@ body{
     color: goldenrod;
     border-radius: 4px;
     font-size: 60px;
-    font: "Times New Roman";
+    font-family: "Times New Roman";
     position: relative;
     left: 400px;
     top: 460px;
+    transition-duration: 0,4s;
+}
+
+.button-d1:hover{
+    background-color: goldenrod;
+    color: saddlebrown;
+}
+
+.button-enter:hover{
+    background-color: goldenrod;
+    color: saddlebrown;
 }
