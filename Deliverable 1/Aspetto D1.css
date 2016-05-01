@@ -53,7 +53,7 @@ footer{
 }
 
 footer span{
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .realizedBy {
@@ -63,6 +63,29 @@ footer span{
 
 footer li{
     list-style-type: none;
-    font-size: 15px;
+    font-size: 20px;
 }
 
+.User{
+    line-height: 2px;
+}
+
+.Professione{
+    line-height: 2px;
+}
+
+.Categoria{
+    line-height: 2px;
+}
+
+.Descrizione{
+    margin-bottom: 30px;
+}
+
+.titoloScenario{
+    line-height: 2px;
+}
+
+.descScenario{
+    margin-bottom: 30px;
+}
