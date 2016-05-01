@@ -49,6 +49,7 @@ footer{
     -moz-tab-size: 20; /* Code for Firefox */
     -o-tab-size: 20; /* Code for Opera 10.6-12.1 */
     tab-size: 20;
+    margin-bottom: 10px;
 }
 
 footer span{
