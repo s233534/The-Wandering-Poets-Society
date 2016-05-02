@@ -4,3 +4,7 @@
 function openInfo() {
     window.open("Info.html");
 }
+
+function openLogin() {
+    window.open("Login.html");
+}
