@@ -1,0 +1,63 @@
+body{
+    background: url("images/TWPS- sfondo login.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+header{
+    height: 100px;
+}
+
+.login{
+    text-align: right;
+    color: goldenrod;
+    padding-right: 50px;
+    position: relative;
+    float: right;
+    vertical-align: middle;
+    font-size: 20px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.buttonLogin{
+    background-color: transparent;
+    color: goldenrod;
+    border-radius: 4px;
+    border-color: goldenrod;
+    border-style: none;
+    font-family: "Helvetica Neue";
+    font-size: 20px;
+    transition-duration: 0,4s;
+}
+
+.buttonLogin:hover{
+    background-color: goldenrod;
+    color: darkred;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.logoScritto{
+    width: 30%;
+    height: auto;
+}
+
+article{
+    color: goldenrod;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+
+.join h1{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
+.join form br{
+    line-height: 10px;
+}
