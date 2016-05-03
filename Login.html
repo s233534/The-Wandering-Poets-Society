@@ -3,28 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="Login.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <title>TWPS- Enter</title>
+    <script>
+        $(function() {
+            $( "#datepicker").datepicker();
+        });
+    </script>
 </head>
 <body>
     <header>
         <img class="logoScritto" src="images/Logo%20scritta.png">
         <form class="login" method="get">
             E-mail:
-            <input type="text" name="e-mail">
+            <input class="loginMail" type="text" name="e-mail">
             Password:
-            <input type="text" name="password">
+            <input class="loginPassword" type="text" name="password">
             <button class="buttonLogin" type="submit">Accedi</button>
         </form>
     </header>
     <article class="join">
-        <h1>Iscriviti:</h1>
+        <h1>Iscriviti</h1>
         <form method="get">
-            <input type="text" name="firstName" placeholder="Nome">
-            <input type="text" name="lastName" placeholder="Cognome">
+            <input class="joinName" type="text" name="firstName" placeholder="Nome">
+            <input class="joinLastName" type="text" name="lastName" placeholder="Cognome">
+            <br><br>
+            <input class="joinMail" type="text" name="e-mail" placeholder="E-mail">
+            <br><br>
+            <input class="joinConfirmMail" type="text" name="confirmMail" placeholder="Conferma E-mail">
+            <br><br>
+            <input class="joinPassword" type="text" name="password" placeholder="Password">
+            <br><br>
+            <input class="joinConfirmPassword" type="text" name="confirmPassword" placeholder="Conferma Password">
             <br>
-            <input type="text" name="e-mail" placeholder="E-mail">
-            <br>
-            <input type="text" name="password" placeholder="Password">
+            <p class="date">Data di nascita <input class="dateInput" type="text" id="datepicker"> </p>
+            <label class="femaleSel" for="female">Donna</label>
+            <input type="radio" name="gender" id="female" value="Female">
+            <label class="maleSel" for="male">Uomo</label>
+            <input type="radio" name="gender" id="male" value="Male">
+            <br><br>
+            <button class="joinButton" type="submit">Iscriviti</button>
         </form>
     </article>
     <footer>

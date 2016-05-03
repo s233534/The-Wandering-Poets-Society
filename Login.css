@@ -12,7 +12,7 @@ header{
 
 .login{
     text-align: right;
-    color: goldenrod;
+    color: lightgrey;
     padding-right: 50px;
     position: relative;
     float: right;
@@ -21,11 +21,21 @@ header{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.loginMail{
+    border-radius: 4px;
+    border-style: none;
+}
+
+.loginPassword{
+    border-radius: 4px;
+    border-style: none;
+}
+
 .buttonLogin{
     background-color: transparent;
-    color: goldenrod;
+    color: lightgrey;
     border-radius: 4px;
-    border-color: goldenrod;
+    border-color: lightgrey;
     border-style: none;
     font-family: "Helvetica Neue";
     font-size: 20px;
@@ -33,10 +43,14 @@ header{
 }
 
 .buttonLogin:hover{
-    background-color: goldenrod;
+    background-color: lightgrey;
     color: darkred;
     cursor: pointer;
     cursor: hand;
+}
+
+.buttonLogin:focus{
+    outline: none;
 }
 
 .logoScritto{
@@ -45,19 +59,120 @@ header{
 }
 
 article{
-    color: goldenrod;
+    color: lightgrey;
     margin-top: 10px;
     margin-left: 20px;
     margin-right: 20px;
 }
 
-
+.join{
+    margin-top: 80px;
+    margin-left: 100px;
+}
 
 .join h1{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 20px;
+    font-size: 50px;
 }
 
 .join form br{
     line-height: 10px;
+}
+
+.joinName{
+    width: 200px;
+    height: 30px;
+    border-radius: 4px;
+    border-style: none;
+    font-size: 18px;
+}
+
+.joinLastName{
+    width: 200px;
+    height: 30px;
+    border-radius: 4px;
+    border-style: none;
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.joinMail{
+    width: 420px;
+    height: 30px;
+    border-radius: 4px;
+    border-style: none;
+    font-size: 18px;
+}
+
+.joinConfirmMail{
+    width: 420px;
+    height: 30px;
+    border-radius: 4px;
+    border-style: none;
+    font-size: 18px;
+}
+
+.joinPassword{
+    width: 420px;
+    height: 30px;
+    border-radius: 4px;
+    border-style: none;
+    font-size: 18px;
+}
+
+.joinConfirmPassword{
+    width: 420px;
+    height: 30px;
+    border-radius: 4px;
+    border-style: none;
+    font-size: 18px;
+}
+
+.date{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+
+}
+
+.date .dateInput{
+    padding-left: 5px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    border-radius: 4px;
+    border-style: none;
+    width: 290px;
+    height: 30px;
+}
+
+.femaleSel{
+    font-size: 18px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.maleSel{
+    font-size: 18px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding-left: 15px;
+}
+
+.joinButton{
+    background-color: goldenrod;
+    color: darkred;
+    border-radius: 4px;
+    border-color: lightgrey;
+    border-style: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    transition-duration: 0,4s;
+}
+
+.joinButton:hover{
+    background-color: lightgrey;
+    color: darkred;
+    cursor: pointer;
+    cursor: hand;
+}
+
+.joinButton:focus{
+    outline: none;
 }
