@@ -30,15 +30,22 @@
             <input class="joinName" type="text" name="firstName" placeholder="Nome">
             <input class="joinLastName" type="text" name="lastName" placeholder="Cognome">
             <br><br>
-            <input class="joinMail" type="text" name="e-mail" placeholder="E-mail">
+            <input class="joinMail" type="email" name="e-mail" placeholder="E-mail">
             <br><br>
-            <input class="joinConfirmMail" type="text" name="confirmMail" placeholder="Conferma E-mail">
+            <input class="joinConfirmMail" type="email" name="confirmMail" placeholder="Conferma E-mail">
             <br><br>
-            <input class="joinPassword" type="text" name="password" placeholder="Password">
+            <input class="joinPassword" type="password" name="password" placeholder="Password">
             <br><br>
-            <input class="joinConfirmPassword" type="text" name="confirmPassword" placeholder="Conferma Password">
+            <input class="joinConfirmPassword" type="password" name="confirmPassword" placeholder="Conferma Password">
             <br>
             <p class="date">Data di nascita <input class="dateInput" type="text" id="datepicker"> </p>
+            <p class="userSelectorName">Tipo di utente
+                <select class="userSelector">
+                     <option value="lettore">Lettore</option>
+                     <option value="scrittore">Scrittore</option>
+                     <option value="fumettista">Fumettista</option>
+                </select>
+            </p>
             <label class="femaleSel" for="female">Donna</label>
             <input type="radio" name="gender" id="female" value="Female">
             <label class="maleSel" for="male">Uomo</label>

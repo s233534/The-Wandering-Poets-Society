@@ -24,11 +24,15 @@ header{
 .loginMail{
     border-radius: 4px;
     border-style: none;
+    width: 200px;
+    height: 20px;
 }
 
 .loginPassword{
     border-radius: 4px;
     border-style: none;
+    width: 200px;
+    height: 20px;
 }
 
 .buttonLogin{
@@ -37,7 +41,7 @@ header{
     border-radius: 4px;
     border-color: lightgrey;
     border-style: none;
-    font-family: "Helvetica Neue";
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
     transition-duration: 0,4s;
 }
@@ -125,6 +129,19 @@ article{
     height: 30px;
     border-radius: 4px;
     border-style: none;
+    font-size: 18px;
+}
+
+.userSelector{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    width: 295px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.userSelectorName{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
 }
 
