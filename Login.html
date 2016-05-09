@@ -17,51 +17,67 @@
 <body>
     <header>
         <img class="logoScritto" src="images/Logo%20scritta.png">
-        <form class="login" method="get">
-            E-mail:
-            <input class="loginMail" type="text" name="email" id="loginEmail">
-            Password:
-            <input class="loginPassword" type="text" name="password" id="loginPassword">
-            <button class="buttonLogin" type="submit">Accedi</button>
-        </form>
+
     </header>
     <article class="join">
-        <h1>Iscriviti</h1>
-        <form method="get">
-            <div class="col-xs-3">
-                    <input class="form-control" type="text" name="firstName" placeholder="Nome">
+        <div class="container" style="vertical-align: middle">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="control-label" for="loginEmail" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; color: lightgrey">Email:</label>
+                    <input class="form-control" type="email" name="loginEmail" id="loginEmail" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; width: 500px">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="loginPassword" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; color: lightgrey">Password:</label>
+                    <input class="form-control" type="password" name="loginPassword" id="loginPassword" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; width: 500px">
+                </div>
+                <button class="btn btn-default" type="submit" style="background-color: transparent; color: lightgrey; border-style: none; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px">Accedi</button>
+            </form>
+            <h1>Iscriviti</h1>
+            <form method="get" role="form" class="form-inline">
+                <div class="form-group">
+                    <input class="form-control" id="name" type="text" name="firstName" placeholder="Nome" style="border-style: none; width: 300px">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="lastName" type="text" name="lastName" placeholder="Cognome" style="border-style: none; width: 300px; margin-left: 15px">
+                </div>
+            </form>
 
-            </div>
-            <div class="col-xs-3">
-                <input class="form-control" type="text" name="lastName" placeholder="Cognome">
-            </div>
-            <br><br>
-            <input class="joinMail" type="email" name="email" placeholder="E-mail">
-            <br><br>
-            <input class="joinConfirmMail" type="email" name="confirmMail" placeholder="Conferma E-mail">
-            <br><br>
-            <input class="joinPassword" type="password" name="password" placeholder="Password">
-            <br><br>
-            <input class="joinConfirmPassword" type="password" name="confirmPassword" placeholder="Conferma Password">
-            <br>
-            <input type="text" class="datepicker">
-            <script type="text/javascript">
-                getCalendar2();
-            </script>
-            <p class="userSelectorName">Tipo di utente
-                <select class="userSelector" name="typeOfUser">
-                     <option value="lettore">Lettore</option>
-                     <option value="scrittore">Scrittore</option>
-                     <option value="fumettista">Fumettista</option>
-                </select>
-            </p>
-            <label class="femaleSel" for="female">Donna</label>
-            <input type="radio" name="gender" id="female" value="Female">
-            <label class="maleSel" for="male">Uomo</label>
-            <input type="radio" name="gender" id="male" value="Male">
-            <br><br>
-            <button class="joinButton" type="submit">Iscriviti</button>
-        </form>
+            <form role="form" method="get" style="margin-top: 15px">
+                <div class="form-group">
+                    <input class="form-control" id="email" type="email" name="email" placeholder="E-mail" style="border-style: none; width: 615px">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="confirmMail" type="email" name="confirmMail" placeholder="Conferma E-mail" style="border-style: none; width: 615px">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="password" type="password" name="password" placeholder="Password" style="border-style: none; width: 615px">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="confirmPassword" type="password" name="confirmPassword" placeholder="Conferma Password" style="border-style: none; width: 615px">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="datepicker" id="dateOfBirth" name="dateOfBirth" placeholder="Data di nascita" style="border-style: none; color: black; width: 615px">
+                    <script type="text/javascript">
+                        getCalendar2();
+                    </script>
+                </div>
+            </form>
+            <form role="form" class="form-inline">
+                <div class="form-group">
+                    <label for="userType" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 18px">Tipo di utente:</label>
+                    <select class="form-control" id="userType" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 18px; margin-left: 10px; width: 475px">
+                        <option value="lettore">Lettore</option>
+                        <option value="scrittore">Scrittore</option>
+                        <option value="fumettista">Fumettista</option>
+                    </select>
+                </div>
+            </form>
+            <form role="form" class="form-group" style="margin-top: 15px">
+                <label class="radio-inline" for="female" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 18px"><input type="radio" name="gender" id="female" value="Female"><b>Donna</b></label>
+                <label class="radio-inline" for="male" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 18px"><input type="radio" name="gender" id="male" value="Male"><b>Uomo</b></label>
+            </form>
+        </div>
+
     </article>
     <footer>
 
