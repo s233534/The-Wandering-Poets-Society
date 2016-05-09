@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset="UTF-8">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="Text%20Editor.js"></script>
+    <link rel="stylesheet" type="text/css" href="Text%20Editor.css">
+    <title>TWPS- Scrivi un tuo racconto</title>
+</head>
+<body>
+
+<!-- Knapper -->
+<input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
+<input type="button" value="I" onclick="mod_selection('[i]','[/i]')" />
+<input type="button" value="U" onclick="mod_selection('[u]','[/u]')" />
+<br />
+
+<!-- Text area -->
+<textarea class="text_edit" id="my_text"></textarea>
+<br />
+
+<!-- Submit button -->
+<input type="button" value="Show text" onclick="view_text()" />
+
+<!-- Empty div to put the text in -->
+<div id="view_text">
+</div>
+
+
+</body>
+</html>

@@ -2,35 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="Login.css">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script src="Login.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/bootstrap.css">
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="bootstrap-3.3.6-dist/css/datepicker.css">
+    <script src="bootstrap-3.3.6-dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="Login.css">
     <title>TWPS- Enter</title>
-    <script>
-        $(function() {
-            $( "#datepicker").datepicker();
-        });
-    </script>
 </head>
 <body>
     <header>
         <img class="logoScritto" src="images/Logo%20scritta.png">
         <form class="login" method="get">
             E-mail:
-            <input class="loginMail" type="text" name="e-mail">
+            <input class="loginMail" type="text" name="email" id="loginEmail">
             Password:
-            <input class="loginPassword" type="text" name="password">
+            <input class="loginPassword" type="text" name="password" id="loginPassword">
             <button class="buttonLogin" type="submit">Accedi</button>
         </form>
     </header>
     <article class="join">
         <h1>Iscriviti</h1>
         <form method="get">
-            <input class="joinName" type="text" name="firstName" placeholder="Nome">
-            <input class="joinLastName" type="text" name="lastName" placeholder="Cognome">
+            <div class="col-xs-3">
+                    <input class="form-control" type="text" name="firstName" placeholder="Nome">
+
+            </div>
+            <div class="col-xs-3">
+                <input class="form-control" type="text" name="lastName" placeholder="Cognome">
+            </div>
             <br><br>
-            <input class="joinMail" type="email" name="e-mail" placeholder="E-mail">
+            <input class="joinMail" type="email" name="email" placeholder="E-mail">
             <br><br>
             <input class="joinConfirmMail" type="email" name="confirmMail" placeholder="Conferma E-mail">
             <br><br>
@@ -38,9 +44,12 @@
             <br><br>
             <input class="joinConfirmPassword" type="password" name="confirmPassword" placeholder="Conferma Password">
             <br>
-            <p class="date">Data di nascita <input class="dateInput" type="text" id="datepicker"> </p>
+            <input type="text" class="datepicker">
+            <script type="text/javascript">
+                getCalendar2();
+            </script>
             <p class="userSelectorName">Tipo di utente
-                <select class="userSelector">
+                <select class="userSelector" name="typeOfUser">
                      <option value="lettore">Lettore</option>
                      <option value="scrittore">Scrittore</option>
                      <option value="fumettista">Fumettista</option>

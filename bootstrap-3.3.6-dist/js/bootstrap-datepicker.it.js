@@ -1,17 +1,9 @@
 /**
- * Created by giancarloavalle on 02/05/16.
+ * Created by giancarloavalle on 08/05/16.
  */
 
-var twps = new Firebase("https://twps.firebaseio.com/");
-
-//function getCalendar (){
-  //      $.datepicker.setDefaults($.datepicker.regional['it']);
-    //    $( "#datepicker").datepicker();
-      //  window.alert("1");
-    //}
-
-function getCalendar2() {
-    $('.datepicker').datepicker({
+;(function($){
+    $.fn.datepicker.dates['it'] = {
         days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
         daysShort: ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
         daysMin: ["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"],
@@ -22,5 +14,5 @@ function getCalendar2() {
         clear: "Cancella",
         weekStart: 1,
         format: "dd/mm/yyyy"
-    });
-}
+    };
+}(jQuery));
