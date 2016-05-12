@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>TWPS- User page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../bootstrap-3.3.6-dist/css/bootstrap.css">
+    <script src="User%20page.js"></script>
     <style>
         /* Set black background color, white text and some padding */
         body{
@@ -22,23 +23,23 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
+    <div class="container-fluid" style="color: goldenrod">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Logo</a>
+            <a class="navbar-brand" href="../Home%20Page.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Messages</a></li>
+                <li class="active"><a href="#">La mia pagina</a></li>
+                <li><a href="#">I miei lavori</a></li>
             </ul>
             <form class="navbar-form navbar-right" role="search">
                 <div class="form-group input-group">
-                    <input type="text" class="form-control" placeholder="Search..">
+                    <input type="text" class="form-control" placeholder="Cerca...">
           <span class="input-group-btn">
             <button class="btn btn-default" type="button">
               <span class="glyphicon glyphicon-search"></span>
@@ -166,11 +167,13 @@
     </div>
 </div>
 
-<footer class="container-fluid text-center">
-    <button class="btn btn-link" style="color: goldenrod">
-        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
-        Logout
-    </button>
+<footer style="background-color: #222222; bottom: 0; position: fixed; width: 100%">
+    <div class="container-fluid text-center" >
+        <button class="btn btn-link" style="color: white">
+            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+            Logout
+        </button>
+    </div>
 </footer>
 </body>
 </html>
