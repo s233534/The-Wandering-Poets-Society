@@ -18,3 +18,6 @@ function createDate(){
     
 }
 
+function openTextEditor() {
+    window.open("../Create text/Text Editor.html");
+}
