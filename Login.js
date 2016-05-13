@@ -24,3 +24,4 @@ function getCalendar2() {
         format: "dd/mm/yyyy"
     });
 }
+

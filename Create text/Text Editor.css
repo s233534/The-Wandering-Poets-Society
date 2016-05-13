@@ -1,7 +1,5 @@
-.text_edit {
-    width: 1000px;
-    height: 800px;
-    resize: none;
+body{
+    background-color: darkred;
 }
 
 #view_text {
