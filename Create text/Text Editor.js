@@ -1,6 +1,7 @@
 /**
  * Created by giancarloavalle on 06/05/16.
  */
+/*
 function view_text () {
   
     // Find html elements.
@@ -64,3 +65,6 @@ function mod_selection (val1,val2) {
     }
     
 }
+*/
+
+

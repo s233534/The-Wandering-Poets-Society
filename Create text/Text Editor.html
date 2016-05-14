@@ -6,6 +6,7 @@
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="Text%20Editor.js"></script>
+    <script src="../ckeditor/ckeditor.js"></script>
     <link rel="stylesheet" type="text/css" href="../bootstrap-3.3.6-dist/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="Text%20Editor.css">
     <title>TWPS- Scrivi un tuo racconto</title>
@@ -48,12 +49,26 @@
     </header>
 </header>
 
-<!-- Knapper -->
 <div class="container">
-    <button class="btn btn-default"><strong>B</strong></button>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <input class="form-control" placeholder="Titolo">
+            <br>
+            <input class="form-control" placeholder="Sottotitolo">
+        </div>
+    </form>
+</div>
+<!-- Knapper
+<div class="container">
+    <button class="btn btn-default"><span class="glyphicon glyphicon-align-left"></span></button>
+    <button class="btn btn-default"><span class="glyphicon glyphicon-align-center"></span></button>
+    <button class="btn btn-default"><span class="glyphicon glyphicon-align-right"></span></button>
+    <button class="btn btn-default"><span class="glyphicon glyphicon-align-justify"></span></button>
+    <button class="btn btn-default" onclick="grassetto()"><strong>B</strong></button>
     <button class="btn btn-default"><em>I</em></button>
     <button class="btn btn-default"><u>U</u></button>
 </div>
+ -->
 <br>
 <!--
 <input type="button" value="B" onclick="mod_selection('[b]','[/b]')" />
@@ -65,7 +80,10 @@
 <div class="container">
     <form role="form">
         <div class="form-group">
-            <textarea class="form-control" id="my_text" style="height: 700px"></textarea>
+            <textarea class="form-control" name="my_text" id="my_text"></textarea>
+            <script>
+                CKEDITOR.replace('my_text');
+            </script>
         </div>
     </form>
 </div>
