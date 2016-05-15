@@ -35,7 +35,7 @@
             <h1>Iscriviti</h1>
             <form method="get" role="form" class="form-inline">
                 <div class="form-group">
-                    <input class="form-control" id="name" type="text" name="firstName" placeholder="Nome" style="border-style: none; width: 300px">
+                    <input class="form-control" id="firstName" type="text" name="firstName" placeholder="Nome" style="border-style: none; width: 300px">
                 </div>
                 <div class="form-group">
                     <input class="form-control" id="lastName" type="text" name="lastName" placeholder="Cognome" style="border-style: none; width: 300px; margin-left: 15px">
@@ -43,6 +43,9 @@
             </form>
 
             <form role="form" method="get" style="margin-top: 15px">
+                <div class="form-group">
+                    <input class="form-control" id="username" type="text" name="username" placeholder="User name" style="border-style: none; width: 615px">
+                </div>
                 <div class="form-group">
                     <input class="form-control" id="email" type="email" name="email" placeholder="E-mail" style="border-style: none; width: 615px">
                 </div>
@@ -72,10 +75,18 @@
                     </select>
                 </div>
             </form>
+            <!--
             <form role="form" class="form-group" style="margin-top: 15px">
                 <label class="radio-inline" for="female" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 18px"><input type="radio" name="gender" id="female" value="Female"><b>Donna</b></label>
                 <label class="radio-inline" for="male" style="font-family: Helvetica Neue, Helvetica, Arial, sans-serif; font-size: 18px"><input type="radio" name="gender" id="male" value="Male"><b>Uomo</b></label>
             </form>
+            -->
+            <form role="form" class="form-group">
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit" onclick="iscriviti()" style="background-color: transparent; color: lightgrey; border-style: none; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px">Iscriviti</button>
+                </div>
+            </form>
+
         </div>
 
     </article>

@@ -1,7 +1,7 @@
 /**
  * Created by giancarloavalle on 06/05/16.
  */
-/*
+
 function view_text () {
   
     // Find html elements.
@@ -29,6 +29,7 @@ function view_text () {
     // Print the text in the div made for it.
     div.innerHTML = text;
 }
+
 
 function mod_selection (val1,val2) {
     
@@ -65,6 +66,12 @@ function mod_selection (val1,val2) {
     }
     
 }
-*/
+
+function saveText(){
+    var textArea=document.getElementById('my_text');
+    var racconto=textArea.value;
+    document.write(racconto);
+
+}
 
 
