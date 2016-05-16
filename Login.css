@@ -8,6 +8,10 @@ body{
 
 header{
     height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    color: lightgrey;
+    font-family: "Times New Roman";
 }
 
 .login{

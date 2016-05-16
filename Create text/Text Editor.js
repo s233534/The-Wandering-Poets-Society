@@ -2,6 +2,8 @@
  * Created by giancarloavalle on 06/05/16.
  */
 
+var twps = new Firebase("https://twps.firebaseio.com/");
+
 function view_text () {
   
     // Find html elements.
@@ -68,10 +70,21 @@ function mod_selection (val1,val2) {
 }
 
 function saveText(){
+    var title=document.getElementById('titolo');
+    var subtitle=document.getElementById('sottotitolo');
+    var author=document.getElementById('autore');
+    var genre=document.getElementById('genere');
     var textArea=document.getElementById('my_text');
     var racconto=textArea.value;
-    document.write(racconto);
 
+    var story=twps.child("stories");
+
+    story.set({
+        titolo: title,
+        sottotitolo: subtitle,
+        autore: author,
+        genere: genre
+    });
 }
 
 
