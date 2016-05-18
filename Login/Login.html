@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="../bootstrap-3.3.6-dist/css/datepicker.css">
     <script src="../bootstrap-3.3.6-dist/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="Login.js"></script>
+    <script src="../UserDominator.js"></script>
     <link rel="stylesheet" type="text/css" href="Login.css">
-    <title>Login prova 2</title>
+    <title>TWPS- Login</title>
 </head>
 <body>
 <header>
@@ -25,38 +26,11 @@
             <input class="form-control" placeholder="E-mail" type="email" id="logMail" style="width: 300px">
             <input class="form-control" placeholder="Password" type="password" id="logPwd" style="width: 300px; margin-left: 20px">
         </div>
-        <button class="btn btn-default" type="submit">Login</button>
+        <button class="btn btn-default" type="submit" onclick="login()"><a href="../User%20page/User%20page%20template.html"></a>Login</button>
     </div>
 
-    <div class="container" style="margin-top: 80px">
-        <h2>Iscriviti</h2>
-        <div class="form-group form-inline">
-            <input class="form-control" placeholder="Nome" type="text" id="nom" style="width: 300px">
-            <input class="form-control" placeholder="Cognome" type="text" id="cog" style="width: 300px; margin-left: 20px">
-        </div>
-        <div class="form-group">
-            <input class="form-control" placeholder="E-mail" type="email" id="mail" style="width: 620px">
-        </div>
-        <div class="form-group">
-            <input class="form-control" placeholder="Password" type="password" id="pass" style="width: 620px">
-        </div>
-
-        <div class="form-group">
-            <select class="form-control" id="usCat" style="width: 620px">
-                <option value="Lettore">Lettore</option>
-                <option value="Scrittore">Scrittore</option>
-                <option value="Fumettista">Fumettista</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="datepicker" id="DOB" placeholder="Data di nascita" style="border-style: none; color: black; width: 620px">
-            <script type="text/javascript">
-                getCalendar2();
-            </script>
-        </div>
-
-        <button class="btn btn-default" type="submit" onclick="isc()">Iscriviti</button>
-    </div>
+<div class="container" style="margin-top: 50px">
+    <p style="color: lightgrey; font-family: 'Times New Roman'; font-size: 20px">Oppure <a href="Iscriviti.html" style="color: lightgrey; font-family: 'Times New Roman'; font-size: 20px">iscriviti</a></p>
+</div>
 </body>
 </html>

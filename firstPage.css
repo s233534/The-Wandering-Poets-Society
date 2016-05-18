@@ -11,6 +11,7 @@ body{
     border-style: solid;
     border-radius: 4px;
     border-color: goldenrod;
+    border-width: 5px;
     color: goldenrod;
     background: transparent;
     width: 200px;
@@ -24,5 +25,13 @@ body{
 
 .btn-default:hover{
     background-color: goldenrod;
+    border-color: goldenrod;
     color: saddlebrown;
+}
+
+.btn-default:focus{
+    background-color: goldenrod;
+    border-color: goldenrod;
+    color: saddlebrown;
+    outline: none; !important;
 }

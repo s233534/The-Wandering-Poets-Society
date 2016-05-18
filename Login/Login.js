@@ -1,38 +1,7 @@
-var twps=new Firebase("https://twps.firebaseio.com")
 
-function isc() {
-    var Email=document.getElementById('mail').value;
-    var pwd=document.getElementById('pass').value;
-    var firstName=document.getElementById('nom').value;
-    var lastName=document.getElementById('cog').value;
-    var cat=document.getElementById('usCat').value;
 
-    twps.createUser({
-        email    : Email,
-        password : pwd
-    }, function(error, userData) {
-        if (error) {
-            console.log("Error creating user:", error);
-        } else {
-            console.log("Successfully created user account with uid:", userData.uid);
-            var UID=userData.uid;
-            console.log(UID);
-        }
-    });
-
-    var neoRamo=twps.child('users');
-    //var neoRef=neoRamo.child(UID);
-    neoRamo.push({
-        nome: firstName,
-        cognome: lastName,
-        email: Email,
-        password: pwd,
-        typeOfUser: cat,
-        countStories: 0,
-        countComics: 0,
-        countReviews: 0,
-        level: "Discepolo"
-    });
+function openUserPage() {
+    window.open("../User page/User page template.html");
 }
 
 function getCalendar2() {
@@ -49,3 +18,4 @@ function getCalendar2() {
         format: "dd/mm/yyyy"
     });
 }
+

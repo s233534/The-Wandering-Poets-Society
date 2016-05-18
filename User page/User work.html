@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <link rel="stylesheet" type="text/css" href="../bootstrap-3.3.6-dist/css/bootstrap.css">
     <script src="User%20page.js"></script>
+    <script src="../UserDominator.js"></script>
     <style>
         /* Set black background color, white text and some padding */
         body{
@@ -21,7 +23,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="getStories()">
 <header>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -59,10 +61,8 @@
 
 <article>
     <div class="container">
-
-
-            </div>
-        </div>
+        <button class="btn btn-default" onclick="getTheStory()"><span id="titoloUserWork" style="color: black"></span ><span id="idUserWork" style="color: transparent"></span><span class="glyphicon glyphicon-chevron-down"></span></button>
+        <p id="resaRacconto" style="background-color: white; color: black"></p>
     </div>
     <div class="container text-center">
         <button class="btn btn-default" onclick="openTextEditor()">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus"></span></button>

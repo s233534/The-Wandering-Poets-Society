@@ -2,24 +2,26 @@
  * Created by giancarloavalle on 06/05/16.
  */
 
-var twps=new Firebase("https://twps.firebaseio.com")
-/*
+function openUserWork() {
+    window.open("../User page/User work.html");
+}
+
 function view_text () {
-  
+    
     // Find html elements.
     var textArea = document.getElementById('my_text');
     var div = document.getElementById('view_text');
-  
+    
     // Put the text in a variable so we can manipulate it.
     var text = textArea.value;
- 
+    
     // Make sure html and php tags are unusable by disabling < and >.
     text = text.replace(/\</gi, "<");
     text = text.replace(/\>/gi, ">");
-   
+    
     // Exchange newlines for <br />
     text = text.replace(/\n/gi, "<br />");
-   
+    
     // Basic BBCodes.
     text = text.replace(/\[b\]/gi, "<b>");
     text = text.replace(/\[\/b\]/gi, "</b>");
@@ -32,60 +34,36 @@ function view_text () {
     div.innerHTML = text;
 }
 
-
 function mod_selection (val1,val2) {
-    
     // Get the text area
+
     var textArea = document.getElementById('my_text');
-    
+
     // IE specific code.
+
     if( -1 != navigator.userAgent.indexOf ("MSIE") ) {
-       
+
         var range = document.selection.createRange();
+
         var stored_range = range.duplicate();
-        
+
         if(stored_range.length > 0) {
             stored_range.moveToElementText(textArea);
             stored_range.setEndPoint('EndToEnd', range);
             textArea.selectionstart = stored_range.text.length - range.text.length;
             textArea.selectionend = textArea.selectionstart + range.text.length;
-            
+
         }
-        
     }
     
     // Do we even have a selection?
-   if (typeof(textArea.selectionstart) != "undefined") {
-       
+
+    if (typeof(textArea.selectionstart) != "undefined") {
         // Split the text in three pieces - the selection, and what comes before and after.
         var begin = textArea.value.substr(0, textArea.selectionstart);
         var selection = textArea.value.substr(textArea.selectionstart, textArea.selectionend - textArea.selectionstart);
         var end = textArea.value.substr(textArea.selectionend);
-       
         // Insert the tags between the three pieces of text.
         textArea.value = begin + val1 + selection + val2 + end;
-        
     }
-    
 }
-*/
-function saveText(){
-    var title=document.getElementById('titolo').value;
-    var subtitle=document.getElementById('sottotitolo').value;
-    var author=document.getElementById('autore').value;
-    var genre=document.getElementById('genere').value;
-    var textArea=document.getElementById('my_text');
-    var racconto=textArea.value;
-
-    var story=twps.child("stories");
-
-    story.push({
-        titolo: title,
-        sottotitolo: subtitle,
-        autore: author,
-        genere: genre,
-        testo: racconto
-    });
-}
-
-
