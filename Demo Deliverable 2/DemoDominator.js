@@ -28,15 +28,9 @@ var attAutore="";
 var storyID="";
 
 
-
-
 function isc() {
     var Email=document.getElementById('mail').value;
     var pwd=document.getElementById('pass').value;
-    var firstName=document.getElementById('nom').value;
-    var lastName=document.getElementById('cog').value;
-    var cat=document.getElementById('usCat').value;
-    var dob=document.getElementById('DOB').value;
 
     twps.createUser({
         email    : Email,
@@ -46,11 +40,18 @@ function isc() {
             console.log("Error creating user:", error);
         } else {
             console.log("Successfully created user account with uid:", userData.uid);
-            var UID=userData.uid;
-            console.log(UID);
+            localStorage.UID=userData.uid;
+            console.log(localStorage.UID);
+            setDataUser();
+            function openLog() {
+                location.href="../Login Demo/Login Demo.html";
+            }
+            openLog();
         }
     });
-   
+
+
+/*
     var neoRamo=twps.child('users');
     //var neoRef=neoRamo.child(UID);
     var useRef=neoRamo.push({
@@ -79,10 +80,38 @@ function isc() {
     localStorage.contatoreStorieAttuale=0;
     localStorage.contatoreFumettiAttuale=0;
     localStorage.contatoreRecensioniAttuale=0;
-
-    openUserPage();
+*/
 
 }
+
+function setDataUser(){
+    var Email=document.getElementById('mail').value;
+    var pwd=document.getElementById('pass').value;
+    var firstName=document.getElementById('nom').value;
+    var lastName=document.getElementById('cog').value;
+    var cat=document.getElementById('usCat').value;
+    var dob=document.getElementById('DOB').value;
+
+
+    var pathUsers=new Firebase("https://twps.firebaseio.com/users");
+    var attualUID=localStorage.UID
+    pathUsers.child(attualUID).set({
+        nome: firstName,
+        cognome: lastName,
+        email: Email,
+        password: pwd,
+        typeOfUser: cat,
+        countStories: 0,
+        countComics: 0,
+        countReviews: 0,
+        level: "Discepolo",
+        dateOfBirth: dob
+    });
+
+    
+}
+
+
 
 function login() {
     function isValidKey(lMail) {
@@ -107,59 +136,63 @@ function login() {
             snapshot.forEach(function (childSnapshot) {
                 var key= childSnapshot.key();
                 localStorage.actUsId=key;
+                console.log(localStorage.actUsId);
+                function setUserData() {
+                    usID=localStorage.actUsId;
+                    pathUs=path.child(usID);
+
+                    pathUs.child("nome").on("value", function(snapshot) {
+                        localStorage.nomeAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("cognome").on("value", function(snapshot) {
+                        localStorage.cognomeAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("email").on("value", function(snapshot) {
+                        localStorage.emailAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("password").on("value", function(snapshot) {
+                        localStorage.pwdAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("dateOfBirth").on("value", function(snapshot) {
+                        localStorage.dobAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("typeOfUser").on("value", function(snapshot) {
+                        localStorage.topAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("level").on("value", function(snapshot) {
+                        localStorage.livelloAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("countStories").on("value", function(snapshot) {
+                        localStorage.contatoreStorieAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("countComics").on("value", function(snapshot) {
+                        localStorage.contatoreFumettiAttuale=snapshot.val();
+                    });
+
+                    pathUs.child("countReviews").on("value", function(snapshot) {
+                        localStorage.contatoreRecensioniAttuale=snapshot.val();
+                    });
+
+                }
+                setUserData();
+
+                function openUserPage() {
+                    location.href="../Demo User Page/Demo User Page.html";
+                }
+                openUserPage();
             });
         });
     }
 
-    console.log(localStorage.actUsId);
 
-    usID=localStorage.actUsId;
-    pathUs=path.child(usID);
-
-    pathUs.child("nome").on("value", function(snapshot) {
-        localStorage.nomeAttuale=snapshot.val();
-    });
-
-    pathUs.child("cognome").on("value", function(snapshot) {
-        localStorage.cognomeAttuale=snapshot.val();
-    });
-
-    pathUs.child("email").on("value", function(snapshot) {
-        localStorage.emailAttuale=snapshot.val();
-    });
-
-    pathUs.child("password").on("value", function(snapshot) {
-        localStorage.pwdAttuale=snapshot.val();
-    });
-
-    pathUs.child("dateOfBirth").on("value", function(snapshot) {
-        localStorage.dobAttuale=snapshot.val();
-    });
-
-    pathUs.child("typeOfUser").on("value", function(snapshot) {
-        localStorage.topAttuale=snapshot.val();
-    });
-
-    pathUs.child("level").on("value", function(snapshot) {
-        localStorage.livelloAttuale=snapshot.val();
-    });
-
-    pathUs.child("countStories").on("value", function(snapshot) {
-        localStorage.contatoreStorieAttuale=snapshot.val();
-    });
-
-    pathUs.child("countComics").on("value", function(snapshot) {
-        localStorage.contatoreFumettiAttuale=snapshot.val();
-    });
-
-    pathUs.child("countReviews").on("value", function(snapshot) {
-        localStorage.contatoreRecensioniAttuale=snapshot.val();
-    });
-    
-
-
-
-    openUserPage();
 }
 
 
@@ -169,6 +202,7 @@ function authHandler(error, authData) {
         console.log("Login Failed!", error);
     } else {
         console.log("Authenticated successfully with payload:", authData);
+
     }
 }
 
@@ -182,19 +216,28 @@ function actualUserData() {
     actDOB=localStorage.dobAttuale;
     actTOP=localStorage.topAttuale;
     actLev=localStorage.livelloAttuale;
-    
+
 
     document.getElementById('nomeattuale').innerHTML=actNome;
     document.getElementById('cognomeattuale').innerHTML=actCognome;
     document.getElementById('dobattuale').innerHTML=actDOB;
     document.getElementById('catattuale').innerHTML=actTOP;
     document.getElementById('levattuale').innerHTML=actLev;
-    
+
 
 }
 
+function logOut() {
+    twps.unauth();
+    localStorage.clear();
+    function openIndex() {
+        location.href="../../index.html";
+    }
+    openIndex();
+}
+
 function saveText(){
-    
+
     path=new Firebase("https://twps.firebaseio.com/users");
     usID=localStorage.actUsId;
     pathUs=path.child(usID);
@@ -269,41 +312,41 @@ function getStories() {
 }
 
 function getTheStory() {
-    usID=localStorage.actUsId;
+    usID = localStorage.actUsId;
     console.log(usID);
 
     function isValidKey(usID) {
-        var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
+        var invalidKeys = {'': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']'};
         return invalidKeys[usID] === undefined;
     }
 
-    path=new Firebase("https://twps.firebaseio.com/stories");
-    if(isValidKey(usID)){
+    path = new Firebase("https://twps.firebaseio.com/stories");
+    if (isValidKey(usID)) {
         //path.child("email").once("value", function (snapshot)
         path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
             console.log(snapshot.val());
             snapshot.forEach(function (childSnapshot) {
-                var key= childSnapshot.key();
-                localStorage.storyID=key;
+                var key = childSnapshot.key();
+                localStorage.storyID = key;
             });
         });
     }
 
-    storyID=localStorage.storyID;
-    var pathST=path.child(storyID);
-/*
-    pathST.child("titolo").on("value", function(snapshot) {
-        document.getElementById("modalTitolo").innerHTML=snapshot.val();
-    });
+    storyID = localStorage.storyID;
+    var pathST = path.child(storyID);
+    /*
+     pathST.child("titolo").on("value", function(snapshot) {
+     document.getElementById("modalTitolo").innerHTML=snapshot.val();
+     });
 
-    pathST.child("sottotitolo").on("value", function(snapshot) {
-        document.getElementById("modalSottotitolo").innerHTML=snapshot.val();
-    });
-*/
-    pathST.child("testo").on("value", function(snapshot) {
-        var text=snapshot.val();
+     pathST.child("sottotitolo").on("value", function(snapshot) {
+     document.getElementById("modalSottotitolo").innerHTML=snapshot.val();
+     });
+     */
+    pathST.child("testo").on("value", function (snapshot) {
+        var text = snapshot.val();
         text = text.replace(/\n/gi, "<br />");
-        document.getElementById('resaRacconto').innerHTML=text;
+        document.getElementById('resaRacconto').innerHTML = text;
     });
 
 }

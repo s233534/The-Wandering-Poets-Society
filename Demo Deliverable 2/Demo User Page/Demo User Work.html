@@ -8,11 +8,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../lib/bootstrap-3.3.6-dist/css/bootstrap.css">
-    <script src="User%20page.js"></script>
-    <script src="../UserDominator.js"></script>
+    <script src="../DemoDominator.js"></script>
+    <script src="../Login%20Demo/Login%20Demo.js"></script>
+    <script src="Demo%20user%20page.js"></script>
+    <link href="User%20Demo%20Style.css">
+
     <style>
         /* Set black background color, white text and some padding */
         body{
@@ -25,7 +25,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="getStories()">
 <header>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -39,8 +39,9 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="User%20page%20template.html">La mia pagina</a></li>
-                    <li class="active"><a href="User%20work.html">I miei lavori</a></li>
+                    <li><a href="Demo%20User%20Page.html">La mia pagina</a></li>
+                    <li class="active"><a href="Demo%20User%20Work.html">I miei lavori</a></li>
+                    <li><a href="../Database%20Racconti/DatabaseRacconti.html">Biblioteca</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group input-group">
@@ -61,26 +62,26 @@
 
 </header>
 
-<article ng-app="twpsUserWork" ng-controller="WorkCtrl">
+<article>
     <div class="container">
-        <button class="btn btn-default"><span id="titUserWork" style="color: black"></span ><span id="idUserWork"></span><span class="glyphicon glyphicon-chevron-down"></span></button>
-        <p ng-app='twpsNarration' ng-controller='NarrationCtrl' id="resaRacconto" style="background-color: white; color: black"></p>
+        <button class="btn btn-default" onclick="getTheStory()"><span id="titoloUserWork" style="color: black"></span ><span id="idUserWork" style="color: transparent"></span><span class="glyphicon glyphicon-chevron-down"></span></button>
+        <p id="resaRacconto" style="background-color: white; color: black"></p>
     </div>
     <div class="container text-center">
-        <button class="btn btn-default" onclick="openTextEditor()" style="margin-top: 20px; width: 400px">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+        <a href="../Demo%20Text%20Editor/Demo%20Text%20Editor.html"><button class="btn btn-default">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus"></span></button></a>
     </div>
     <div class="container text-center">
-        <button class="btn btn-default" style="margin-top: 20px; width: 400px">Scrivi un nuovo fumetto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+        <button class="btn btn-default" data-toggle="popover" data-trigger="focus" title="Scrivi un nuovo fumetto" data-content="Funzione non ancora disponibile">Scrivi un nuovo fumetto<span class="glyphicon glyphicon-plus"></span></button>
     </div>
     <div class="container text-center">
-        <button class="btn btn-default" style="margin-top: 20px; width: 400px">Crea un nuovo progetto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+        <button class="btn btn-default" data-toggle="popover" data-trigger="focus" title="Crea un nuovo progetto" data-content="Funzione non ancora disponibile">Crea un nuovo progetto<span class="glyphicon glyphicon-plus"></span></button>
     </div>
 </article>
 
 
 <footer style="background-color: #222222; bottom: 0; position: fixed; width: 100%">
     <div class="container-fluid text-center" >
-        <button class="btn btn-link" style="color: white">
+        <button class="btn btn-link" style="color: white" onclick="logOut()">
             <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
             Logout
         </button>
