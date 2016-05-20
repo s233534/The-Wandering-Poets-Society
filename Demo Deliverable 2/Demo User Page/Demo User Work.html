@@ -8,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script src="../../lib/angular-1.5.5/angular.js"></script>
     <script src="../DemoDominator.js"></script>
     <script src="../Login%20Demo/Login%20Demo.js"></script>
     <script src="Demo%20user%20page.js"></script>
@@ -63,17 +64,20 @@
 </header>
 
 <article>
-    <div class="container">
-        <button class="btn btn-default" onclick="getTheStory()"><span id="titoloUserWork" style="color: black"></span ><span id="idUserWork" style="color: transparent"></span><span class="glyphicon glyphicon-chevron-down"></span></button>
-        <p id="resaRacconto" style="background-color: white; color: black"></p>
+    <div class="container" style="min-height: 650px">
+        <ul class="list-group">
+            <li class="list-group-item"><button class="btn btn-link" onclick="goToAttualWork()"><span id="titoloUserWork" style="color: black"></span ><span id="idUserWork" style="color: transparent"></span></button>
+            </li>
+        </ul>
+
     </div>
-    <div class="container text-center">
-        <a href="../Demo%20Text%20Editor/Demo%20Text%20Editor.html"><button class="btn btn-default">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus"></span></button></a>
+    <div class="container text-center" style="margin-top: 20px">
+        <a><button class="btn btn-default" onclick="createStory()">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus"></span></button></a>
     </div>
-    <div class="container text-center">
+    <div class="container text-center" style="margin-top: 5px">
         <button class="btn btn-default" data-toggle="popover" data-trigger="focus" title="Scrivi un nuovo fumetto" data-content="Funzione non ancora disponibile">Scrivi un nuovo fumetto<span class="glyphicon glyphicon-plus"></span></button>
     </div>
-    <div class="container text-center">
+    <div class="container text-center" style="margin-top: 5px">
         <button class="btn btn-default" data-toggle="popover" data-trigger="focus" title="Crea un nuovo progetto" data-content="Funzione non ancora disponibile">Crea un nuovo progetto<span class="glyphicon glyphicon-plus"></span></button>
     </div>
 </article>

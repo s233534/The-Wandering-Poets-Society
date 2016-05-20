@@ -38,6 +38,10 @@ function isc() {
     }, function(error, userData) {
         if (error) {
             console.log("Error creating user:", error);
+            if(confirm("Iscrizione fallita: se sei già iscritto clicca su accedi," +
+                    "altrimenti ritenta")){
+                window.location.reload();
+            }
         } else {
             console.log("Successfully created user account with uid:", userData.uid);
             localStorage.UID=userData.uid;
@@ -49,38 +53,6 @@ function isc() {
             openLog();
         }
     });
-
-
-/*
-    var neoRamo=twps.child('users');
-    //var neoRef=neoRamo.child(UID);
-    var useRef=neoRamo.push({
-        nome: firstName,
-        cognome: lastName,
-        email: Email,
-        password: pwd,
-        typeOfUser: cat,
-        countStories: 0,
-        countComics: 0,
-        countReviews: 0,
-        level: "Discepolo",
-        dateOfBirth: dob
-    });
-
-    usID=useRef.key();
-    localStorage.actUsId=usID;
-
-    localStorage.nomeAttuale=firstName;
-    localStorage.cognomeAttuale=lastName;
-    localStorage.emailAttuale=Email;
-    localStorage.pwdAttuale=pwd;
-    localStorage.dobAttuale=dob;
-    localStorage.topAttuale=cat;
-    localStorage.livelloAttuale="Discepolo";
-    localStorage.contatoreStorieAttuale=0;
-    localStorage.contatoreFumettiAttuale=0;
-    localStorage.contatoreRecensioniAttuale=0;
-*/
 
 }
 
@@ -114,10 +86,12 @@ function setDataUser(){
 
 
 function login() {
+    /*
     function isValidKey(lMail) {
         var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
         return invalidKeys[lMail] === undefined;
     }
+    */
 
     var lMail=document.getElementById('logMail').value;
     var lpwd=document.getElementById('logPwd').value;
@@ -125,24 +99,29 @@ function login() {
     twps.authWithPassword({
         email    : lMail,
         password : lpwd
-    }, authHandler);
+    },  authHandler);
+    function authHandler(error, authData) {
+        if (error) {
+            console.log("Login Failed!", error);
+            if(confirm("Login Fallito: " +
+                    "se non sei ancora iscritto, iscriviti " +
+                    "altrimenti ritenta")){
+                window.location.reload();
+            }
+        } else {
+            console.log("Authenticated successfully with payload:", authData);
+            localStorage.UID = authData.uid;
+            console.log(localStorage.UID);
+
+            path=new Firebase("https://twps.firebaseio.com/users");
 
 
-    path=new Firebase("https://twps.firebaseio.com/users");
-    if(isValidKey(lMail)){
-        //path.child("email").once("value", function (snapshot)
-        path.orderByChild("email").equalTo(lMail).on("value", function (snapshot) {
-            console.log(snapshot.val());
-            snapshot.forEach(function (childSnapshot) {
-                var key= childSnapshot.key();
-                localStorage.actUsId=key;
-                console.log(localStorage.actUsId);
+
                 function setUserData() {
-                    usID=localStorage.actUsId;
-                    pathUs=path.child(usID);
-
+                    var pathUs=path.child(localStorage.UID);
                     pathUs.child("nome").on("value", function(snapshot) {
                         localStorage.nomeAttuale=snapshot.val();
+                        console.log(localStorage.nomeAttuale);
                     });
 
                     pathUs.child("cognome").on("value", function(snapshot) {
@@ -179,36 +158,21 @@ function login() {
 
                     pathUs.child("countReviews").on("value", function(snapshot) {
                         localStorage.contatoreRecensioniAttuale=snapshot.val();
+                        location.href="../Demo%20User%20Page/Demo%20User%20Page.html";
                     });
 
                 }
                 setUserData();
 
-                function openUserPage() {
-                    location.href="../Demo User Page/Demo User Page.html";
-                }
-                openUserPage();
-            });
-        });
-    }
 
+        }
+
+    }
 
 }
 
 
-
-function authHandler(error, authData) {
-    if (error) {
-        console.log("Login Failed!", error);
-    } else {
-        console.log("Authenticated successfully with payload:", authData);
-
-    }
-}
-
-
-
-function actualUserData() {
+function attualUserData(){
     console.log(localStorage.nomeAttuale);
 
     actNome=localStorage.nomeAttuale;
@@ -217,13 +181,11 @@ function actualUserData() {
     actTOP=localStorage.topAttuale;
     actLev=localStorage.livelloAttuale;
 
-
     document.getElementById('nomeattuale').innerHTML=actNome;
     document.getElementById('cognomeattuale').innerHTML=actCognome;
     document.getElementById('dobattuale').innerHTML=actDOB;
     document.getElementById('catattuale').innerHTML=actTOP;
     document.getElementById('levattuale').innerHTML=actLev;
-
 
 }
 
@@ -236,10 +198,35 @@ function logOut() {
     openIndex();
 }
 
+function createStory() {
+    usID=localStorage.UID;
+    console.log(usID);
+
+    function isValidKey(usID) {
+        var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
+        return invalidKeys[usID] === undefined;
+    }
+
+    path=new Firebase("https://twps.firebaseio.com/stories");
+    if(isValidKey(usID)){
+        path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val()==null){
+                location.href="../Demo Text Editor/Demo Text Editor.html";
+            }else{
+
+                    window.alert("Non puoi creare più di un racconto a settimana," +
+                        "conserva la tua storia e postala fra un po' di tempo");
+
+            }
+        });
+    }
+}
+
 function saveText(){
 
     path=new Firebase("https://twps.firebaseio.com/users");
-    usID=localStorage.actUsId;
+    usID=localStorage.UID;
     pathUs=path.child(usID);
 
     var title=document.getElementById('titolo').value;
@@ -248,7 +235,7 @@ function saveText(){
     var genre=document.getElementById('genere').value;
     var textArea=document.getElementById('my_text');
     var racconto=textArea.value;
-    var idAutore=localStorage.actUsId;
+    var idAutore=localStorage.UID;
     var dateOfCreation=Date();
 
     var story=twps.child("stories");
@@ -279,7 +266,7 @@ function saveText(){
 }
 
 function getStories() {
-    usID=localStorage.actUsId;
+    usID=localStorage.UID;
     console.log(usID);
 
     function isValidKey(usID) {
@@ -289,7 +276,6 @@ function getStories() {
 
     path=new Firebase("https://twps.firebaseio.com/stories");
     if(isValidKey(usID)){
-        //path.child("email").once("value", function (snapshot)
         path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
             console.log(snapshot.val());
             snapshot.forEach(function (childSnapshot) {
@@ -311,8 +297,12 @@ function getStories() {
     document.getElementById('idUserWork').innerHTML=usID;
 }
 
+function goToAttualWork() {
+    location.href="Attual User Work.html";
+}
+
 function getTheStory() {
-    usID = localStorage.actUsId;
+    usID = localStorage.UID;
     console.log(usID);
 
     function isValidKey(usID) {
@@ -334,19 +324,27 @@ function getTheStory() {
 
     storyID = localStorage.storyID;
     var pathST = path.child(storyID);
-    /*
+
      pathST.child("titolo").on("value", function(snapshot) {
-     document.getElementById("modalTitolo").innerHTML=snapshot.val();
+     document.getElementById("titoloUW").innerHTML=snapshot.val();
      });
 
      pathST.child("sottotitolo").on("value", function(snapshot) {
-     document.getElementById("modalSottotitolo").innerHTML=snapshot.val();
+     document.getElementById("sottotitoloUW").innerHTML=snapshot.val();
      });
-     */
+
     pathST.child("testo").on("value", function (snapshot) {
         var text = snapshot.val();
         text = text.replace(/\n/gi, "<br />");
-        document.getElementById('resaRacconto').innerHTML = text;
+        document.getElementById('testoUW').innerHTML = text;
     });
 
+}
+
+function deleteTheStory() {
+    path = new Firebase("https://twps.firebaseio.com/stories");
+    storyID = localStorage.storyID;
+    var pathST = path.child(storyID);
+    pathST.onDisconnect().remove();
+    location.href="Demo User Work.html";
 }

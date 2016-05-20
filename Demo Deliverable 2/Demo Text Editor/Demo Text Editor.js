@@ -1,5 +1,5 @@
 function openUserWork() {
-    window.open("../User page/User work.html");
+    location.href="../Demo User Page/Demo User Page.html";
 }
 
 function view_text () {

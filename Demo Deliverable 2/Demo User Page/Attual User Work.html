@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TWPS- Database racconti</title>
+    <title>TWPS- J- Capitolo 1 di Amstel Sodyba</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -12,7 +12,6 @@
     <script src="../DemoDominator.js"></script>
     <script src="../Login%20Demo/Login%20Demo.js"></script>
     <script src="../Demo%20User%20Page/Demo%20user%20page.js"></script>
-    <script src="DatabaseRacconti.js"></script>
     <link href="../Demo%20User%20Page/User%20Demo%20Style.css">
 
     <style>
@@ -27,7 +26,7 @@
         }
     </style>
 </head>
-<body>
+<body  onload="getTheStory()">
 <header>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -43,9 +42,11 @@
                 <ul class="nav navbar-nav">
                     <li><a href="../Demo%20User%20Page/Demo%20User%20Page.html">La mia pagina</a></li>
                     <li><a href="../Demo%20User%20Page/Demo%20User%20Work.html">I miei lavori</a></li>
-                    <li class="active"><a href="DatabaseRacconti.html">Biblioteca</a></li>
+                    <li><a href="../Database%20Racconti/DatabaseRacconti.html">Biblioteca</a></li>
                 </ul>
 
+                    </div>
+                </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
                 </ul>
@@ -54,24 +55,30 @@
     </nav>
 
 </header>
-<div class="container">
-    <ul class="list-group">
-        <li class="list-group-item"><a href="../Demo%20Users'%20Pages/Amstel_Sodyba_J_1.html"><button class="btn btn-link" style="color: black">J- Capitolo 1 di Amstel Sodyba</button></a></li>
-        <li class="list-group-item"><a href="../Demo%20Users'%20Pages/Giancarlo_Avalle_Le_Fantasmagoriche_Open.html"><button class="btn btn-link" style="color: black">Le fantasmagoriche disavventure di uno sfigato alle prese con la fine del mondo- Ouverture di Giancarlo Avalle</button></a></li>
-        <li class="list-group-item"><a href="../Demo%20Users'%20Pages/Giancarlo_Avalle_Viaggio_Oltre_Open.html"><button class="btn btn-link" style="color: black">Viaggio oltre l'Impossibile- Ouverture di Giancarlo Avalle</button></a></li>
-        <li class="list-group-item"><a href="../Demo%20Users'%20Pages/Giancarlo_Avalle_Viaggio_Oltre_R1G1.html"><button class="btn btn-link" style="color: black">Viaggio oltre l'Impossibile- Risveglio 1 Giorno 1 di Giancarlo Avalle</button></a></li>
-    </ul>
+<div class="container text-center" style="background-color: white; overflow: scroll">
+    <div>
+        <h2 id="titoloUW" style="font-family: 'Times New Roman'"></h2>
+        <h3 id="sottotitoloUW" style="font-family: 'Times New Roman'"></h3>
+    </div>
+    <div>
+        <p id="testoUW" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px; min-height:650px"></p>
+    </div>
 </div>
 
-    <footer style="background-color: #222222; bottom: 0; position: fixed; width: 100%">
-        <div class="container-fluid text-center" >
-            <button class="btn btn-link" style="color: white" onclick="logOut()">
-                <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
-                Logout
-            </button>
-        </div>
-    </footer>
+<div class="container text-left">
+    <button class="btn btn-danger" onclick="deleteTheStory()" style="margin-top: 50px; background-color: orangered">Cancella questa storia</button>
+</div>
+
+<footer style="background-color: #222222; bottom: 0; margin-top: 100px; width: 100%">
+    <div class="container-fluid text-center" >
+        <button class="btn btn-link" style="color: white" onclick="logOut()">
+            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+            Logout
+        </button>
+    </div>
+</footer>
 
 
 </body>
+
 </html>
