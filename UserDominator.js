@@ -27,16 +27,9 @@ var prova="";
 var attAutore="";
 var storyID="";
 
-
-
-
 function isc() {
     var Email=document.getElementById('mail').value;
     var pwd=document.getElementById('pass').value;
-    var firstName=document.getElementById('nom').value;
-    var lastName=document.getElementById('cog').value;
-    var cat=document.getElementById('usCat').value;
-    var dob=document.getElementById('DOB').value;
 
     twps.createUser({
         email    : Email,
@@ -44,16 +37,36 @@ function isc() {
     }, function(error, userData) {
         if (error) {
             console.log("Error creating user:", error);
+            if(confirm("Iscrizione fallita: se sei già iscritto clicca su accedi," +
+                    "altrimenti ritenta")){
+                window.location.reload();
+            }
         } else {
             console.log("Successfully created user account with uid:", userData.uid);
-            var UID=userData.uid;
-            console.log(UID);
+            localStorage.UID=userData.uid;
+            console.log(localStorage.UID);
+            setDataUser();
+            function openLog() {
+                location.href="Login/Login.html";
+            }
+            openLog();
         }
     });
-   
-    var neoRamo=twps.child('users');
-    //var neoRef=neoRamo.child(UID);
-    var useRef=neoRamo.push({
+
+}
+
+function setDataUser(){
+    var Email=document.getElementById('mail').value;
+    var pwd=document.getElementById('pass').value;
+    var firstName=document.getElementById('nom').value;
+    var lastName=document.getElementById('cog').value;
+    var cat=document.getElementById('usCat').value;
+    var dob=document.getElementById('DOB').value;
+
+
+    var pathUsers=new Firebase("https://twps.firebaseio.com/users");
+    var attualUID=localStorage.UID
+    pathUsers.child(attualUID).set({
         nome: firstName,
         cognome: lastName,
         email: Email,
@@ -66,29 +79,16 @@ function isc() {
         dateOfBirth: dob
     });
 
-    usID=useRef.key();
-    localStorage.actUsId=usID;
-
-    localStorage.nomeAttuale=firstName;
-    localStorage.cognomeAttuale=lastName;
-    localStorage.emailAttuale=Email;
-    localStorage.pwdAttuale=pwd;
-    localStorage.dobAttuale=dob;
-    localStorage.topAttuale=cat;
-    localStorage.livelloAttuale="Discepolo";
-    localStorage.contatoreStorieAttuale=0;
-    localStorage.contatoreFumettiAttuale=0;
-    localStorage.contatoreRecensioniAttuale=0;
-
-    openUserPage();
 
 }
 
 function login() {
-    function isValidKey(lMail) {
-        var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
-        return invalidKeys[lMail] === undefined;
-    }
+    /*
+     function isValidKey(lMail) {
+     var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
+     return invalidKeys[lMail] === undefined;
+     }
+     */
 
     var lMail=document.getElementById('logMail').value;
     var lpwd=document.getElementById('logPwd').value;
@@ -96,85 +96,79 @@ function login() {
     twps.authWithPassword({
         email    : lMail,
         password : lpwd
-    }, authHandler);
+    },  authHandler);
+    function authHandler(error, authData) {
+        if (error) {
+            console.log("Login Failed!", error);
+            if(confirm("Login Fallito: " +
+                    "se non sei ancora iscritto, iscriviti " +
+                    "altrimenti ritenta")){
+                window.location.reload();
+            }
+        } else {
+            console.log("Authenticated successfully with payload:", authData);
+            localStorage.UID = authData.uid;
+            console.log(localStorage.UID);
+
+            path=new Firebase("https://twps.firebaseio.com/users");
 
 
-    path=new Firebase("https://twps.firebaseio.com/users");
-    if(isValidKey(lMail)){
-        //path.child("email").once("value", function (snapshot)
-        path.orderByChild("email").equalTo(lMail).on("value", function (snapshot) {
-            console.log(snapshot.val());
-            snapshot.forEach(function (childSnapshot) {
-                var key= childSnapshot.key();
-                localStorage.actUsId=key;
-            });
-        });
+
+            function setUserData() {
+                var pathUs=path.child(localStorage.UID);
+                pathUs.child("nome").on("value", function(snapshot) {
+                    localStorage.nomeAttuale=snapshot.val();
+                    console.log(localStorage.nomeAttuale);
+                });
+
+                pathUs.child("cognome").on("value", function(snapshot) {
+                    localStorage.cognomeAttuale=snapshot.val();
+                });
+
+                pathUs.child("email").on("value", function(snapshot) {
+                    localStorage.emailAttuale=snapshot.val();
+                });
+
+                pathUs.child("password").on("value", function(snapshot) {
+                    localStorage.pwdAttuale=snapshot.val();
+                });
+
+                pathUs.child("dateOfBirth").on("value", function(snapshot) {
+                    localStorage.dobAttuale=snapshot.val();
+                });
+
+                pathUs.child("typeOfUser").on("value", function(snapshot) {
+                    localStorage.topAttuale=snapshot.val();
+                });
+
+                pathUs.child("level").on("value", function(snapshot) {
+                    localStorage.livelloAttuale=snapshot.val();
+                });
+
+                pathUs.child("countStories").on("value", function(snapshot) {
+                    localStorage.contatoreStorieAttuale=snapshot.val();
+                });
+
+                pathUs.child("countComics").on("value", function(snapshot) {
+                    localStorage.contatoreFumettiAttuale=snapshot.val();
+                });
+
+                pathUs.child("countReviews").on("value", function(snapshot) {
+                    localStorage.contatoreRecensioniAttuale=snapshot.val();
+                    location.href="User%20page/User%20page%20template.html";
+                });
+
+            }
+            setUserData();
+
+
+        }
+
     }
 
-    console.log(localStorage.actUsId);
-
-    usID=localStorage.actUsId;
-    pathUs=path.child(usID);
-
-    pathUs.child("nome").on("value", function(snapshot) {
-        localStorage.nomeAttuale=snapshot.val();
-    });
-
-    pathUs.child("cognome").on("value", function(snapshot) {
-        localStorage.cognomeAttuale=snapshot.val();
-    });
-
-    pathUs.child("email").on("value", function(snapshot) {
-        localStorage.emailAttuale=snapshot.val();
-    });
-
-    pathUs.child("password").on("value", function(snapshot) {
-        localStorage.pwdAttuale=snapshot.val();
-    });
-
-    pathUs.child("dateOfBirth").on("value", function(snapshot) {
-        localStorage.dobAttuale=snapshot.val();
-    });
-
-    pathUs.child("typeOfUser").on("value", function(snapshot) {
-        localStorage.topAttuale=snapshot.val();
-    });
-
-    pathUs.child("level").on("value", function(snapshot) {
-        localStorage.livelloAttuale=snapshot.val();
-    });
-
-    pathUs.child("countStories").on("value", function(snapshot) {
-        localStorage.contatoreStorieAttuale=snapshot.val();
-    });
-
-    pathUs.child("countComics").on("value", function(snapshot) {
-        localStorage.contatoreFumettiAttuale=snapshot.val();
-    });
-
-    pathUs.child("countReviews").on("value", function(snapshot) {
-        localStorage.contatoreRecensioniAttuale=snapshot.val();
-    });
-    
-
-
-
-    openUserPage();
 }
 
-
-
-function authHandler(error, authData) {
-    if (error) {
-        console.log("Login Failed!", error);
-    } else {
-        console.log("Authenticated successfully with payload:", authData);
-    }
-}
-
-
-
-function actualUserData() {
+function attualUserData(){
     console.log(localStorage.nomeAttuale);
 
     actNome=localStorage.nomeAttuale;
@@ -182,21 +176,53 @@ function actualUserData() {
     actDOB=localStorage.dobAttuale;
     actTOP=localStorage.topAttuale;
     actLev=localStorage.livelloAttuale;
-    
 
     document.getElementById('nomeattuale').innerHTML=actNome;
     document.getElementById('cognomeattuale').innerHTML=actCognome;
     document.getElementById('dobattuale').innerHTML=actDOB;
     document.getElementById('catattuale').innerHTML=actTOP;
     document.getElementById('levattuale').innerHTML=actLev;
-    
 
 }
 
+function logOut() {
+    twps.unauth();
+    localStorage.clear();
+    function openIndex() {
+        location.href="../../index.html";
+    }
+    openIndex();
+}
+
+function createStory() {
+    usID=localStorage.UID;
+    console.log(usID);
+
+    function isValidKey(usID) {
+        var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
+        return invalidKeys[usID] === undefined;
+    }
+
+    path=new Firebase("https://twps.firebaseio.com/stories");
+    if(isValidKey(usID)){
+        path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val()==null){
+                location.href="Create text/Text Editor.html";
+            }else{
+
+                window.alert("Non puoi creare più di un racconto a settimana," +
+                    "conserva la tua storia e postala fra un po' di tempo");
+
+            }
+        });
+    }
+}
+
 function saveText(){
-    
+
     path=new Firebase("https://twps.firebaseio.com/users");
-    usID=localStorage.actUsId;
+    usID=localStorage.UID;
     pathUs=path.child(usID);
 
     var title=document.getElementById('titolo').value;
@@ -205,7 +231,7 @@ function saveText(){
     var genre=document.getElementById('genere').value;
     var textArea=document.getElementById('my_text');
     var racconto=textArea.value;
-    var idAutore=localStorage.actUsId;
+    var idAutore=localStorage.UID;
     var dateOfCreation=Date();
 
     var story=twps.child("stories");
@@ -236,7 +262,7 @@ function saveText(){
 }
 
 function getStories() {
-    usID=localStorage.actUsId;
+    usID=localStorage.UID;
     console.log(usID);
 
     function isValidKey(usID) {
@@ -246,7 +272,6 @@ function getStories() {
 
     path=new Firebase("https://twps.firebaseio.com/stories");
     if(isValidKey(usID)){
-        //path.child("email").once("value", function (snapshot)
         path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
             console.log(snapshot.val());
             snapshot.forEach(function (childSnapshot) {
@@ -268,42 +293,35 @@ function getStories() {
     document.getElementById('idUserWork').innerHTML=usID;
 }
 
-function getTheStory() {
-    usID=localStorage.actUsId;
-    console.log(usID);
+function goToAttualWork() {
+    location.href="Attual User Work.html";
+}
 
-    function isValidKey(usID) {
-        var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
-        return invalidKeys[usID] === undefined;
-    }
+function setAttualStory(){
+    path=new Firebase("https://twps.firebaseio.com/stories")
+    storyID=localStorage.storyReadID;
 
-    path=new Firebase("https://twps.firebaseio.com/stories");
-    if(isValidKey(usID)){
-        //path.child("email").once("value", function (snapshot)
-        path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
-            console.log(snapshot.val());
-            snapshot.forEach(function (childSnapshot) {
-                var key= childSnapshot.key();
-                localStorage.storyID=key;
-            });
-        });
-    }
+    var pathST = path.child(storyID);
 
-    storyID=localStorage.storyID;
-    var pathST=path.child(storyID);
-/*
     pathST.child("titolo").on("value", function(snapshot) {
-        document.getElementById("modalTitolo").innerHTML=snapshot.val();
+        document.getElementById("titoloStory").innerHTML=snapshot.val();
     });
 
     pathST.child("sottotitolo").on("value", function(snapshot) {
-        document.getElementById("modalSottotitolo").innerHTML=snapshot.val();
-    });
-*/
-    pathST.child("testo").on("value", function(snapshot) {
-        var text=snapshot.val();
-        text = text.replace(/\n/gi, "<br />");
-        document.getElementById('resaRacconto').innerHTML=text;
+        document.getElementById("sottotitoloStory").innerHTML=snapshot.val();
     });
 
+    pathST.child("testo").on("value", function (snapshot) {
+        var text = snapshot.val();
+        text = text.replace(/\n/gi, "<br />");
+        document.getElementById('testoStory').innerHTML = text;
+    });
+}
+
+function deleteTheStory() {
+    path = new Firebase("https://twps.firebaseio.com/stories");
+    storyID = localStorage.storyID;
+    var pathST = path.child(storyID);
+    pathST.onDisconnect().remove();
+    location.href="Demo User Work.html";
 }
