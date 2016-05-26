@@ -47,7 +47,7 @@ function isc() {
             console.log(localStorage.UID);
             setDataUser();
             function openLog() {
-                location.href="Login/Login.html";
+                location.href="Login.html";
             }
             openLog();
         }
@@ -155,7 +155,7 @@ function login() {
 
                 pathUs.child("countReviews").on("value", function(snapshot) {
                     localStorage.contatoreRecensioniAttuale=snapshot.val();
-                    location.href="User%20page/User%20page%20template.html";
+                    location.href="../User%20page/User%20page%20template.html";
                 });
 
             }
@@ -189,7 +189,7 @@ function logOut() {
     twps.unauth();
     localStorage.clear();
     function openIndex() {
-        location.href="../../index.html";
+        location.href="../index.html";
     }
     openIndex();
 }
@@ -208,7 +208,7 @@ function createStory() {
         path.orderByChild("idautore").equalTo(usID).on("value", function (snapshot) {
             console.log(snapshot.val());
             if(snapshot.val()==null){
-                location.href="Create text/Text Editor.html";
+                location.href="../Create%20text/Text%20Editor.html";
             }else{
 
                 window.alert("Non puoi creare più di un racconto a settimana," +
@@ -217,6 +217,12 @@ function createStory() {
             }
         });
     }
+}
+
+function goToEditor() {
+    usID=localStorage.UID;
+    console.log(usID);
+    location.href="../Create%20text/Text%20Editor.html";
 }
 
 function saveText(){
