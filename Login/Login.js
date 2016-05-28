@@ -1,7 +1,7 @@
 
 
 function openUserPage() {
-    window.open("../User page/User page template.html");
+    window.open("../userPage/userPage template.html");
 }
 
 function getCalendar2() {

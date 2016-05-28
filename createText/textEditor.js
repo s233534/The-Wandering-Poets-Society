@@ -3,7 +3,7 @@
  */
 
 function openUserWork() {
-    window.open("../User page/User work.html");
+    window.open("../userPage/userWork.html");
 }
 
 function view_text () {

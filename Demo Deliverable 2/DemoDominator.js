@@ -48,7 +48,7 @@ function isc() {
             console.log(localStorage.UID);
             setDataUser();
             function openLog() {
-                location.href="../Login Demo/Login Demo.html";
+                location.href="../login Demo/login Demo.html";
             }
             openLog();
         }
@@ -102,8 +102,8 @@ function login() {
     },  authHandler);
     function authHandler(error, authData) {
         if (error) {
-            console.log("Login Failed!", error);
-            if(confirm("Login Fallito: " +
+            console.log("login Failed!", error);
+            if(confirm("login Fallito: " +
                     "se non sei ancora iscritto, iscriviti " +
                     "altrimenti ritenta")){
                 window.location.reload();

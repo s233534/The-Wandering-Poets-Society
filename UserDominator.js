@@ -47,7 +47,7 @@ function isc() {
             console.log(localStorage.UID);
             setDataUser();
             function openLog() {
-                location.href="Login.html";
+                location.href="login.html";
             }
             openLog();
         }
@@ -79,109 +79,6 @@ function setDataUser(){
         dateOfBirth: dob
     });
 
-
-}
-
-function login() {
-    /*
-     function isValidKey(lMail) {
-     var invalidKeys = { '': '', '$': '$', '.': '.', '#': '#', '[': '[', ']': ']' };
-     return invalidKeys[lMail] === undefined;
-     }
-     */
-
-    var lMail=document.getElementById('logMail').value;
-    var lpwd=document.getElementById('logPwd').value;
-
-    twps.authWithPassword({
-        email    : lMail,
-        password : lpwd
-    },  authHandler);
-    function authHandler(error, authData) {
-        if (error) {
-            console.log("Login Failed!", error);
-            if(confirm("Login Fallito: " +
-                    "se non sei ancora iscritto, iscriviti " +
-                    "altrimenti ritenta")){
-                window.location.reload();
-            }
-        } else {
-            console.log("Authenticated successfully with payload:", authData);
-            localStorage.UID = authData.uid;
-            console.log(localStorage.UID);
-
-            path=new Firebase("https://twps.firebaseio.com/users");
-
-
-
-            function setUserData() {
-                var pathUs=path.child(localStorage.UID);
-                pathUs.child("nome").on("value", function(snapshot) {
-                    localStorage.nomeAttuale=snapshot.val();
-                    console.log(localStorage.nomeAttuale);
-                });
-
-                pathUs.child("cognome").on("value", function(snapshot) {
-                    localStorage.cognomeAttuale=snapshot.val();
-                });
-
-                pathUs.child("email").on("value", function(snapshot) {
-                    localStorage.emailAttuale=snapshot.val();
-                });
-
-                pathUs.child("password").on("value", function(snapshot) {
-                    localStorage.pwdAttuale=snapshot.val();
-                });
-
-                pathUs.child("dateOfBirth").on("value", function(snapshot) {
-                    localStorage.dobAttuale=snapshot.val();
-                });
-
-                pathUs.child("typeOfUser").on("value", function(snapshot) {
-                    localStorage.topAttuale=snapshot.val();
-                });
-
-                pathUs.child("level").on("value", function(snapshot) {
-                    localStorage.livelloAttuale=snapshot.val();
-                });
-
-                pathUs.child("countStories").on("value", function(snapshot) {
-                    localStorage.contatoreStorieAttuale=snapshot.val();
-                });
-
-                pathUs.child("countComics").on("value", function(snapshot) {
-                    localStorage.contatoreFumettiAttuale=snapshot.val();
-                });
-
-                pathUs.child("countReviews").on("value", function(snapshot) {
-                    localStorage.contatoreRecensioniAttuale=snapshot.val();
-                    location.href="../User%20page/User%20page%20template.html";
-                });
-
-            }
-            setUserData();
-
-
-        }
-
-    }
-
-}
-
-function attualUserData(){
-    console.log(localStorage.nomeAttuale);
-
-    actNome=localStorage.nomeAttuale;
-    actCognome=localStorage.cognomeAttuale;
-    actDOB=localStorage.dobAttuale;
-    actTOP=localStorage.topAttuale;
-    actLev=localStorage.livelloAttuale;
-
-    document.getElementById('nomeattuale').innerHTML=actNome;
-    document.getElementById('cognomeattuale').innerHTML=actCognome;
-    document.getElementById('dobattuale').innerHTML=actDOB;
-    document.getElementById('catattuale').innerHTML=actTOP;
-    document.getElementById('levattuale').innerHTML=actLev;
 
 }
 
@@ -222,7 +119,7 @@ function createStory() {
 function goToEditor() {
     usID=localStorage.UID;
     console.log(usID);
-    location.href="../Create%20text/Text%20Editor.html";
+    location.href="../createText/textEditor.html";
 }
 
 function saveText(){

@@ -1,3 +1,3 @@
 function openLog() {
-    window.open("Login/Login.html");
+    window.open("login/login.html");
 }

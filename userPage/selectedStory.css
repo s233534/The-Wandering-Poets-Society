@@ -1,5 +1,5 @@
 form .stars {
-    background: url("stars.png") repeat-x 0 0;
+    background: url("../images/stars.png") repeat-x 0 0;
     width: 150px;
     margin: 0 auto;
 }
@@ -61,10 +61,11 @@ form .stars span {
     top: 0;
     left: 0;
     height: 30px;
-    background: url("stars.png") repeat-x 0 -60px;
+    background: url("../images/stars.png") repeat-x 0 -60px;
     -webkit-transition: -webkit-width 0.5s;
     -moz-transition: -moz-width 0.5s;
     -ms-transition: -ms-width 0.5s;
     -o-transition: -o-width 0.5s;
     transition: width 0.5s;
 }
+
