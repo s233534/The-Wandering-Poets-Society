@@ -1,5 +1,6 @@
 var twps=new Firebase("https://twps.firebaseio.com");
 
+
 var usID="";
 var path="";
 var pathUs="";
@@ -86,7 +87,7 @@ function logOut() {
     twps.unauth();
     localStorage.clear();
     function openIndex() {
-        location.href="../index.html";
+        location.href="../login/login.html";
     }
     openIndex();
 }
@@ -199,7 +200,7 @@ function getStories() {
 function goToAttualWork() {
     location.href="Attual User Work.html";
 }
-
+/*
 function setAttualStory(){
     path=new Firebase("https://twps.firebaseio.com/stories")
     storyID=localStorage.storyReadID;
@@ -219,7 +220,7 @@ function setAttualStory(){
         text = text.replace(/\n/gi, "<br />");
         document.getElementById('testoStory').innerHTML = text;
     });
-}
+}*/
 
 function deleteTheStory() {
     path = new Firebase("https://twps.firebaseio.com/stories");

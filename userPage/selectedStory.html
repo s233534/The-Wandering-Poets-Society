@@ -13,8 +13,8 @@
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <link rel="stylesheet" type="text/css" href="selectedStory.css">
     <script src="../login/login.js"></script>
-    <script src="../Create%20text/Text%20Editor.js"></script>
-    <script src="User%20page.js"></script>
+    <script src="../createText/textEditor.js"></script>
+    <script src="userPage.js"></script>
     <script src="../UserDominator.js"></script>
     <script src="../TWPSapp.js"></script>
 </head>
@@ -30,7 +30,7 @@
     }
 </style>
 </head>
-<body onload="setAttualStory()">
+<body ng-app="twpsApp" ng-controller="attStoryCtrl">
 <header>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -44,8 +44,8 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="User%20page%20template.html">La mia pagina</a></li>
-                    <li><a href="User%20work.html">I miei lavori</a></li>
+                    <li><a href="userPage.html">La mia pagina</a></li>
+                    <li><a href="userWork.html">I miei lavori</a></li>
                     <li><a href="Biblioteca.html">Biblioteca</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
@@ -69,32 +69,33 @@
 
 <div class="container text-center" style="background-color: white; min-height: 650px">
     <div>
-        <h2 id="titoloStory" style="font-family: 'Times New Roman'"></h2>
-        <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'"></h3>
+        <h2 id="autoreStory" style="font-family: 'Times New Roman'">{{attStory.autore}}</h2>
+        <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attStory.titolo}}</h2>
+        <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attStory.sottotitolo}}</h3>
     </div>
     <div>
-        <p id="testoStory" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
+        <p id="testoStory" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px">{{attStory.testo}}</p>
     </div>
 </div>
 <div class="container">
     <div class="rating" style="margin-top: 50px">
         <form id="rate" name="rate">
             <div class="stars">
-                <input type="radio" name="star" class="star-1" id="star-1" value="1" onclick="check(this.value)"/>
+                <input type="radio" name="star" class="star-1" id="star-1" value="1" ng-click="check(1)"/>
                 <label class="star-1" for="star-1">1</label>
-                <input type="radio" name="star" class="star-2" id="star-2" value="2" onclick="check(this.value)"/>
+                <input type="radio" name="star" class="star-2" id="star-2" value="2" ng-click="check(2)"/>
                 <label class="star-2" for="star-2">2</label>
-                <input type="radio" name="star" class="star-3" id="star-3" value="3" onclick="check(this.value)"/>
+                <input type="radio" name="star" class="star-3" id="star-3" value="3" ng-click="check(3)"/>
                 <label class="star-3" for="star-3">3</label>
-                <input type="radio" name="star" class="star-4" id="star-4" value="4" onclick="check(this.value)"/>
+                <input type="radio" name="star" class="star-4" id="star-4" value="4" ng-click="check(4)"/>
                 <label class="star-4" for="star-4">4</label>
-                <input type="radio" name="star" class="star-5" id="star-5" value="5" onclick="check(this.value)"/>
+                <input type="radio" name="star" class="star-5" id="star-5" value="5" ng-click="check(5)"/>
                 <label class="star-5" for="star-5">5</label>
                 <span></span>
             </div>
         </form>
     </div>
-    <button onclick="updateRating()">Conferma voto</button>
+    <button ng-click="updateRating()">Conferma voto</button>
 </div>
 
 
@@ -102,7 +103,7 @@
 
 <footer style="background-color: #222222; bottom: 0; margin-top: 200px; width: 100%">
     <div class="container-fluid text-center" >
-        <button class="btn btn-link" style="color: white" onclick="logOut()">
+        <button class="btn btn-link" style="color: white" ng-click="logOut()">
             <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
             Logout
         </button>

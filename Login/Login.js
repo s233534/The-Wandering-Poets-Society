@@ -1,9 +1,3 @@
-
-
-function openUserPage() {
-    window.open("../userPage/userPage template.html");
-}
-
 function getCalendar2() {
     $('.datepicker').datepicker({
         days: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
