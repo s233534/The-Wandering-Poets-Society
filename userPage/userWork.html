@@ -58,7 +58,7 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+                    <li><a href="../modificheUtente/modificheAccount.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
                 </ul>
             </div>
         </div>
@@ -90,9 +90,9 @@
 </article>
 
 
-<footer style="background-color: #222222; bottom: 0; margin-top: 200px; width: 100%">
+<footer ng-controller="AuthCtrl" style="background-color: #222222; bottom: 0; margin-top: 200px; width: 100%">
     <div class="container-fluid text-center" >
-        <button class="btn btn-link" style="color: white" ng-click="logOut()">
+        <button class="btn btn-link" style="color: white" ng-click="logout()">
             <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
             Logout
         </button>

@@ -1,5 +1,5 @@
 
-var app = angular.module("twpsApp", ["firebase"]);
+var app = angular.module("twpsApp", ["firebase", 'ngFileUpload']);
 /*
 app.controller("ProfileCtrl", ["$scope", "$firebaseObject",  function($scope, $firebaseObject){
     var userRef=new Firebase("https://twps.firebaseio.com/users");
@@ -288,3 +288,67 @@ app.controller("attStoryCtrl", ["$scope", "$firebaseObject",
         }
 
     }]);
+
+app.controller("modificaProfiloCtrl", ["$scope",
+    function($scope){
+        var ref=new Firebase("https://twps.firebaseio.com/users");
+        var path=ref.child(localStorage.UID);
+
+        var attNome=localStorage.attNome;
+        var attCognome=localStorage.attCognome;
+        var attDOB=localStorage.attDOB;
+
+        document.getElementById("modnom").placeholder=attNome;
+        document.getElementById("modcog").placeholder=attCognome;
+        document.getElementById("modDOB").placeholder=attDOB;
+
+        console.log(attNome+" "+attCognome+" "+attDOB);
+
+        
+        $scope.updateProfile=function(){
+
+            var newNome=document.getElementById("modnom").value;
+            var newCognome=document.getElementById("modcog").value;
+            var newDOB=document.getElementById("modDOB").value;
+
+            if(newNome===""){
+                newNome=localStorage.attNome;
+            }
+
+            if(newCognome===""){
+                newCognome=localStorage.attCognome;
+            }
+
+            if(newDOB===""){
+                newDOB=localStorage.attDOB;
+            }
+
+            path.update({
+                nome: newNome,
+                cognome: newCognome,
+                dateOfBirth: newDOB
+            })
+
+        };
+
+    }
+
+]);
+
+app.controller("caricaImmagineCtrl", ["$scope", "Upload",
+    function($scope, Upload){
+        $scope.add = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addImgProfile = function () {
+
+
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                console.log(imgData);
+            });
+
+        };
+    }
+]);
