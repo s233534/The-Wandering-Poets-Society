@@ -34,6 +34,11 @@
             padding: 15px;
         }
     </style>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </head>
 <body ng-app="twpsApp" ng-controller="modificaProfiloCtrl">
     <header>
@@ -73,13 +78,14 @@
     </header>
 
     <div class="container">
+        <h3 style="color: lightgrey">Modifica i tuoi dati personali</h3>
         <div class="form-group form-inline">
             <input class="form-control"  type="text" id="modnom" style="width: 300px">
             <input class="form-control"  type="text" id="modcog" style="width: 300px; margin-left: 20px">
         </div>
 
         <div class="form-group">
-            <select class="form-control" id="usCat" style="width: 620px">
+            <select class="form-control" id="modTOP" style="width: 620px">
                 <option value="Lettore">Lettore</option>
                 <option value="Scrittore">Scrittore</option>
                 <option value="Fumettista">Fumettista</option>
@@ -93,14 +99,20 @@
             </script>
         </div>
 
-
         <button class="btn btn-default" ng-click="updateProfile()">Modifica Profilo</button>
     </div>
     <br><br><br>
     <div class="container" ng-controller="caricaImmagineCtrl">
-        <form ng-submit="addImgProfile()">
-            <input type="file" id="newImageProfile" name="pic" ng-model="user.img" accept="image/*" ngf-select="add()">
-            <button type="submit">Invia</button>
+        <h3 style="color: lightgrey">Modifica la foto del profilo</h3>
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+        <form class="form-group" ng-submit="addImgProfile()">
+            <input style="color: lightgrey" data-toggle="tooltip" title="L'immagine non deve superare 1MB di dimensioni" type="file" id="newImageProfile" name="pic" ng-model="user.img" accept="image/*" ngf-select="add()">
+            <br>
+            <button class="btn btn-default" type="submit">Invia</button>
         </form>
 
     </div>
