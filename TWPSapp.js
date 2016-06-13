@@ -18,8 +18,12 @@ app.factory("Auth", ["$firebaseAuth",
 ]);
 
 // Creazione utente e registrazione dati su database
-app.controller("CreateUserCtrl", ["$scope", "Auth",
-    function($scope, Auth) {
+app.controller("CreateUserCtrl", ["$scope", "Auth", "Upload",
+    function($scope, Auth, Upload) {
+        $scope.add = function () {
+            console.log($scope.user.img);
+        };
+
         $scope.createUser = function () {
             $scope.message = null;
             $scope.error = null;
@@ -42,6 +46,11 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
                 var dob = document.getElementById('DOB').value;
                 var pathUsers = new Firebase("https://twps.firebaseio.com/users");
                 var attualUID = localStorage.UID;
+                Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                    localStorage.passImg = base64Url;
+                    console.log(localStorage.passImg);
+                });
+                var imgP=localStorage.passImg;
                 
                 pathUsers.child(attualUID).set({
                     nome: firstName,
@@ -53,7 +62,8 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
                     countComics: 0,
                     countReviews: 0,
                     level: "Discepolo",
-                    dateOfBirth: dob
+                    dateOfBirth: dob,
+                    imageProfile: imgP
                 });
 
                 location.href = "login.html";
@@ -80,6 +90,8 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
         };
 
         $scope.changeEmail = function(){
+            var userRef=new Firebase("https://twps.firebaseio.com/users");
+            var UID=localStorage.UID;
             var oldMail=localStorage.attEmail;
             var newMail=document.getElementById("newEmail").value;
             var pwd=localStorage.attPassword;
@@ -93,6 +105,9 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
                 }).then(function() {
                     console.log("Email changed successfully!");
                     localStorage.attEmail=newMail;
+                    userRef.child(UID).update({
+                        email: newMail
+                    });
                     location.href = "../userPage/userPage.html";
                 }).catch(function(error) {
                     console.error("Error: ", error);
@@ -105,6 +120,8 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
         };
 
         $scope.changePassword = function(){
+            var userRef=new Firebase("https://twps.firebaseio.com/users");
+            var UID=localStorage.UID;
             var Mail=localStorage.attEmail;
             var pwd=localStorage.attPassword;
             var confOldPwd=document.getElementById("oldPassword").value;
@@ -119,6 +136,9 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
                 }).then(function() {
                     console.log("Password changed successfully!");
                     localStorage.attPassword=newPwd;
+                    userRef.child(UID).update({
+                        password: newPwd
+                    });
                     location.href = "../userPage/userPage.html";
                 }).catch(function(error) {
                     console.error("Error: ", error);

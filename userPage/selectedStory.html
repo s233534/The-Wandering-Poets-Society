@@ -58,19 +58,6 @@
                         Logout
                     </button>
                 </form>
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group input-group">
-                        <input type="text" class="form-control" placeholder="Cerca...">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </span>
-                    </div>
-                </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../modificheUtente/modificheAccount.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-                </ul>
             </div>
         </div>
     </nav>
@@ -79,7 +66,7 @@
 
 <div class="container text-center" style="background-color: white; min-height: 650px">
     <div>
-        <h2 id="autoreStory" style="font-family: 'Times New Roman'">{{attStory.autore}}</h2>
+        <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black">{{attStory.autore}}</a></h2>
         <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attStory.titolo}}</h2>
         <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attStory.sottotitolo}}</h3>
     </div>
