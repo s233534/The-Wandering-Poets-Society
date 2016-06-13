@@ -34,7 +34,6 @@
         padding: 15px;
     }
 </style>
-</head>
 <body ng-app="twpsApp" ng-controller="attStoryCtrl">
 <header>
     <nav class="navbar navbar-inverse">
@@ -53,6 +52,12 @@
                     <li><a href="userWork.html">I miei lavori</a></li>
                     <li><a href="Biblioteca.html">Biblioteca</a></li>
                 </ul>
+                <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
+                    <button class="btn btn-link" style="color: white" ng-click="logout()">
+                        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                        Logout
+                    </button>
+                </form>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="Cerca...">
@@ -83,10 +88,6 @@
     </div>
 </div>
 <div class="container">
-    <div id="voto" style="color: lightgrey">
-        <h5>Il voto medio degli utenti è: {{attStory.rating.value}}</h5>
-        <h5>Basato su: {{attStory.rating.total}} voti</h5>
-    </div>
     <div class="rating" style="margin-top: 50px">
         <form id="rate" name="rate">
             <div class="stars">
@@ -104,20 +105,33 @@
             </div>
         </form>
     </div>
-    <button ng-click="updateRating()">Conferma voto</button>
+    <button class="btn btn-default" ng-click="updateRating()">Conferma voto</button>
+    <br>
+    <div id="votoMedio" style="color: lightgrey">
+        <h5>Il voto medio degli utenti è: {{attStory.rating.value}}. Basato su: {{attStory.rating.total}} voti</h5>
+    </div>
+</div>
+<br><br><br>
+<div class="container" ng-controller="newReviewCtrl">
+    <form role="form">
+        <div class="form-group">
+            <input class="form-control" id="titoloReview" placeholder="Titolo">
+            <br>
+            <textarea class="form-control" name="newReview" id="newReview" placeholder="Scrivi la tua recensione..."></textarea>
+        </div>
+    </form>
+    <button class="btn btn-default" ng-click="createReview()">Invia recensione</button>
+</div>
+<br>
+<div class="container" ng-controller="attStoryReviewCtrl">
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="review in filterReviews track by $index">
+            <h6 style="color: black">{{review.autore}}: {{review.titolo}}</h6>
+            <p style="color: black">{{review.testo}}</p>
+        </li>
+    </ul>
 </div>
 
-
-
-
-<footer ng-controller="AuthCtrl" style="background-color: #222222; bottom: 0; margin-top: 200px; width: 100%">
-    <div class="container-fluid text-center" >
-        <button class="btn btn-link" style="color: white" ng-click="logout()">
-            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
-            Logout
-        </button>
-    </div>
-</footer>
 
 </body>
 </html>

@@ -50,6 +50,12 @@
                     <li><a href="userWork.html">I miei lavori</a></li>
                     <li class="active"><a href="Biblioteca.html">Biblioteca</a></li>
                 </ul>
+                <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
+                    <button class="btn btn-link" style="color: white" ng-click="logout()">
+                        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                        Logout
+                    </button>
+                </form>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group input-group">
                         <input type="text" class="form-control" placeholder="Cerca...">
@@ -75,14 +81,6 @@
     </ul>
 </div>
 
-<footer ng-controller="AuthCtrl" style="background-color: #222222; bottom: 0; margin-top: 200px; width: 100%">
-    <div class="container-fluid text-center" >
-        <button class="btn btn-link" style="color: white" ng-click="logout()">
-            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
-            Logout
-        </button>
-    </div>
-</footer>
 
 </body>
 </html>

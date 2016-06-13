@@ -61,6 +61,73 @@ app.controller("CreateUserCtrl", ["$scope", "Auth",
                 $scope.error = error;
             });
         };
+
+        $scope.removeUser = function(){
+            $scope.message = null;
+            $scope.error = null;
+            var Email=localStorage.attEmail;
+            var pwd=localStorage.attPassword;
+
+            Auth.$removeUser({
+                email: Email,
+                password: pwd
+            }).then(function() {
+                $scope.message = "User removed";
+                location.href="../index.html";
+            }).catch(function(error) {
+                $scope.error = error;
+            });
+        };
+
+        $scope.changeEmail = function(){
+            var oldMail=localStorage.attEmail;
+            var newMail=document.getElementById("newEmail").value;
+            var pwd=localStorage.attPassword;
+            var confPwd=document.getElementById("confirmMailPassword").value;
+
+            if(pwd===confPwd){
+                Auth.$changeEmail({
+                    oldEmail: oldMail,
+                    newEmail: newMail,
+                    password: pwd
+                }).then(function() {
+                    console.log("Email changed successfully!");
+                    localStorage.attEmail=newMail;
+                    location.href = "../userPage/userPage.html";
+                }).catch(function(error) {
+                    console.error("Error: ", error);
+                });
+            }else{
+                window.alert("Password sbagliata");
+                location.href = "modificheAccount.html";
+            }
+
+        };
+
+        $scope.changePassword = function(){
+            var Mail=localStorage.attEmail;
+            var pwd=localStorage.attPassword;
+            var confOldPwd=document.getElementById("oldPassword").value;
+            var newPwd=document.getElementById("newPassword").value;
+            var confNewPwd=document.getElementById("confirmNewPassword").value;
+
+            if(pwd===confOldPwd && newPwd===confNewPwd){
+                Auth.$changePassword({
+                    email: Mail,
+                    oldPassword: pwd,
+                    newPassword: newPwd
+                }).then(function() {
+                    console.log("Password changed successfully!");
+                    localStorage.attPassword=newPwd;
+                    location.href = "../userPage/userPage.html";
+                }).catch(function(error) {
+                    console.error("Error: ", error);
+                });
+            }else{
+                window.alert("Password sbagliata");
+                location.href = "modificheAccount.html";
+            }
+        }
     }
 ]);
 
@@ -134,6 +201,7 @@ app.controller("ProfileCtrl", ["$scope", "$firebaseObject",
             localStorage.attContRev=obj.countReviews;
             localStorage.attContCom=obj.countComics;
             localStorage.attImage=obj.imageProfile;
+            localStorage.attPassword=obj.password;
         });
     }
 ]);
@@ -155,7 +223,7 @@ app.controller("CreateStoryCtrl", ["$scope",
             var idautore=localStorage.UID;
             var nomeAutore=localStorage.attNome;
             var cognomeAutore=localStorage.attCognome;
-            var author=nomeAutore+" "+cognomeAutore;
+            var author=nomeAutore+"_"+cognomeAutore;
             var storyID=nomeAutore+"_"+cognomeAutore+"_"+title+"_"+subtitle;
 
             var contStorie = parseInt(localStorage.attContSto);
@@ -338,6 +406,64 @@ app.controller("attStoryCtrl", ["$scope", "$firebaseObject",
 
     }]);
 
+app.controller("attStoryReviewCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
+        $scope.reviews=$firebaseArray(reviewRef);
+        var SID=localStorage.storyReadID;
+        var queryReviews=reviewRef.orderByChild("idstoria").equalTo(SID).limitToLast(5);
+        $scope.filterReviews=$firebaseArray(queryReviews);
+    }
+]);
+
+app.controller("newReviewCtrl", ["$scope", 
+    function ($scope) {
+        var reviewRef = new Firebase("https://twps.firebaseio.com/reviews");
+        
+        $scope.createReview=function(){
+            $scope.message = null;
+            $scope.error = null;
+
+            var textArea=document.getElementById('newReview');
+            var recensione=textArea.value;
+            var dateOfCreation=Date();
+            var idAutore=localStorage.UID;
+            var nomeAutore=localStorage.attNome;
+            var cognomeAutore=localStorage.attCognome;
+            var author=nomeAutore+" "+cognomeAutore;
+            var authorxid=nomeAutore+"_"+cognomeAutore;
+            var idStoria=localStorage.storyReadID;
+            var titleStoria=localStorage.attTitolo;
+            var subtitleStoria=localStorage.attSottotitolo;
+            var authorStoria=localStorage.attAutore;
+            var titoloRecensione=document.getElementById("titoloReview").value;
+            var idRecensione=authorxid+"_"+titoloRecensione+"_"+"recensione di:"+idStoria;
+
+            var contRecensioni = parseInt(localStorage.attContRev);
+            contRecensioni++;
+            localStorage.attContRev=contRecensioni;
+
+            var userRef = new Firebase("https://twps.firebaseio.com/users");
+            var attUserRef = userRef.child(localStorage.UID);
+            attUserRef.update({
+                countReviews: parseInt(localStorage.attContRev)
+            });
+
+            reviewRef.child(idRecensione).set({
+                titolo: titoloRecensione,
+                autore: author,
+                idstoria: idStoria,
+                testo: recensione,
+                idautore: idAutore,
+                dataDiCreazione: dateOfCreation,
+                titoloStoria: titleStoria,
+                sottotitoloStoria: subtitleStoria,
+                autoreStoria: authorStoria
+            })
+        }
+    }
+]);
+
 app.controller("modificaProfiloCtrl", ["$scope",
     function($scope){
         var ref=new Firebase("https://twps.firebaseio.com/users");
@@ -409,3 +535,7 @@ app.controller("caricaImmagineCtrl", ["$scope", "Upload",
         };
     }
 ]);
+
+
+
+
