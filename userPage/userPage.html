@@ -53,6 +53,8 @@
                     <li class="active"><a href="userPage.html">La mia pagina</a></li>
                     <li><a href="userWork.html">I miei lavori</a></li>
                     <li><a href="Biblioteca.html">Biblioteca</a></li>
+                    <li><a href="Fumetteria.html">Fumetteria</a></li>
+                    <li><a href="Archivio.html">Archivio</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
                     <button class="btn btn-link" style="color: white" ng-click="logout()">
@@ -89,64 +91,24 @@
             </div>
 
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-9" ng-controller="EventCtrl">
 
-            <div class="row">
+            <div class="row" ng-repeat="story in filterStories track by $index">
+                <div class="col-sm-3">
+                    <div class="well">
+                        <img ng-src="{{story.imageOfCreator}}" class="img-circle" height="55" width="55" alt="Avatar">
+                        <br>
+                        <p><a href="selectedAuthor.html" style="color: black">{{story.autore}}</a></p>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="well">
+                        <p>Ho scritto una nuova storia</p>
+                        <p><a style="color: black" href="selectedStory.html" ng-click="getTheStory($index)">{{story.titolo}}- {{story.sottotitolo}}</a></p>
+                    </div>
+                </div>
+            </div>
 
-            </div>
-
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="well">
-                        <p>John</p>
-                        <img src="../images/user_default_image.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-                    </div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="well">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="well">
-                        <p>Bo</p>
-                        <img src="../images/user_default_image.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-                    </div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="well">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="well">
-                        <p>Jane</p>
-                        <img src="../images/user_default_image.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-                    </div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="well">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="well">
-                        <p>Anja</p>
-                        <img src="../images/user_default_image.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-                    </div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="well">
-                        <p></p>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

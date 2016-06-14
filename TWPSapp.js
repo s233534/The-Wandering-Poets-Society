@@ -222,7 +222,28 @@ app.controller("ProfileCtrl", ["$scope", "$firebaseObject",
             localStorage.attContCom=obj.countComics;
             localStorage.attImage=obj.imageProfile;
             localStorage.attPassword=obj.password;
+            localStorage.attImageProfile=obj.imageProfile;
         });
+    }
+]);
+
+app.controller("EventCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var libraryRef=new Firebase("https://twps.firebaseio.com/stories");
+        $scope.stories=$firebaseArray(libraryRef);
+        var query=libraryRef.orderByChild("dataDiCreazione").limitToLast(5);
+        $scope.filterStories=$firebaseArray(query);
+        var list=$scope.filterStories;
+
+        $scope.getTheStory=function($index) {
+            var n=$index;
+            var item = list[n];
+            console.log(item);
+            localStorage.storyReadID=item.$id;
+            console.log(localStorage.storyReadID);
+
+            location.href="selectedStory.html";
+        }
     }
 ]);
 
@@ -239,12 +260,13 @@ app.controller("CreateStoryCtrl", ["$scope",
             var genre=document.getElementById("genere").value;
             var textArea=document.getElementById('my_text');
             var racconto=textArea.value;
-            var dateOfCreation=Date();
+            var dateOfCreation=new Date();
             var idautore=localStorage.UID;
             var nomeAutore=localStorage.attNome;
             var cognomeAutore=localStorage.attCognome;
-            var author=nomeAutore+"_"+cognomeAutore;
-            var storyID=nomeAutore+"_"+cognomeAutore+"_"+title+"_"+subtitle;
+            var author=nomeAutore+" "+cognomeAutore;
+            var storyID=author+"_"+title+"_"+subtitle;
+            var imgCre=localStorage.attImageProfile;
 
             var contStorie = parseInt(localStorage.attContSto);
             contStorie++;
@@ -264,6 +286,7 @@ app.controller("CreateStoryCtrl", ["$scope",
                 dataDiCreazione: dateOfCreation,
                 idautore: idautore,
                 autore:author,
+                imageOfCreator: imgCre,
                 rating: {
                     value: 0,
                     total: 0,
@@ -300,6 +323,48 @@ app.controller("LibraryCtrl", ["$scope", "$firebaseArray",
 
 
 }]);
+
+app.controller("FumetteriaCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var comicRef=new Firebase("https://twps.firebaseio.com/comics");
+        $scope.comics=$firebaseArray(comicRef);
+        var query=comicRef.orderByChild("dataDiCreazione");
+        $scope.filterComics=$firebaseArray(query);
+        var list=$scope.filterComics;
+
+        $scope.getTheComic=function($index) {
+            var n=$index;
+            var item = list[n];
+            console.log(item);
+            localStorage.comicReadID=item.$id;
+            console.log(localStorage.comicReadID);
+
+            location.href="selectedComic.html";
+        }
+
+
+}]);
+
+app.controller("ArchivioCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var projectRef=new Firebase("https://twps.firebaseio.com/projects");
+        $scope.projects=$firebaseArray(projectRef);
+        var query=projectRef.orderByChild("dataDiCreazione");
+        $scope.filterProjects=$firebaseArray(query);
+        var list=$scope.filterProjects;
+
+        $scope.getTheProject=function($index) {
+            var n=$index;
+            var item = list[n];
+            console.log(item);
+            localStorage.projectReadID=item.$id;
+            console.log(localStorage.projectReadID);
+
+            location.href="selectedProject.html";
+        }
+
+
+    }]);
 
 //Gestione lavori utente
 app.controller("WorkCtrl", ["$scope", "$firebaseArray",
@@ -386,6 +451,17 @@ app.controller("attStoryCtrl", ["$scope", "$firebaseObject",
             localStorage.attTotal=obj.rating.total;
             localStorage.attValue=obj.rating.value;
             localStorage.attIdAutore=obj.idautore;
+            localStorage.attTesto=obj.testo;
+            localStorage.attImageCreator=obj.imageOfCreator;
+
+            var text=localStorage.attTesto;
+            text = text.replace(/\n/gi, "<br />");
+            document.getElementById('testoStory').innerHTML = text;
+
+            if(localStorage.attIdAutore===localStorage.UID){
+                document.getElementById("ratingContainer").style.display="none";
+                document.getElementById("reviewContainer").style.display="none";
+            }
         });
 
         $scope.check=function(val){
@@ -446,7 +522,7 @@ app.controller("newReviewCtrl", ["$scope",
 
             var textArea=document.getElementById('newReview');
             var recensione=textArea.value;
-            var dateOfCreation=Date();
+            var dateOfCreation=new Date();
             var idAutore=localStorage.UID;
             var nomeAutore=localStorage.attNome;
             var cognomeAutore=localStorage.attCognome;

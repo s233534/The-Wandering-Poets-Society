@@ -51,6 +51,8 @@
                     <li><a href="userPage.html">La mia pagina</a></li>
                     <li><a href="userWork.html">I miei lavori</a></li>
                     <li><a href="Biblioteca.html">Biblioteca</a></li>
+                    <li><a href="Fumetteria.html">Fumetteria</a></li>
+                    <li><a href="Archivio.html">Archivio</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
                     <button class="btn btn-link" style="color: white" ng-click="logout()">
@@ -71,11 +73,11 @@
         <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attStory.sottotitolo}}</h3>
     </div>
     <div>
-        <p id="testoStory" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px">{{attStory.testo}}</p>
+        <p id="testoStory" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
     </div>
 </div>
 <div class="container">
-    <div class="rating" style="margin-top: 50px">
+    <div class="rating" id="ratingContainer" style="margin-top: 50px">
         <form id="rate" name="rate">
             <div class="stars">
                 <input type="radio" name="star" class="star-1" id="star-1" value="1" ng-click="check(1)"/>
@@ -91,15 +93,16 @@
                 <span></span>
             </div>
         </form>
+        <br>
+        <button class="btn btn-default" ng-click="updateRating()">Conferma voto</button>
     </div>
-    <button class="btn btn-default" ng-click="updateRating()">Conferma voto</button>
     <br>
     <div id="votoMedio" style="color: lightgrey">
         <h5>Il voto medio degli utenti è: {{attStory.rating.value}}. Basato su: {{attStory.rating.total}} voti</h5>
     </div>
 </div>
 <br><br><br>
-<div class="container" ng-controller="newReviewCtrl">
+<div class="container" id="reviewContainer" ng-controller="newReviewCtrl">
     <form role="form">
         <div class="form-group">
             <input class="form-control" id="titoloReview" placeholder="Titolo">

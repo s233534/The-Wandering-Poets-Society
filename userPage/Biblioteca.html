@@ -49,6 +49,8 @@
                     <li><a href="userPage.html">La mia pagina</a></li>
                     <li><a href="userWork.html">I miei lavori</a></li>
                     <li class="active"><a href="Biblioteca.html">Biblioteca</a></li>
+                    <li><a href="Fumetteria.html">Fumetteria</a></li>
+                    <li><a href="Archivio.html">Archivio</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
                     <button class="btn btn-link" style="color: white" ng-click="logout()">
@@ -63,7 +65,7 @@
 </header>
 <div class="container">
     <ul class="list-group">
-        <li class="list-group-item" ng-repeat="story in filterStories track by $index"><button id="{{$index}}" class="btn btn-link" ng-click="getTheStory($index)" style="color: black">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</button></li>
+        <li class="list-group-item" ng-repeat="story in filterStories track by $index"><button class="btn btn-link" ng-click="getTheStory($index)" style="color: black">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</button></li>
         <!-- <li ng-repeat="story in stories">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</li> -->
     </ul>
 </div>
