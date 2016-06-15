@@ -502,17 +502,6 @@ app.controller("WorkCtrl", ["$scope", "$firebaseArray",
         }
     });
 
-    var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
-    $scope.reviews=$firebaseArray(reviewRef);
-    var queryReviews=reviewRef.orderByChild("idautore").equalTo(usID);
-    $scope.filterReviews=$firebaseArray(queryReviews);
-    var listReviews=$scope.filterReviews;
-    listReviews.$loaded().then(function () {
-        if(listReviews.length!==0){
-            document.getElementById("userReviewsDiv").style.display="block";
-        }
-    });
-
     $scope.getTheStory=function($index) {
         var n=$index;
         var item = listStories[n];
@@ -635,7 +624,7 @@ app.controller("attStoryReviewCtrl", ["$scope", "$firebaseArray",
         var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
         $scope.reviews=$firebaseArray(reviewRef);
         var SID=localStorage.storyReadID;
-        var queryReviews=reviewRef.orderByChild("idstoria").equalTo(SID).limitToLast(5);
+        var queryReviews=reviewRef.orderByChild("idstoria").equalTo(SID);
         $scope.filterReviews=$firebaseArray(queryReviews);
     }
 ]);
@@ -767,6 +756,29 @@ app.controller("attAuthorCtrl", ["$scope", "$firebaseObject",
     }
 ]);
 
+
+app.controller("UserListCtrl", ["$scope", "$firebaseArray", "$firebaseObject",
+    function($scope, $firebaseArray, $firebaseObject){
+        var userRef=new Firebase("https://twps.firebaseio.com/users");
+        $scope.users=$firebaseArray(userRef);
+        var query=userRef.orderByChild("nome");
+        $scope.filterUsers=$firebaseArray(query);
+        var list=$scope.filterUsers;
+
+        $scope.getTheAuthor=function($index){
+            var n=$index;
+            var item=list[n];
+            localStorage.storyOfThisId=item.$id;
+            var userRef=new Firebase("https://twps.firebaseio.com/users");
+            var obj=$firebaseObject(userRef.child(localStorage.storyOfThisId));
+
+            obj.$loaded().then(function(){
+                localStorage.storyOfThisIdAutore=localStorage.storyOfThisId;
+            });
+        }
+    }
+]);
+
 app.controller("attAuthorWorkCtrl", ["$scope", "$firebaseArray",
     function($scope, $firebaseArray){
         var workRef=new Firebase("https://twps.firebaseio.com/stories");
@@ -802,18 +814,6 @@ app.controller("attAuthorWorkCtrl", ["$scope", "$firebaseArray",
         listProjects.$loaded().then(function () {
             if(listProjects.length!==0){
                 document.getElementById("progettiAutoreSelezionato").style.display="block";
-            }
-        });
-
-
-        var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
-        $scope.reviews=$firebaseArray(reviewRef);
-        var queryReviews=reviewRef.orderByChild("idautore").equalTo(USRID);
-        $scope.filterReviews=$firebaseArray(queryReviews);
-        var listReviews=$scope.filterReviews;
-        listReviews.$loaded().then(function () {
-            if(listReviews.length!==0){
-                document.getElementById("recensioniAutoreSelezionato").style.display="block";
             }
         });
 
@@ -1258,7 +1258,7 @@ app.controller("attComicReviewCtrl", ["$scope", "$firebaseArray",
         var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
         $scope.reviews=$firebaseArray(reviewRef);
         var CID=localStorage.comicReadID;
-        var queryReviews=reviewRef.orderByChild("idcomic").equalTo(CID).limitToLast(5);
+        var queryReviews=reviewRef.orderByChild("idcomic").equalTo(CID);
         $scope.filterReviews=$firebaseArray(queryReviews);
     }
 ]);
@@ -1273,12 +1273,14 @@ app.controller("createProjectCtrl", ["$scope",
             var titPro=document.getElementById("titoloProgetto").value;
             var tipPro=document.getElementById("tipoProgetto").value;
             var text=document.getElementById("soggettoProgetto");
+            var sectext=document.getElementById("motivazioniProgetto");
             var sogPro=text.value;
+            var motPro=sectext.value;
             var idAutore=localStorage.UID;
             var nomeAutore=localStorage.attNome;
             var cognomeAutore=localStorage.attCognome;
             var author=nomeAutore+" "+cognomeAutore;
-            var projectID=author+"_"+title+"_"+subtitle;
+            var projectID=author+"_"+titPro+"_"+tipPro;
             var imgCre=localStorage.attImageProfile;
 
             proRef.child(projectID).set({
@@ -1288,7 +1290,15 @@ app.controller("createProjectCtrl", ["$scope",
                 idautore: idAutore,
                 autore: author,
                 imageOfCreator: imgCre,
-                partecipanti: author
+                partecipanti: author,
+                motivazioni: motPro,
+                rating: {
+                    votes: 0,
+                    total: 0,
+                    value: 0
+                }
+            }).then(function(){
+                location.href="../userPage/userWork.html";
             })
         }
     }
@@ -1314,10 +1324,15 @@ app.controller("attProjectCtrl", ["$scope", "$firebaseObject",
             localStorage.attProSoggetto=obj.soggetto;
             localStorage.attImageCreator=obj.imageOfCreator;
             localStorage.attProPartecipanti=obj.partecipanti;
+            localStorage.attProMotivazioni=obj.motivazioni;
 
             var text=localStorage.attProSoggetto;
             text = text.replace(/\n/gi, "<br />");
             document.getElementById('testoProject').innerHTML = text;
+
+            var sectext=localStorage.attProMotivazioni;
+            sectext = sectext.replace(/\n/gi, "<br />");
+            document.getElementById('motiviProject').innerHTML = sectext;
 
             if(localStorage.attIdAutore!==localStorage.UID){
                 document.getElementById("ratingContainer").style.display="block";
@@ -1438,7 +1453,14 @@ app.controller("attProjectReviewCtrl", ["$scope", "$firebaseArray",
         var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
         $scope.reviews=$firebaseArray(reviewRef);
         var PID=localStorage.projectReadID;
-        var queryReviews=reviewRef.orderByChild("idprogetto").equalTo(PID).limitToLast(5);
+        var queryReviews=reviewRef.orderByChild("idprogetto").equalTo(PID);
         $scope.filterReviews=$firebaseArray(queryReviews);
     }
 ]);
+
+
+/*
+
+ <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+ <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ */

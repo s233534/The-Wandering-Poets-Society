@@ -5,8 +5,9 @@
     <title>TWPS- Progetto selezionato</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="../lib/jquery-3.0.0.js"></script>
+    <script src="../lib/jquery-2.x-git.js"></script>
+    <script src="../lib/jquery-ui-1.11.4.custom/external/jquery/jquery.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="../lib/bootstrap-3.3.6-dist/css/bootstrap.css">
@@ -74,6 +75,9 @@
                 <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black" ng-click="getTheAuthor()">{{attProject.autore}}</a></h2>
                 <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attProject.titolo}}</h2>
                 <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attProject.tipologiaDelProgetto}}</h3>
+            </div>
+            <div>
+                <p id="motiviProject" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
             </div>
             <div>
                 <p id="testoProject" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
