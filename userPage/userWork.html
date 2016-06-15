@@ -14,8 +14,6 @@
     <script src="../lib/ng-file-upload-shim.min.js"></script>
     <script src="../lib/ng-file-upload.min.js"></script>
     <script src="../lib/sha256.js"></script>
-    <script src="userPage.js"></script>
-    <script src="../UserDominator.js"></script>
     <script src="../TWPSapp.js"></script>
     <style>
         /* Set black background color, white text and some padding */
@@ -61,41 +59,43 @@
 
 </header>
 
-<article>
+<article id="userWorkContent">
     <div class="container">
-        <h4 style="color: lightgrey">I miei racconti:</h4>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="story in filterStories track by $index">
-                <button class="btn btn-link" ng-click="getTheStory($index)" style="color: black">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</button>
-            </li>
-        </ul>
-        <h4 style="color: lightgrey">I miei fumetti:</h4>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="comic in filterComics track by $index">
-                <button class="btn btn-link" ng-click="getTheComic($index)" style="color: black">{{comic.autore}}: {{comic.titolo}}- {{comic.sottotitolo}}</button>
-            </li>
-        </ul>
-        <h4 style="color: lightgrey">I miei progetti:</h4>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="project in filterProjects track by $index">
-                <button class="btn btn-link" ng-click="getTheProject($index)" style="color: black">{{project.autore}}: {{project.titolo}}- {{project.sottotitolo}}</button>
-            </li>
-        </ul>
-        <h4 style="color: lightgrey">Le mie recensioni:</h4>
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="review in filterReviews track by $index">
-                <button class="btn btn-link" ng-click="getTheReview($index)" style="color: black">{{review.autore}}: {{review.titolo}}</button>
-            </li>
-        </ul>
+        <div class="container text-center">
+            <button class="btn btn-default" ng-click="openTextEditor()" style="margin-top: 20px; width: 400px">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+        </div>
+        <div class="container text-center">
+            <button class="btn btn-default" ng-click="openComicEditor()" style="margin-top: 20px; width: 400px">Scrivi un nuovo fumetto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+        </div>
+        <div class="container text-center">
+            <button class="btn btn-default" style="margin-top: 20px; width: 400px">Crea un nuovo progetto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+        </div>
     </div>
-    <div class="container text-center">
-        <button class="btn btn-default" ng-click="openTextEditor()" style="margin-top: 20px; width: 400px">Scrivi un nuovo racconto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
-    </div>
-    <div class="container text-center">
-        <button class="btn btn-default" style="margin-top: 20px; width: 400px">Scrivi un nuovo fumetto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
-    </div>
-    <div class="container text-center">
-        <button class="btn btn-default" style="margin-top: 20px; width: 400px">Crea un nuovo progetto<span class="glyphicon glyphicon-plus" style="margin-left: 30px"></span></button>
+    <div class="container">
+        <div id="userStoriesDiv" style="display: none">
+            <h4 style="color: lightgrey">I miei racconti:</h4>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="story in filterStories track by $index">
+                    <button class="btn btn-link" ng-click="getTheStory($index)" style="color: black">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</button>
+                </li>
+            </ul>
+        </div>
+        <div id="userComicsDiv" style="display: none">
+            <h4 style="color: lightgrey">I miei fumetti:</h4>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="comic in filterComics track by $index">
+                    <button class="btn btn-link" ng-click="getTheComic($index)" style="color: black">{{comic.autore}}: {{comic.titolo}}- {{comic.sottotitolo}}</button>
+                </li>
+            </ul>
+        </div>
+        <div id="userProjectsDiv" style="display: none">
+            <h4 style="color: lightgrey">I miei progetti:</h4>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="project in filterProjects track by $index">
+                    <button class="btn btn-link" ng-click="getTheProject($index)" style="color: black">{{project.autore}}: {{project.titolo}}- {{project.tipologiaDelProgetto}}</button>
+                </li>
+            </ul>
+        </div>
     </div>
 </article>
 

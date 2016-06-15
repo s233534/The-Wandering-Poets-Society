@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TWPS- Reading a story</title>
+    <title>TWPS- Fumetto attuale</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -32,50 +32,80 @@
         padding: 15px;
     }
 </style>
-<body ng-app="twpsApp" ng-controller="attStoryCtrl">
-<header>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="userPage.html">La mia pagina</a></li>
-                    <li><a href="userWork.html">I miei lavori</a></li>
-                    <li><a href="Biblioteca.html">Biblioteca</a></li>
-                    <li><a href="Fumetteria.html">Fumetteria</a></li>
-                    <li><a href="Archivio.html">Archivio</a></li>
-                </ul>
-                <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
-                    <button class="btn btn-link" style="color: white" ng-click="logout()">
-                        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
-                        Logout
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
 
-</header>
-<article id="selectedStoryContent" style="display: none">
+<body ng-app="twpsApp" ng-controller="attComicCtrl">
+    <header>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="userPage.html">La mia pagina</a></li>
+                        <li><a href="userWork.html">I miei lavori</a></li>
+                        <li><a href="Biblioteca.html">Biblioteca</a></li>
+                        <li><a href="Fumetteria.html">Fumetteria</a></li>
+                        <li><a href="Archivio.html">Archivio</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
+                        <button class="btn btn-link" style="color: white" ng-click="logout()">
+                            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+    </header>
     <div class="container text-center" style="background-color: white; min-height: 650px">
         <div>
-            <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black" ng-click="getTheAuthor()">{{attStory.autore}}</a></h2>
-            <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attStory.titolo}}</h2>
-            <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attStory.sottotitolo}}</h3>
+            <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black" ng-click="getTheAuthor()">{{attComic.autore}}</a></h2>
+            <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attComic.titolo}}</h2>
+            <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attComic.sottotitolo}}</h3>
         </div>
         <div>
-            <p id="testoStory" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
+            <div id="attComicPage1" style="display: none">
+                <img ng-src="{{attComic.pagina1}}">
+            </div>
+            <div id="attComicPage2" style="display: none">
+                <img ng-src="{{attComic.pagina2}}">
+            </div>
+            <div id="attComicPage3" style="display: none">
+                <img ng-src="{{attComic.pagina3}}">
+            </div>
+            <div id="attComicPage4" style="display: none">
+                <img ng-src="{{attComic.pagina4}}">
+            </div>
+            <div id="attComicPage5" style="display: none">
+                <img ng-src="{{attComic.pagina5}}">
+            </div>
+            <div id="attComicPage6" style="display: none">
+                <img ng-src="{{attComic.pagina6}}">
+            </div>
+            <div id="attComicPage7" style="display: none">
+                <img ng-src="{{attComic.pagina7}}">
+            </div>
+            <div id="attComicPage8" style="display: none">
+                <img ng-src="{{attComic.pagina8}}">
+            </div>
+            <div id="attComicPage9" style="display: none">
+                <img ng-src="{{attComic.pagina9}}">
+            </div>
+            <div id="attComicPage10" style="display: none">
+                <img ng-src="{{attComic.paginaFinale}}">
+            </div>
         </div>
     </div>
+
     <div class="container">
-        <div class="rating" id="ratingContainer" style="margin-top: 50px; display: none">
+        <div class="rating" id="ratingComicContainer" style="margin-top: 50px; display: none">
             <form id="rate" name="rate">
                 <div class="stars">
                     <input type="radio" name="star" class="star-1" id="star-1" value="1" ng-click="check(1)"/>
@@ -96,11 +126,11 @@
         </div>
         <br>
         <div id="votoMedio" style="color: lightgrey">
-            <h5>Il voto medio degli utenti è: {{attStory.rating.value}}. Basato su: {{attStory.rating.votes}} voti</h5>
+            <h5>Il voto medio degli utenti è: {{attComic.rating.value}}. Basato su: {{attComic.rating.votes}} voti</h5>
         </div>
     </div>
     <br><br><br>
-    <div class="container" id="reviewContainer" ng-controller="newReviewCtrl" style="display: none">
+    <div class="container" id="reviewComicContainer" ng-controller="newReviewComicCtrl" style="display: none">
         <form role="form">
             <div class="form-group">
                 <input class="form-control" id="titoloReview" placeholder="Titolo">
@@ -111,7 +141,7 @@
         <button class="btn btn-default" ng-click="createReview()">Invia recensione</button>
     </div>
     <br>
-    <div class="container" ng-controller="attStoryReviewCtrl">
+    <div class="container" ng-controller="attComicReviewCtrl">
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="review in filterReviews track by $index">
                 <h6 style="color: black">{{review.autore}}: {{review.titolo}}</h6>
@@ -119,10 +149,5 @@
             </li>
         </ul>
     </div>
-</article>
-
-
-
-
 </body>
 </html>

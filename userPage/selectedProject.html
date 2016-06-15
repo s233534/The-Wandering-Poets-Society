@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TWPS- Progetto selezionato</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.6-dist/css/bootstrap.css">
+    <script src="../lib/bootstrap-3.3.6-dist/js/bootstrap.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="../lib/ng-file-upload-shim.min.js"></script>
+    <script src="../lib/ng-file-upload.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="selectedStory.css">
+    <script src="../login/login.js"></script>
+    <script src="../createText/textEditor.js"></script>
+    <script src="../TWPSapp.js"></script>
+</head>
+<style>
+    /* Set black background color, white text and some padding */
+    body{
+        background-color: darkred;
+    }
+    footer {
+        background-color: #555;
+        color: white;
+        padding: 15px;
+    }
+</style>
+<body ng-app="twpsApp" ng-controller="attProjectCtrl">
+    <header>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href="userPage.html">La mia pagina</a></li>
+                        <li><a href="userWork.html">I miei lavori</a></li>
+                        <li><a href="Biblioteca.html">Biblioteca</a></li>
+                        <li><a href="Fumetteria.html">Fumetteria</a></li>
+                        <li><a href="Archivio.html">Archivio</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
+                        <button class="btn btn-link" style="color: white" ng-click="logout()">
+                            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                            Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+    </header>
+    <article id="selectedProjectContent" style="display: none">
+        <div class="container text-center" style="background-color: white; min-height: 650px">
+            <div>
+                <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black" ng-click="getTheAuthor()">{{attProject.autore}}</a></h2>
+                <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attProject.titolo}}</h2>
+                <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attProject.tipologiaDelProgetto}}</h3>
+            </div>
+            <div>
+                <p id="testoProject" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
+            </div>
+        </div>
+        <br>
+        <div class="container" style="background-color: white">
+            <h5>Partecipanti</h5>
+            <div>
+                <p id="partecipantiAttPro">{{attProject.partecipanti}}</p>
+            </div>
+        </div>
+        <br>
+        <div class="container" id="partecipa">
+            <button class="btn btn-default" ng-click="partecipa()">Partecipa</button>
+        </div>
+        <div class="container">
+            <div class="rating" id="ratingContainer" style="margin-top: 50px; display: none">
+                <form id="rate" name="rate">
+                    <div class="stars">
+                        <input type="radio" name="star" class="star-1" id="star-1" value="1" ng-click="check(1)"/>
+                        <label class="star-1" for="star-1">1</label>
+                        <input type="radio" name="star" class="star-2" id="star-2" value="2" ng-click="check(2)"/>
+                        <label class="star-2" for="star-2">2</label>
+                        <input type="radio" name="star" class="star-3" id="star-3" value="3" ng-click="check(3)"/>
+                        <label class="star-3" for="star-3">3</label>
+                        <input type="radio" name="star" class="star-4" id="star-4" value="4" ng-click="check(4)"/>
+                        <label class="star-4" for="star-4">4</label>
+                        <input type="radio" name="star" class="star-5" id="star-5" value="5" ng-click="check(5)"/>
+                        <label class="star-5" for="star-5">5</label>
+                        <span></span>
+                    </div>
+                </form>
+                <br>
+                <button class="btn btn-default" ng-click="updateRating()">Conferma voto</button>
+            </div>
+            <br>
+            <div id="votoMedio" style="color: lightgrey">
+                <h5>Il voto medio degli utenti è: {{attProject.rating.value}}. Basato su: {{attProject.rating.votes}} voti</h5>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="container" id="reviewContainer" ng-controller="newReviewProjectCtrl" style="display: none">
+            <form role="form">
+                <div class="form-group">
+                    <input class="form-control" id="titoloReview" placeholder="Titolo">
+                    <br>
+                    <textarea class="form-control" name="newReview" id="newReview" placeholder="Scrivi la tua recensione..."></textarea>
+                </div>
+            </form>
+            <button class="btn btn-default" ng-click="createReview()">Invia recensione</button>
+        </div>
+        <br>
+        <div class="container" ng-controller="attProjectReviewCtrl">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="review in filterReviews track by $index">
+                    <h6 style="color: black">{{review.autore}}: {{review.titolo}}</h6>
+                    <p style="color: black">{{review.testo}}</p>
+                </li>
+            </ul>
+        </div>
+    </article>
+</body>
+</html>

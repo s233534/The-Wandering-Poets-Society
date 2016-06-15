@@ -16,8 +16,6 @@
     <script src="../lib/sha256.js"></script>
     <script src="../login/login.js"></script>
     <script src="../createText/textEditor.js"></script>
-    <script src="userPage.js"></script>
-    <script src="../UserDominator.js"></script>
     <script src="../TWPSapp.js"></script>
 
     <style>
@@ -65,7 +63,7 @@
     </header>
     <div class="container">
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="project in filterProjects track by $index"><button class="btn btn-link" ng-click="getTheProject($index)" style="color: black">{{project.autore}}: {{project.titolo}}- {{project.sottotitolo}}</button></li>
+            <li class="list-group-item" ng-repeat="project in filterProjects track by $index"><button class="btn btn-link" ng-click="getTheProject($index)" style="color: black">{{project.autore}}: {{project.titolo}}- {{project.tipologiaDelProgetto}}</button></li>
             <!-- <li ng-repeat="story in stories">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</li> -->
         </ul>
     </div>

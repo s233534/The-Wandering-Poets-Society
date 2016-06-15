@@ -17,8 +17,6 @@
     <script src="../lib/sha256.js"></script>
     <script src="textEditor.js"></script>
     <script src="../login/login.js"></script>
-    <script src="../userPage/userPage.js"></script>
-    <script src="../UserDominator.js"></script>
     <script src="../TWPSapp.js"></script>
     <link rel="stylesheet" type="text/css" href="textEditor.css">
     <title>TWPS- Scrivi un tuo racconto</title>
@@ -50,19 +48,6 @@
                             Logout
                         </button>
                     </form>
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="Cerca...">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </span>
-                        </div>
-                    </form>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="../modificheUtente/modificheAccount.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-                    </ul>
                 </div>
             </div>
         </nav>
@@ -109,7 +94,7 @@
 <div class="container">
     <form role="form">
         <div class="form-group">
-            <textarea class="form-control" name="my_text" id="my_text" style="height: 650px"></textarea>
+            <textarea class="form-control" name="myText" id="myText" style="height: 650px"></textarea>
         </div>
     </form>
 </div>
@@ -119,7 +104,7 @@
 
 <!-- Submit button -->
 <div class="container">
-    <button class="btn btn-default" ng-click="createStory()">Save Text</button>
+    <button class="btn btn-default" ng-click="createStory()">Salva il racconto</button>
 </div>
 
 <!--

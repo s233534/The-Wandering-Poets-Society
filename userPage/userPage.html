@@ -21,18 +21,11 @@
     <script src="../TWPSapp.js"></script>
     <script src="../login/login.js"></script>
     <script src="../createText/textEditor.js"></script>
-    <script src="userPage.js"></script>
-    <script src="../UserDominator.js"></script>
 
     <style>
         /* Set black background color, white text and some padding */
         body{
             background-color: darkred;
-        }
-        footer {
-            background-color: #555;
-            color: white;
-            padding: 15px;
         }
     </style>
 </head>
@@ -67,51 +60,54 @@
     </nav>
 
 </header>
-<div class="container text-center">
-    <div class="row">
-        <div class="col-sm-3 well">
-            <div class="well" style="overflow: hidden">
-                <img id="imageProfile" class="img-circle" ng-src="{{profile.imageProfile}}" onerror="this.src='../images/user_default_profile.jpg'" height="200" width="200" alt="Avatar">
+<article id="userPageContent" style="display: none">
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-sm-3 well">
+                <div class="well" style="overflow: hidden">
+                    <img id="imageProfile" class="img-circle" ng-src="{{profile.imageProfile}}" onerror="this.src='../images/user_default_profile.jpg'" height="200" width="200" alt="Avatar">
+                </div>
+                <div class="well">
+                    <p id="nomeattuale">{{profile.nome}}</p>
+                    <p id="cognomeattuale">{{profile.cognome}}</p>
+                    <p id="dobattuale">{{profile.dateOfBirth}}</p>
+                    <p id="catattuale">{{profile.typeOfUser}}</p>
+                    <p id="levattuale">{{profile.level}}</p>
+                </div>
+                <div class="well">
+
+                    <p><a href="Cerca.html"><span class="glyphicon glyphicon-search"></span>Cerca</a></p>
+
+                    <p><a href="../modificheUtente/modificheProfilo.html"><span class="glyphicon glyphicon-cog"></span>Modifica Profilo</a></p>
+
+                    <p><a href="../modificheUtente/modificheAccount.html"><span class="glyphicon glyphicon-user"></span> Modifica Account</a></p>
+
+                </div>
+
             </div>
-            <div class="well">
-                <p id="nomeattuale">{{profile.nome}}</p>
-                <p id="cognomeattuale">{{profile.cognome}}</p>
-                <p id="dobattuale">{{profile.dateOfBirth}}</p>
-                <p id="catattuale">{{profile.typeOfUser}}</p>
-                <p id="levattuale">{{profile.level}}</p>
-            </div>
-            <div class="well">
+            <div class="col-sm-9" ng-controller="EventCtrl">
 
-                <p><a><span class="glyphicon glyphicon-search"></span>Cerca</a></p>
-
-                <p><a href="../modificheUtente/modificheProfilo.html"><span class="glyphicon glyphicon-cog"></span>Modifica Profilo</a></p>
-
-                <p><a href="../modificheUtente/modificheAccount.html"><span class="glyphicon glyphicon-user"></span> Modifica Account</a></p>
-
-            </div>
-
-        </div>
-        <div class="col-sm-9" ng-controller="EventCtrl">
-
-            <div class="row" ng-repeat="story in filterStories track by $index">
-                <div class="col-sm-3">
-                    <div class="well">
-                        <img ng-src="{{story.imageOfCreator}}" class="img-circle" height="55" width="55" alt="Avatar">
-                        <br>
-                        <p><a href="selectedAuthor.html" style="color: black">{{story.autore}}</a></p>
+                <div class="row" ng-repeat="story in filterStories track by $index">
+                    <div class="col-sm-3">
+                        <div class="well">
+                            <img ng-src="{{story.imageOfCreator}}" class="img-circle" height="55" width="55" alt="Avatar">
+                            <br>
+                            <p><a href="selectedAuthor.html" ng-click="getTheAuthor($index)" style="color: black">{{story.autore}}</a></p>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="well">
+                            <p>Ho scritto una nuova storia</p>
+                            <p><a style="color: black" href="selectedStory.html" ng-click="getTheStory($index)">{{story.titolo}}- {{story.sottotitolo}}</a></p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-9">
-                    <div class="well">
-                        <p>Ho scritto una nuova storia</p>
-                        <p><a style="color: black" href="selectedStory.html" ng-click="getTheStory($index)">{{story.titolo}}- {{story.sottotitolo}}</a></p>
-                    </div>
-                </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
+</article>
+
 
 </body>
 </html>

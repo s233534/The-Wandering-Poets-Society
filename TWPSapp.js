@@ -48,25 +48,26 @@ app.controller("CreateUserCtrl", ["$scope", "Auth", "Upload",
                 var attualUID = localStorage.UID;
                 Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
                     localStorage.passImg = base64Url;
-                    console.log(localStorage.passImg);
-                });
-                var imgP=localStorage.passImg;
-                
-                pathUsers.child(attualUID).set({
-                    nome: firstName,
-                    cognome: lastName,
-                    email: Email,
-                    password: pwd,
-                    typeOfUser: cat,
-                    countStories: 0,
-                    countComics: 0,
-                    countReviews: 0,
-                    level: "Discepolo",
-                    dateOfBirth: dob,
-                    imageProfile: imgP
-                });
+                }).then(function(){
+                    var imgP=localStorage.passImg;
 
-                location.href = "login.html";
+                    pathUsers.child(attualUID).set({
+                        nome: firstName,
+                        cognome: lastName,
+                        email: Email,
+                        password: pwd,
+                        typeOfUser: cat,
+                        countStories: 0,
+                        countComics: 0,
+                        countReviews: 0,
+                        level: "Discepolo",
+                        dateOfBirth: dob,
+                        imageProfile: imgP
+                    }).then(function(){
+                        location.href = "login.html";
+                    });
+
+                });
             }).catch(function (error) {
                 $scope.error = error;
             });
@@ -82,11 +83,15 @@ app.controller("CreateUserCtrl", ["$scope", "Auth", "Upload",
                 email: Email,
                 password: pwd
             }).then(function() {
+                var userRef=new Firebase("https://twps.firebaseio.com/users");
+                var UID=localStorage.UID;
+                userRef.child(UID).remove();
                 $scope.message = "User removed";
-                location.href="../index.html";
             }).catch(function(error) {
                 $scope.error = error;
-            });
+            }).then(function () {
+                location.href="../login/iscriviti.html";
+            })
         };
 
         $scope.changeEmail = function(){
@@ -210,7 +215,6 @@ app.controller("ProfileCtrl", ["$scope", "$firebaseObject",
         var obj = $firebaseObject(ref.child(UID));
         obj.$loaded().then(function() {
             $scope.profile=obj;
-            console.log(obj.nome);
             localStorage.attNome=obj.nome;
             localStorage.attCognome=obj.cognome;
             localStorage.attEmail=obj.email;
@@ -223,12 +227,14 @@ app.controller("ProfileCtrl", ["$scope", "$firebaseObject",
             localStorage.attImage=obj.imageProfile;
             localStorage.attPassword=obj.password;
             localStorage.attImageProfile=obj.imageProfile;
+
+            document.getElementById("userPageContent").style.display="block";
         });
     }
 ]);
 
-app.controller("EventCtrl", ["$scope", "$firebaseArray",
-    function($scope, $firebaseArray){
+app.controller("EventCtrl", ["$scope", "$firebaseArray", "$firebaseObject",
+    function($scope, $firebaseArray, $firebaseObject){
         var libraryRef=new Firebase("https://twps.firebaseio.com/stories");
         $scope.stories=$firebaseArray(libraryRef);
         var query=libraryRef.orderByChild("dataDiCreazione").limitToLast(5);
@@ -243,9 +249,94 @@ app.controller("EventCtrl", ["$scope", "$firebaseArray",
             console.log(localStorage.storyReadID);
 
             location.href="selectedStory.html";
+        };
+
+        $scope.getTheAuthor=function($index){
+            var n=$index;
+            var item=list[n];
+            localStorage.storyOfThisId=item.$id;
+            var storyRef=new Firebase("https://twps.firebaseio.com/stories");
+            var sobj=$firebaseObject(storyRef.child(localStorage.storyOfThisId));
+
+            sobj.$loaded().then(function(){
+                localStorage.storyOfThisIdAutore=sobj.idautore;
+            });
         }
     }
 ]);
+
+app.controller("modificaProfiloCtrl", ["$scope",
+    function($scope){
+        var ref=new Firebase("https://twps.firebaseio.com/users");
+        var path=ref.child(localStorage.UID);
+
+        var attNome=localStorage.attNome;
+        var attCognome=localStorage.attCognome;
+        var attDOB=localStorage.attDOB;
+
+        document.getElementById("modnom").placeholder=attNome;
+        document.getElementById("modcog").placeholder=attCognome;
+        document.getElementById("modDOB").placeholder=attDOB;
+
+        console.log(attNome+" "+attCognome+" "+attDOB);
+
+
+        $scope.updateProfile=function(){
+
+            var newNome=document.getElementById("modnom").value;
+            var newCognome=document.getElementById("modcog").value;
+            var newDOB=document.getElementById("modDOB").value;
+            var newTOP=document.getElementById("modTOP").value;
+
+            if(newNome===""){
+                newNome=localStorage.attNome;
+            }
+
+            if(newCognome===""){
+                newCognome=localStorage.attCognome;
+            }
+
+            if(newDOB===""){
+                newDOB=localStorage.attDOB;
+            }
+
+            path.update({
+                nome: newNome,
+                cognome: newCognome,
+                dateOfBirth: newDOB,
+                typeOfUser: newTOP
+            });
+            location.href="../userPage/userPage.html";
+
+        };
+
+    }
+
+]);
+
+app.controller("caricaImmagineCtrl", ["$scope", "Upload",
+    function($scope, Upload){
+        $scope.add = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addImgProfile = function () {
+
+
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/users");
+                var path=ref.child(localStorage.UID);
+                path.update({
+                    imageProfile: imgData
+                });
+                location.href="../userPage/userPage.html";
+            });
+
+        };
+    }
+]);
+
 
 //Creazione storia
 app.controller("CreateStoryCtrl", ["$scope",
@@ -258,7 +349,7 @@ app.controller("CreateStoryCtrl", ["$scope",
             var title=document.getElementById("titolo").value;
             var subtitle=document.getElementById("sottotitolo").value;
             var genre=document.getElementById("genere").value;
-            var textArea=document.getElementById('my_text');
+            var textArea=document.getElementById('myText');
             var racconto=textArea.value;
             var dateOfCreation=new Date();
             var idautore=localStorage.UID;
@@ -267,16 +358,6 @@ app.controller("CreateStoryCtrl", ["$scope",
             var author=nomeAutore+" "+cognomeAutore;
             var storyID=author+"_"+title+"_"+subtitle;
             var imgCre=localStorage.attImageProfile;
-
-            var contStorie = parseInt(localStorage.attContSto);
-            contStorie++;
-            localStorage.attContSto=contStorie;
-
-            var userRef = new Firebase("https://twps.firebaseio.com/users");
-            var attUserRef = userRef.child(localStorage.UID);
-            attUserRef.update({
-                countStories: parseInt(localStorage.attContSto)
-            });
 
             storyRef.child(storyID).set({
                 titolo: title,
@@ -292,9 +373,21 @@ app.controller("CreateStoryCtrl", ["$scope",
                     total: 0,
                     votes: 0
                 }
+            }).then(function(){
+                var contStorie = parseInt(localStorage.attContSto);
+                contStorie++;
+                localStorage.attContSto=contStorie;
+
+                var userRef = new Firebase("https://twps.firebaseio.com/users");
+                var attUserRef = userRef.child(localStorage.UID);
+                attUserRef.update({
+                    countStories: parseInt(localStorage.attContSto)
+                });
+            }).then(function(){
+                location.href="../userPage/userWork.html";
             });
 
-            location.href="../userPage/userWork.html";
+
         }
 
 
@@ -375,24 +468,44 @@ app.controller("WorkCtrl", ["$scope", "$firebaseArray",
     var queryStories=workRef.orderByChild("idautore").equalTo(usID);
     $scope.filterStories=$firebaseArray(queryStories);
     var listStories=$scope.filterStories;
+    listStories.$loaded().then(function(){
+        if($scope.filterStories.length!==0){
+            document.getElementById("userStoriesDiv").style.display="block";
+        }
+    });
 
     var comicRef=new Firebase("https://twps.firebaseio.com/comics");
     $scope.comics=$firebaseArray(comicRef);
     var queryComics=comicRef.orderByChild("idautore").equalTo(usID);
     $scope.filterComics=$firebaseArray(queryComics);
     var listComics=$scope.filterComics;
+    listComics.$loaded().then(function () {
+        if(listComics.length!==0){
+            document.getElementById("userComicsDiv").style.display="block";
+        }
+    });
 
     var projectRef=new Firebase("https://twps.firebaseio.com/projects");
     $scope.projects=$firebaseArray(projectRef);
     var queryProjects=projectRef.orderByChild("idautore").equalTo(usID);
     $scope.filterProjects=$firebaseArray(queryProjects);
     var listProjects=$scope.filterProjects;
+    listProjects.$loaded().then(function () {
+        if(listProjects.length!==0){
+            document.getElementById("userProjectsDiv").style.display="block";
+        }
+    });
 
     var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
     $scope.reviews=$firebaseArray(reviewRef);
     var queryReviews=reviewRef.orderByChild("idautore").equalTo(usID);
     $scope.filterReviews=$firebaseArray(queryReviews);
     var listReviews=$scope.filterReviews;
+    listReviews.$loaded().then(function () {
+        if(listReviews.length!==0){
+            document.getElementById("userReviewsDiv").style.display="block";
+        }
+    });
 
     $scope.getTheStory=function($index) {
         var n=$index;
@@ -407,7 +520,7 @@ app.controller("WorkCtrl", ["$scope", "$firebaseArray",
         var item = listComics[n];
         localStorage.comicReadID=item.$id;
         console.log(localStorage.comicReadID);
-        //location.href="selectedComic.html";
+        location.href="selectedComic.html";
     };
 
     $scope.getTheProject=function($index) {
@@ -415,19 +528,19 @@ app.controller("WorkCtrl", ["$scope", "$firebaseArray",
         var item = listProjects[n];
         localStorage.projectReadID=item.$id;
         console.log(localStorage.projectReadID);
-        //location.href="selectedProject.html";
-    };
-
-    $scope.getTheReview=function($index) {
-        var n=$index;
-        var item = listReviews[n];
-        localStorage.reviewReadID=item.$id;
-        console.log(localStorage.reviewReadID);
-        //location.href="selectedReview.html";
+        location.href="selectedProject.html";
     };
 
     $scope.openTextEditor=function(){
         location.href="../createText/textEditor.html";
+    };
+        
+    $scope.openComicEditor=function () {
+        location.href="../createComic/createComic.html";
+    };
+
+    $scope.openProjectEditor=function(){
+        location.href="../createProject/createProject.html";
     }
 
 }]);
@@ -458,9 +571,16 @@ app.controller("attStoryCtrl", ["$scope", "$firebaseObject",
             text = text.replace(/\n/gi, "<br />");
             document.getElementById('testoStory').innerHTML = text;
 
-            if(localStorage.attIdAutore===localStorage.UID){
-                document.getElementById("ratingContainer").style.display="none";
-                document.getElementById("reviewContainer").style.display="none";
+            if(localStorage.attIdAutore!==localStorage.UID){
+                document.getElementById("ratingContainer").style.display="block";
+                document.getElementById("reviewContainer").style.display="block";
+            }
+
+            document.getElementById("selectedStoryContent").style.display="block";
+
+            $scope.getTheAuthor=function(){
+                localStorage.storyOfThisIdAutore=localStorage.attIdAutore;
+
             }
         });
 
@@ -502,6 +622,8 @@ app.controller("attStoryCtrl", ["$scope", "$firebaseObject",
 
     }]);
 
+
+
 app.controller("attStoryReviewCtrl", ["$scope", "$firebaseArray",
     function($scope, $firebaseArray){
         var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
@@ -535,15 +657,6 @@ app.controller("newReviewCtrl", ["$scope",
             var titoloRecensione=document.getElementById("titoloReview").value;
             var idRecensione=authorxid+"_"+titoloRecensione+"_"+"recensione di:"+idStoria;
 
-            var contRecensioni = parseInt(localStorage.attContRev);
-            contRecensioni++;
-            localStorage.attContRev=contRecensioni;
-
-            var userRef = new Firebase("https://twps.firebaseio.com/users");
-            var attUserRef = userRef.child(localStorage.UID);
-            attUserRef.update({
-                countReviews: parseInt(localStorage.attContRev)
-            });
 
             reviewRef.child(idRecensione).set({
                 titolo: titoloRecensione,
@@ -555,83 +668,771 @@ app.controller("newReviewCtrl", ["$scope",
                 titoloStoria: titleStoria,
                 sottotitoloStoria: subtitleStoria,
                 autoreStoria: authorStoria
+            }).then(function(){
+                var contRecensioni = parseInt(localStorage.attContRev);
+                contRecensioni++;
+                localStorage.attContRev=contRecensioni;
+
+                var userRef = new Firebase("https://twps.firebaseio.com/users");
+                var attUserRef = userRef.child(localStorage.UID);
+                attUserRef.update({
+                    countReviews: parseInt(localStorage.attContRev)
+                });
+            }).then(function(){
+                location.href="selectedStory.html";
             })
         }
     }
 ]);
 
-app.controller("modificaProfiloCtrl", ["$scope",
-    function($scope){
+
+
+
+
+app.controller("SearchCtrl", ["$scope", "$firebaseArray", 
+    function($scope, $firebaseArray){
+        var searchCat=document.getElementById("searchCarat").value;
+        console.log(searchCat);
+
+        $scope.search=function(){
+            var searchCat=document.getElementById("searchCarat").value;
+            var searchVal=document.getElementById("searchCampo").value;
+
+            var storyRef=new Firebase("https://twps.firebaseio.com/stories");
+            var comicRef=new Firebase("https://twps.firebaseio.com/comics");
+            var projectRef=new Firebase("https://twps.firebaseio.com/projects");
+
+            $scope.stories=$firebaseArray(storyRef);
+            var queryStories=storyRef.orderByChild(searchCat).equalTo(searchVal);
+            $scope.filterStories=$firebaseArray(queryStories);
+            var listStories=$scope.filterStories;
+
+            $scope.comics=$firebaseArray(comicRef);
+            var queryComics=comicRef.orderByChild(searchCat).equalTo(searchVal);
+            $scope.filterComics=$firebaseArray(queryComics);
+            var listComics=$scope.filterComics;
+            
+            $scope.projects=$firebaseArray(projectRef);
+            var queryProjects=projectRef.orderByChild(searchCat).equalTo(searchVal);
+            $scope.filterProjects=$firebaseArray(queryProjects);
+            var listProjects=$scope.filterProjects;
+
+            $scope.getTheStory=function($index) {
+                var n=$index;
+                var item = listStories[n];
+                localStorage.storyReadID=item.$id;
+                console.log(localStorage.storyReadID);
+                location.href="selectedStory.html";
+            };
+
+            $scope.getTheComic=function($index) {
+                var n=$index;
+                var item = listComics[n];
+                localStorage.comicReadID=item.$id;
+                console.log(localStorage.comicReadID);
+                location.href="selectedComic.html";
+            };
+
+            $scope.getTheProject=function($index) {
+                var n=$index;
+                var item = listProjects[n];
+                localStorage.projectReadID=item.$id;
+                console.log(localStorage.projectReadID);
+                location.href="selectedProject.html";
+            };
+        };
+
+    }
+]);
+
+app.controller("attAuthorCtrl", ["$scope", "$firebaseObject",
+    function ($scope, $firebaseObject) {
         var ref=new Firebase("https://twps.firebaseio.com/users");
-        var path=ref.child(localStorage.UID);
 
-        var attNome=localStorage.attNome;
-        var attCognome=localStorage.attCognome;
-        var attDOB=localStorage.attDOB;
+        var USRID=localStorage.storyOfThisIdAutore;
+        console.log(USRID);
+        var obj = $firebaseObject(ref.child(USRID));
+        console.log(obj);
+        obj.$loaded().then(function() {
+            $scope.profile=obj;
+            console.log(obj.nome);
+            document.getElementById("selectedAuthorContent").style.display="block";
+        });
+    }
+]);
 
-        document.getElementById("modnom").placeholder=attNome;
-        document.getElementById("modcog").placeholder=attCognome;
-        document.getElementById("modDOB").placeholder=attDOB;
-
-        console.log(attNome+" "+attCognome+" "+attDOB);
-
-        
-        $scope.updateProfile=function(){
-
-            var newNome=document.getElementById("modnom").value;
-            var newCognome=document.getElementById("modcog").value;
-            var newDOB=document.getElementById("modDOB").value;
-            var newTOP=document.getElementById("modTOP").value;
-
-            if(newNome===""){
-                newNome=localStorage.attNome;
+app.controller("attAuthorWorkCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var workRef=new Firebase("https://twps.firebaseio.com/stories");
+        $scope.stories=$firebaseArray(workRef);
+        var USRID=localStorage.storyOfThisIdAutore;
+        var queryStories=workRef.orderByChild("idautore").equalTo(USRID);
+        $scope.filterStories=$firebaseArray(queryStories);
+        var listStories=$scope.filterStories;
+        listStories.$loaded().then(function(){
+            if($scope.filterStories.length!==0){
+                document.getElementById("storieAutoreSelezionato").style.display="block";
             }
+        });
 
-            if(newCognome===""){
-                newCognome=localStorage.attCognome;
+
+        var comicRef=new Firebase("https://twps.firebaseio.com/comics");
+        $scope.comics=$firebaseArray(comicRef);
+        var queryComics=comicRef.orderByChild("idautore").equalTo(USRID);
+        $scope.filterComics=$firebaseArray(queryComics);
+        var listComics=$scope.filterComics;
+        listComics.$loaded().then(function () {
+            if(listComics.length!==0){
+                document.getElementById("fumettiAutoreSelezionato").style.display="block";
             }
+        });
 
-            if(newDOB===""){
-                newDOB=localStorage.attDOB;
+
+        var projectRef=new Firebase("https://twps.firebaseio.com/projects");
+        $scope.projects=$firebaseArray(projectRef);
+        var queryProjects=projectRef.orderByChild("idautore").equalTo(USRID);
+        $scope.filterProjects=$firebaseArray(queryProjects);
+        var listProjects=$scope.filterProjects;
+        listProjects.$loaded().then(function () {
+            if(listProjects.length!==0){
+                document.getElementById("progettiAutoreSelezionato").style.display="block";
             }
+        });
 
-            path.update({
-                nome: newNome,
-                cognome: newCognome,
-                dateOfBirth: newDOB,
-                typeOfUser: newTOP
-            });
-            location.href="../userPage/userPage.html";
+
+        var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
+        $scope.reviews=$firebaseArray(reviewRef);
+        var queryReviews=reviewRef.orderByChild("idautore").equalTo(USRID);
+        $scope.filterReviews=$firebaseArray(queryReviews);
+        var listReviews=$scope.filterReviews;
+        listReviews.$loaded().then(function () {
+            if(listReviews.length!==0){
+                document.getElementById("recensioniAutoreSelezionato").style.display="block";
+            }
+        });
+
+
+        $scope.getTheStory=function($index) {
+            var n=$index;
+            var item = listStories[n];
+            localStorage.storyReadID=item.$id;
+            console.log(localStorage.storyReadID);
+            location.href="selectedStory.html";
+        };
+
+        $scope.getTheComic=function($index) {
+            var n=$index;
+            var item = listComics[n];
+            localStorage.comicReadID=item.$id;
+            console.log(localStorage.comicReadID);
+            location.href="selectedComic.html";
+        };
+
+        $scope.getTheProject=function($index) {
+            var n=$index;
+            var item = listProjects[n];
+            localStorage.projectReadID=item.$id;
+            console.log(localStorage.projectReadID);
+            location.href="selectedProject.html";
+        };
+
+    }]);
+
+app.controller("createComicCtrl", ["$scope",
+    function($scope){
+        var comicRef=new Firebase("https://twps.firebaseio.com/comics");
+
+        $scope.createNewComic = function () {
+            $scope.message = null;
+            $scope.error = null;
+            var title=document.getElementById("titoloFumetto").value;
+            var subtitle=document.getElementById("sottotitoloFumetto").value;
+            var genre=document.getElementById("genereFumetto").value;
+            var dateOfCreation=new Date();
+            var idAutore=localStorage.UID;
+            var nomeAutore=localStorage.attNome;
+            var cognomeAutore=localStorage.attCognome;
+            var author=nomeAutore+" "+cognomeAutore;
+            var comicID=author+"_"+title+"_"+subtitle;
+            localStorage.comicInProgressID=comicID;
+            var imgCre=localStorage.attImageProfile;
+
+
+
+            comicRef.child(comicID).set({
+                titolo: title,
+                sottotitolo: subtitle,
+                genere: genre,
+                dataDiCreazione: dateOfCreation,
+                idautore: idAutore,
+                autore:author,
+                imageOfCreator: imgCre,
+                rating: {
+                    value: 0,
+                    total: 0,
+                    votes: 0
+                }
+
+            }).then(function () {
+                var contFumetti = parseInt(localStorage.attContCom);
+                contFumetti++;
+                localStorage.attContCom=contFumetti;
+
+                var userRef = new Firebase("https://twps.firebaseio.com/users");
+                var attUserRef = userRef.child(localStorage.UID);
+                attUserRef.update({
+                    countComics: parseInt(localStorage.attContCom)
+                });
+            }).then(function () {
+                document.getElementById("imagesInputContainer").style.display="block";
+            })
 
         };
 
     }
-
 ]);
 
-app.controller("caricaImmagineCtrl", ["$scope", "Upload",
+app.controller("addComicPagesCtrl", ["$scope", "Upload",
     function($scope, Upload){
-        $scope.add = function () {
+        var CID=localStorage.comicInProgressID;
+
+        $scope.add1 = function () {
             console.log($scope.user.img);
         };
 
-        $scope.addImgProfile = function () {
-
-
+        $scope.addPagina1 = function () {
             Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
                 var imgData = base64Url;
-                var ref=new Firebase("https://twps.firebaseio.com/users");
-                var path=ref.child(localStorage.UID);
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
                 path.update({
-                    imageProfile: imgData
+                    pagina1: imgData
+                }).then(function () {
+                    document.getElementById("formPagina2").style.display="block";
                 });
-                location.href="../userPage/userPage.html";
             });
 
         };
+
+        $scope.add2 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina2 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina2: imgData
+                }).then(function () {
+                    document.getElementById("formPagina3").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add3 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina3 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina3: imgData
+                }).then(function () {
+                    document.getElementById("formPagina4").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add4 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina4 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina4: imgData
+                }).then(function () {
+                    document.getElementById("formPagina5").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add5 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina5 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina5: imgData
+                }).then(function () {
+                    document.getElementById("formPagina6").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add6 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina6 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina6: imgData
+                }).then(function () {
+                    document.getElementById("formPagina7").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add7 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina7 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina7: imgData
+                }).then(function () {
+                    document.getElementById("formPagina8").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add8 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina8 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina8: imgData
+                }).then(function () {
+                    document.getElementById("formPagina9").style.display="block";
+                });
+            });
+
+        };
+        $scope.add9 = function () {
+            console.log($scope.user.img);
+        };
+
+        $scope.addPagina9 = function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
+                var path=ref.child(CID);
+                path.update({
+                    pagina9: imgData
+                }).then(function () {
+                    document.getElementById("formPagina10").style.display="block";
+                });
+            });
+
+        };
+
+        $scope.add10 = function () {
+            console.log($scope.user.img);
+        };
+        
+        $scope.salvaFumetto=function () {
+            Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                var imgData = base64Url;
+                var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var path=ref.child(CID);
+                path.update({
+                    paginaFinale: imgData
+                }).then(function () {
+                   location.href="../userPage/userWork.html";
+                });
+            });
+        }
+
+
     }
 ]);
 
+app.controller("attComicCtrl", ["$scope", "$firebaseObject",
+    function($scope, $firebaseObject){
+        var ref=new Firebase("https://twps.firebaseio.com/comics");
+
+        var CID=localStorage.comicReadID;
+        console.log(CID);
+        var obj = $firebaseObject(ref.child(CID));
+        obj.$loaded().then(function() {
+            $scope.attComic=obj;
+            console.log(obj.titolo);
+            localStorage.attComTitolo=obj.titolo;
+            localStorage.attComSottotitolo=obj.sottotitolo;
+            localStorage.attComAutore=obj.autore;
+            localStorage.attComGenere=obj.genere;
+            localStorage.attComVotes=obj.rating.votes;
+            localStorage.attComTotal=obj.rating.total;
+            localStorage.attComValue=obj.rating.value;
+            localStorage.attIdAutore=obj.idautore;
+            localStorage.attImageCreator=obj.imageOfCreator;
+
+            if(obj.pagina1!==null){
+                document.getElementById("attComicPage1").style.display="block";
+            }
+
+            if(obj.pagina2!==null){
+                document.getElementById("attComicPage2").style.display="block";
+            }
+
+            if(obj.pagina3!==null){
+                document.getElementById("attComicPage3").style.display="block";
+            }
+
+            if(obj.pagina4!==null){
+                document.getElementById("attComicPage4").style.display="block";
+            }
+
+            if(obj.pagina5!==null){
+                document.getElementById("attComicPage5").style.display="block";
+            }
+
+            if(obj.pagina6!==null){
+                document.getElementById("attComicPage6").style.display="block";
+            }
+
+            if(obj.pagina7!==null){
+                document.getElementById("attComicPage7").style.display="block";
+            }
+
+            if(obj.pagina8!==null){
+                document.getElementById("attComicPage8").style.display="block";
+            }
+
+            if(obj.pagina9!==null){
+                document.getElementById("attComicPage9").style.display="block";
+            }
+
+            if(obj.paginaFinale!==null){
+                document.getElementById("attComicPage10").style.display="block";
+            }
+
+            if(localStorage.attIdAutore!==localStorage.UID){
+                document.getElementById("ratingComicContainer").style.display="block";
+                document.getElementById("reviewComicContainer").style.display="block";
+            }
+
+            $scope.getTheAuthor=function(){
+                localStorage.storyOfThisIdAutore=localStorage.attIdAutore;
+
+            }
+        });
+
+        $scope.check=function(val){
+            localStorage.setItem("numStars", val);
+            $scope.checkStars();
+        };
+
+        $scope.checkStars=function(){
+            var st = localStorage.getItem("numStars");
+            var num = "star-" + st;
+            document.getElementById(num).checked=true;
+        };
+
+        $scope.updateRating=function(){
+            var comicID=localStorage.comicReadID;
+            var pathST = ref.child(comicID);
+            var n=parseInt(localStorage.getItem("numStars"));
+            var AttTotal = parseInt(localStorage.attComTotal);
+            var AttVotes = parseInt(localStorage.attComVotes);
+
+            var newTotal=AttTotal+n;
+            var newVotes=AttVotes+1;
+            var newValue=newTotal/newVotes;
+
+            localStorage.attComVotes=newVotes;
+            localStorage.attComTotal=newTotal;
+            localStorage.attComValue=newValue;
+
+            pathST.update({
+                rating: {
+                    value: newValue,
+                    votes: newVotes,
+                    total: newTotal
+                }
+            });
+
+        }
+    }
+]);
+
+app.controller("newReviewComicCtrl", ["$scope",
+    function ($scope) {
+        var reviewRef = new Firebase("https://twps.firebaseio.com/reviews");
+
+        $scope.createReview=function(){
+            $scope.message = null;
+            $scope.error = null;
+
+            var textArea=document.getElementById('newReview');
+            var recensione=textArea.value;
+            var dateOfCreation=new Date();
+            var idAutore=localStorage.UID;
+            var nomeAutore=localStorage.attNome;
+            var cognomeAutore=localStorage.attCognome;
+            var author=nomeAutore+" "+cognomeAutore;
+            var authorxid=nomeAutore+"_"+cognomeAutore;
+            var idComic=localStorage.comicReadID;
+            var titleStoria=localStorage.attComTitolo;
+            var subtitleStoria=localStorage.attComSottotitolo;
+            var authorStoria=localStorage.attComAutore;
+            var titoloRecensione=document.getElementById("titoloReview").value;
+            var idRecensione=authorxid+"_"+titoloRecensione+"_"+"recensione di:"+idStoria;
 
 
+            reviewRef.child(idRecensione).set({
+                titolo: titoloRecensione,
+                autore: author,
+                idcomic: idComic,
+                testo: recensione,
+                idautore: idAutore,
+                dataDiCreazione: dateOfCreation,
+                titoloStoria: titleStoria,
+                sottotitoloStoria: subtitleStoria,
+                autoreStoria: authorStoria
+            }).then(function(){
+                var contRecensioni = parseInt(localStorage.attContRev);
+                contRecensioni++;
+                localStorage.attContRev=contRecensioni;
 
+                var userRef = new Firebase("https://twps.firebaseio.com/users");
+                var attUserRef = userRef.child(localStorage.UID);
+                attUserRef.update({
+                    countReviews: parseInt(localStorage.attContRev)
+                });
+            }).then(function(){
+                location.href="selectedProject.html";
+            })
+        }
+    }
+]);
+
+app.controller("attComicReviewCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
+        $scope.reviews=$firebaseArray(reviewRef);
+        var CID=localStorage.comicReadID;
+        var queryReviews=reviewRef.orderByChild("idcomic").equalTo(CID).limitToLast(5);
+        $scope.filterReviews=$firebaseArray(queryReviews);
+    }
+]);
+
+app.controller("createProjectCtrl", ["$scope", 
+    function($scope){
+        var proRef=new Firebase("https://twps.firebaseio.com/projects");
+        
+        $scope.createNewProject=function(){
+            $scope.message = null;
+            $scope.error = null;
+            var titPro=document.getElementById("titoloProgetto").value;
+            var tipPro=document.getElementById("tipoProgetto").value;
+            var text=document.getElementById("soggettoProgetto");
+            var sogPro=text.value;
+            var idAutore=localStorage.UID;
+            var nomeAutore=localStorage.attNome;
+            var cognomeAutore=localStorage.attCognome;
+            var author=nomeAutore+" "+cognomeAutore;
+            var projectID=author+"_"+title+"_"+subtitle;
+            var imgCre=localStorage.attImageProfile;
+
+            proRef.child(projectID).set({
+                titolo: titPro,
+                tipologiaDelProgetto: tipPro,
+                soggetto: sogPro,
+                idautore: idAutore,
+                autore: author,
+                imageOfCreator: imgCre,
+                partecipanti: author
+            })
+        }
+    }
+]);
+
+app.controller("attProjectCtrl", ["$scope", "$firebaseObject",
+    function($scope, $firebaseObject){
+        var ref=new Firebase("https://twps.firebaseio.com/projects");
+
+        var PID=localStorage.projectReadID;
+        console.log(PID);
+        var obj = $firebaseObject(ref.child(PID));
+        obj.$loaded().then(function() {
+            $scope.attProject=obj;
+            console.log(obj.titolo);
+            localStorage.attProTitolo=obj.titolo;
+            localStorage.attProAutore=obj.autore;
+            localStorage.attProTipo=obj.tipologiaDelProgetto;
+            localStorage.attProVotes=obj.rating.votes;
+            localStorage.attProTotal=obj.rating.total;
+            localStorage.attProValue=obj.rating.value;
+            localStorage.attIdAutore=obj.idautore;
+            localStorage.attProSoggetto=obj.soggetto;
+            localStorage.attImageCreator=obj.imageOfCreator;
+            localStorage.attProPartecipanti=obj.partecipanti;
+
+            var text=localStorage.attProSoggetto;
+            text = text.replace(/\n/gi, "<br />");
+            document.getElementById('testoProject').innerHTML = text;
+
+            if(localStorage.attIdAutore!==localStorage.UID){
+                document.getElementById("ratingContainer").style.display="block";
+                document.getElementById("reviewContainer").style.display="block";
+            }
+
+            document.getElementById("selectedProjectContent").style.display="block";
+
+            $scope.getTheAuthor=function(){
+                localStorage.storyOfThisIdAutore=localStorage.attIdAutore;
+
+            }
+        });
+
+        $scope.partecipa=function(){
+            var proRef=new Firebase("https://twps.firebaseio.com/projects");
+            var PID=localStorage.projectReadID;
+            var oldPart=localStorage.attProPartecipanti;
+            var newPart=oldPart+", "+localStorage.attNome+" "+localStorage.attCognome;
+            if(localStorage.UID!==localStorage.attIdAutore){
+                proRef.child(PID).update({
+                    partecipanti: newPart
+                })
+            }
+        };
+
+        $scope.check=function(val){
+            localStorage.setItem("numStars", val);
+            $scope.checkStars();
+        };
+
+        $scope.checkStars=function(){
+            var st = localStorage.getItem("numStars");
+            var num = "star-" + st;
+            document.getElementById(num).checked=true;
+        };
+
+        $scope.updateRating=function(){
+            var projectID=localStorage.projectReadID;
+            var pathST = ref.child(projectID);
+            var n=parseInt(localStorage.getItem("numStars"));
+            var AttTotal = parseInt(localStorage.attProTotal);
+            var AttVotes = parseInt(localStorage.attProVotes);
+
+            var newTotal=AttTotal+n;
+            var newVotes=AttVotes+1;
+            var newValue=newTotal/newVotes;
+
+            localStorage.attProVotes=newVotes;
+            localStorage.attProTotal=newTotal;
+            localStorage.attProValue=newValue;
+
+            pathST.update({
+                rating: {
+                    value: newValue,
+                    votes: newVotes,
+                    total: newTotal
+                }
+            });
+
+        }
+
+}]);
+
+app.controller("newReviewProjectCtrl", ["$scope",
+    function ($scope) {
+        var reviewRef = new Firebase("https://twps.firebaseio.com/reviews");
+
+        $scope.createReview=function(){
+            $scope.message = null;
+            $scope.error = null;
+
+            var textArea=document.getElementById('newReview');
+            var recensione=textArea.value;
+            var dateOfCreation=new Date();
+            var idAutore=localStorage.UID;
+            var nomeAutore=localStorage.attNome;
+            var cognomeAutore=localStorage.attCognome;
+            var author=nomeAutore+" "+cognomeAutore;
+            var authorxid=nomeAutore+"_"+cognomeAutore;
+            var idProgetto=localStorage.projectReadID;
+            var titleStoria=localStorage.attProTitolo;
+            var subtitleStoria=localStorage.attProTipo;
+            var authorStoria=localStorage.attProAutore;
+            var titoloRecensione=document.getElementById("titoloReview").value;
+            var idRecensione=authorxid+"_"+titoloRecensione+"_"+"recensione di:"+idStoria;
+
+
+            reviewRef.child(idRecensione).set({
+                titolo: titoloRecensione,
+                autore: author,
+                idprogetto: idProgetto,
+                testo: recensione,
+                idautore: idAutore,
+                dataDiCreazione: dateOfCreation,
+                titoloStoria: titleStoria,
+                sottotitoloStoria: subtitleStoria,
+                autoreStoria: authorStoria
+            }).then(function(){
+                var contRecensioni = parseInt(localStorage.attContRev);
+                contRecensioni++;
+                localStorage.attContRev=contRecensioni;
+
+                var userRef = new Firebase("https://twps.firebaseio.com/users");
+                var attUserRef = userRef.child(localStorage.UID);
+                attUserRef.update({
+                    countReviews: parseInt(localStorage.attContRev)
+                });
+            }).then(function(){
+                location.href="selectedProject.html";
+            })
+        }
+    }
+]);
+
+app.controller("attProjectReviewCtrl", ["$scope", "$firebaseArray",
+    function($scope, $firebaseArray){
+        var reviewRef=new Firebase("https://twps.firebaseio.com/reviews");
+        $scope.reviews=$firebaseArray(reviewRef);
+        var PID=localStorage.projectReadID;
+        var queryReviews=reviewRef.orderByChild("idprogetto").equalTo(PID).limitToLast(5);
+        $scope.filterReviews=$firebaseArray(queryReviews);
+    }
+]);

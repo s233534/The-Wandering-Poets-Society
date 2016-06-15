@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>TWPS- Modifica Account</title>
+    <title>TWPS- Cerca</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -21,6 +21,7 @@
     <script src="../TWPSapp.js"></script>
     <script src="../login/login.js"></script>
     <script src="../createText/textEditor.js"></script>
+
     <style>
         /* Set black background color, white text and some padding */
         body{
@@ -33,7 +34,7 @@
         }
     </style>
 </head>
-<body ng-app="twpsApp" ng-controller="CreateUserCtrl">
+<body ng-app="twpsApp" ng-controller="SearchCtrl">
     <header>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -47,11 +48,11 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="../userPage/userPage.html">La mia pagina</a></li>
-                        <li><a href="../userPage/userWork.html">I miei lavori</a></li>
-                        <li><a href="../userPage/Biblioteca.html">Biblioteca</a></li>
-                        <li><a href="../userPage/Fumetteria.html">Fumetteria</a></li>
-                        <li><a href="../userPage/Archivio.html">Archivio</a></li>
+                        <li><a href="userPage.html">La mia pagina</a></li>
+                        <li><a href="userWork.html">I miei lavori</a></li>
+                        <li><a href="Biblioteca.html">Biblioteca</a></li>
+                        <li><a href="Fumetteria.html">Fumetteria</a></li>
+                        <li><a href="Archivio.html">Archivio</a></li>
                     </ul>
                     <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
                         <button class="btn btn-link" style="color: white" ng-click="logout()">
@@ -65,34 +66,36 @@
 
     </header>
 
-    <div class="container">
-        <h3 style="color: lightgrey">Modifica la tua mail</h3>
-        <div class="form-group">
-            <input class="form-control"  type="text" id="newEmail" placeholder="Nuova Email">
-            <br>
-            <input class="form-control" type="password" id="confirmMailPassword" placeholder="Password">
+    <div class="container" id="searchContainer">
+        <div class="form-group form-inline">
+            <label id="etichettaSearch" style="color: lightgrey">Cerca per </label>
+            <select class="form-control" id="searchCarat" style="width: 300px">
+                <option value="titolo">Titolo</option>
+                <option value="autore">Autore</option>
+                <option value="genere">Genere</option>
+            </select>
+            <input class="form-control" placeholder="Cerca" id="searchCampo" style="width: 500px; margin-left: 20px">
+            <button class="btn btn-default" id="buttonSearch" ng-click="search()"><span class="glyphicon glyphicon-search"></span></button>
         </div>
-        <br>
-        <button class="btn btn-default" ng-click="changeEmail()">Modifica l'Email</button>
     </div>
 
     <div class="container">
-        <h3 style="color: lightgrey">Modifica la tua password</h3>
-        <div class="form-group">
-            <input class="form-control"  type="password" id="oldPassword" placeholder="Vecchia Password">
-            <br>
-            <input class="form-control" type="password" id="newPassword" placeholder="Nuova Password">
-            <br>
-            <input class="form-control" type="password" id="confirmNewPassword" placeholder="Conferma Nuova Password">
-        </div>
-        <br>
-        <button class="btn btn-default" ng-click="changePassword()">Modifica la Password</button>
-    </div>
-
-    <div class="container">
-        <h3 style="color: lightgrey">Cancella il tuo profilo</h3>
-        <br>
-        <button class="btn btn-default" ng-click="removeUser()">Cancella</button>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="story in filterStories track by $index">
+                <button class="btn btn-link" ng-click="getTheStory($index)" style="color: black">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</button>
+            </li>
+            <!-- <li ng-repeat="story in stories">{{story.autore}}: {{story.titolo}}- {{story.sottotitolo}}</li> -->
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="comic in filterComics track by $index">
+                <button class="btn btn-link" ng-click="getTheComic($index)" style="color: black">{{comic.autore}}: {{comic.titolo}}- {{comic.sottotitolo}}</button>
+            </li>
+        </ul>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="project in filterProjects track by $index">
+                <button class="btn btn-link" ng-click="getTheProject($index)" style="color: black">{{project.autore}}: {{project.titolo}}- {{project.sottotitolo}}</button>
+            </li>
+        </ul>
     </div>
 
 </body>
