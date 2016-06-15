@@ -29,48 +29,56 @@ app.controller("CreateUserCtrl", ["$scope", "Auth", "Upload",
             $scope.error = null;
             var Email = document.getElementById('mail').value;
             var pwd = document.getElementById('pass').value;
+            var confPwd=document.getElementById('confpass').value;
 
-            Auth.$createUser({
-                email: Email,
-                password: pwd
-            }).then(function (userData) {
-                $scope.message = "User created with uid: " + userData.uid;
-                localStorage.UID = userData.uid;
-                console.log(userData.uid);
+            if(pwd!==confPwd){
+                document.getElementById('confpass').style.borderStyle="solid";
+                document.getElementById('confpass').style.borderColor="red";
+                document.getElementById('passwordSbagliata').style.display="block";
+            }else{
+                Auth.$createUser({
+                    email: Email,
+                    password: pwd
+                }).then(function (userData) {
+                    $scope.message = "User created with uid: " + userData.uid;
+                    localStorage.UID = userData.uid;
+                    console.log(userData.uid);
 
-                var Email = document.getElementById('mail').value;
-                var pwd = document.getElementById('pass').value;
-                var firstName = document.getElementById('nom').value;
-                var lastName = document.getElementById('cog').value;
-                var cat = document.getElementById('usCat').value;
-                var dob = document.getElementById('DOB').value;
-                var pathUsers = new Firebase("https://twps.firebaseio.com/users");
-                var attualUID = localStorage.UID;
-                Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
-                    localStorage.passImg = base64Url;
-                }).then(function(){
-                    var imgP=localStorage.passImg;
-
-                    pathUsers.child(attualUID).set({
-                        nome: firstName,
-                        cognome: lastName,
-                        email: Email,
-                        password: pwd,
-                        typeOfUser: cat,
-                        countStories: 0,
-                        countComics: 0,
-                        countReviews: 0,
-                        level: "Discepolo",
-                        dateOfBirth: dob,
-                        imageProfile: imgP
+                    var Email = document.getElementById('mail').value;
+                    var pwd = document.getElementById('pass').value;
+                    var firstName = document.getElementById('nom').value;
+                    var lastName = document.getElementById('cog').value;
+                    var cat = document.getElementById('usCat').value;
+                    var dob = document.getElementById('DOB').value;
+                    var pathUsers = new Firebase("https://twps.firebaseio.com/users");
+                    var attualUID = localStorage.UID;
+                    Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
+                        localStorage.passImg = base64Url;
                     }).then(function(){
-                        location.href = "login.html";
-                    });
+                        var imgP=localStorage.passImg;
 
+                        pathUsers.child(attualUID).set({
+                            nome: firstName,
+                            cognome: lastName,
+                            email: Email,
+                            password: pwd,
+                            typeOfUser: cat,
+                            countStories: 0,
+                            countComics: 0,
+                            countReviews: 0,
+                            level: "Discepolo",
+                            dateOfBirth: dob,
+                            imageProfile: imgP
+                        }).then(function(){
+                            location.href = "login.html";
+                        });
+
+                    });
+                }).catch(function (error) {
+                    $scope.error = error;
+                    document.getElementById("iscrizioneFallita").style.display="block";
                 });
-            }).catch(function (error) {
-                $scope.error = error;
-            });
+            }
         };
 
         $scope.removeUser = function(){
