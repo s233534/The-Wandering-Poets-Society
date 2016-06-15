@@ -32,6 +32,11 @@
         padding: 15px;
     }
 </style>
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
 <body ng-app="twpsApp" ng-controller="attStoryCtrl">
 <header>
     <nav class="navbar navbar-inverse">
@@ -103,7 +108,7 @@
     <div class="container" id="reviewContainer" ng-controller="newReviewCtrl" style="display: none">
         <form role="form">
             <div class="form-group">
-                <input class="form-control" id="titoloReview" placeholder="Titolo">
+                <input class="form-control" id="titoloReview" data-toggle="tooltip" title="Non deve contenere questi caratteri: ., #, $, [ o ]" placeholder="Titolo">
                 <br>
                 <textarea class="form-control" name="newReview" id="newReview" placeholder="Scrivi la tua recensione..."></textarea>
             </div>

@@ -33,6 +33,11 @@
     }
 </style>
 <body ng-app="twpsApp" ng-controller="createProjectCtrl">
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
     <header>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -68,12 +73,12 @@
         <form class="form-horizontal">
             <div class="form-group">
                 <div class="col-md-12">
-                    <input class="form-control" id="titoloProgetto" placeholder="Titolo del progetto">
+                    <input class="form-control" id="titoloProgetto" data-toggle="tooltip" title="Non deve contenere questi caratteri: ., #, $, [ o ]" placeholder="Titolo del progetto">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
-                    <input class="form-control" id="tipoProgetto" placeholder="Tipo del progetto">
+                    <input class="form-control" id="tipoProgetto" data-toggle="tooltip" title="Non deve contenere questi caratteri: ., #, $, [ o ]" placeholder="Tipo del progetto">
                 </div>
             </div>
         </form>

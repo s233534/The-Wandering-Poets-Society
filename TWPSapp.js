@@ -173,8 +173,6 @@ app.controller("AuthCtrl", ["$scope", "$firebaseAuth",
         $scope.login = function() {
             var lmail=document.getElementById("logMail").value;
             var lpwd=document.getElementById("logPwd").value;
-            console.log(lmail);
-            console.log(lpwd);
             $scope.authData = null;
             $scope.error = null;
 
