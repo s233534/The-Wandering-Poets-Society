@@ -9,6 +9,8 @@
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="../lib/angularfire.min.js"></script>
+    <script src="../lib/angular.min.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="../lib/bootstrap-3.3.6-dist/css/bootstrap.css">
@@ -33,7 +35,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
+                <a class="navbar-brand" href="../index.html" id="TWPSTasto">TWPS</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
@@ -44,8 +46,8 @@
                     <li><a href="../userPage/Archivio.html">Archivio</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
-                    <button class="btn btn-link" style="color: white" ng-click="logout()">
-                        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                    <button class="btn btn-link" id="logoutButton" ng-click="logout()">
+                        <span class="glyphicon glyphicon-off" id="logoutButtonSpan"></span>
                         Logout
                     </button>
                 </form>
@@ -81,72 +83,90 @@
     <button class="btn btn-default" ng-click="createNewComic()">Aggiungi una pagina</button>
 </div>
 <br><br>
-<div class="container" id="imagesInputContainer" style="display: none" ng-controller="addComicPagesCtrl">
+<div class="container" id="imagesInputContainer" ng-controller="addComicPagesCtrl">
     <form class="form-group">
-        <input style="color: lightgrey" type="file" id="Pagina1" name="pic" ng-model="user.img" accept="image/*" ngf-select="add1()">
+        <input type="file" id="Pagina1" name="pic" ng-model="user.img" accept="image/*" ngf-select="add1()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina1()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina1">
+            <button class="btn btn-default" type="submit" ng-click="addPagina1()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina2" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina2" name="pic" ng-model="user.img" accept="image/*" ngf-select="add2()">
+    <form class="form-group" id="formPagina2">
+        <input type="file" id="Pagina2" name="pic" ng-model="user.img" accept="image/*" ngf-select="add2()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina2()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina2">
+            <button class="btn btn-default" type="submit" ng-click="addPagina2()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina3" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina3" name="pic" ng-model="user.img" accept="image/*" ngf-select="add3()">
+    <form class="form-group" id="formPagina3">
+        <input type="file" id="Pagina3" name="pic" ng-model="user.img" accept="image/*" ngf-select="add3()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina3()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina3">
+            <button class="btn btn-default" type="submit" ng-click="addPagina3()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina4" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina4" name="pic" ng-model="user.img" accept="image/*" ngf-select="add4()">
+    <form class="form-group" id="formPagina4">
+        <input type="file" id="Pagina4" name="pic" ng-model="user.img" accept="image/*" ngf-select="add4()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina4()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina4">
+            <button class="btn btn-default" type="submit" ng-click="addPagina4()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina5" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina5" name="pic" ng-model="user.img" accept="image/*" ngf-select="add5()">
+    <form class="form-group" id="formPagina5">
+        <input type="file" id="Pagina5" name="pic" ng-model="user.img" accept="image/*" ngf-select="add5()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina5()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina5">
+            <button class="btn btn-default" type="submit" ng-click="addPagina5()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina6" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina6" name="pic" ng-model="user.img" accept="image/*" ngf-select="add6()">
+    <form class="form-group" id="formPagina6">
+        <input type="file" id="Pagina6" name="pic" ng-model="user.img" accept="image/*" ngf-select="add6()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina6()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina6">
+            <button class="btn btn-default" type="submit" ng-click="addPagina6()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina7" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina7" name="pic" ng-model="user.img" accept="image/*" ngf-select="add7()">
+    <form class="form-group" id="formPagina7">
+        <input type="file" id="Pagina7" name="pic" ng-model="user.img" accept="image/*" ngf-select="add7()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina7()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina7">
+            <button class="btn btn-default" type="submit" ng-click="addPagina7()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina8" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina8" name="pic" ng-model="user.img" accept="image/*" ngf-select="add8()">
+    <form class="form-group" id="formPagina8">
+        <input type="file" id="Pagina8" name="pic" ng-model="user.img" accept="image/*" ngf-select="add8()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina8()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina8">
+            <button class="btn btn-default" type="submit" ng-click="addPagina8()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina9" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina9" name="pic" ng-model="user.img" accept="image/*" ngf-select="add9()">
+    <form class="form-group" id="formPagina9">
+        <input type="file" id="Pagina9" name="pic" ng-model="user.img" accept="image/*" ngf-select="add9()">
         <br>
-        <button class="btn btn-default" type="submit" ng-click="addPagina9()">Aggiungi una pagina</button>
-        <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        <div id="tastiPagina9">
+            <button class="btn btn-default" type="submit" ng-click="addPagina9()">Aggiungi una pagina</button>
+            <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
+        </div>
     </form>
     <br>
-    <form class="form-group" id="formPagina10" style="display: none">
-        <input style="color: lightgrey" type="file" id="Pagina10" name="pic" ng-model="user.img" accept="image/*" ngf-select="add10()">
+    <form class="form-group" id="formPagina10">
+        <input type="file" id="Pagina10" name="pic" ng-model="user.img" accept="image/*" ngf-select="add10()">
         <br>
         <button class="btn btn-default" type="submit" ng-click="salvaFumetto()">Finisci e salva il fumetto</button>
     </form>

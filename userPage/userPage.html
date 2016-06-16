@@ -16,12 +16,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="../lib/angular.min.js"></script>
+    <script src="../lib/angularfire.min.js"></script>
     <script src="../lib/ng-file-upload-shim.min.js"></script>
     <script src="../lib/ng-file-upload.min.js"></script>
     <script src="../lib/sha256.js"></script>
     <script src="../TWPSapp.js"></script>
     <script src="../login/login.js"></script>
     <script src="../createText/textEditor.js"></script>
+    <link rel="stylesheet" type="text/css" href="userPage.css">
 
     <style>
         /* Set black background color, white text and some padding */
@@ -40,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
+                <a class="navbar-brand" href="../index.html" id="TWPSTasto">TWPS</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
@@ -51,8 +54,8 @@
                     <li><a href="Archivio.html">Archivio</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
-                    <button class="btn btn-link" style="color: white" ng-click="logout()">
-                        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                    <button class="btn btn-link" id="logoutButton" ng-click="logout()">
+                        <span class="glyphicon glyphicon-off" id="logoutButtonSpan"></span>
                         Logout
                     </button>
                 </form>
@@ -61,12 +64,12 @@
     </nav>
 
 </header>
-<article id="userPageContent" style="display: none">
+<article id="userPageContent">
     <div class="container text-center">
         <div class="row">
             <div class="col-sm-3 well">
-                <div class="well" style="overflow: hidden">
-                    <img id="imageProfile" class="img-circle" ng-src="{{profile.imageProfile}}" onerror="this.src='../images/user_default_profile.jpg'" height="200" width="200" alt="Avatar">
+                <div class="well">
+                    <img id="imageProfile" class="img-circle" ng-src="{{profile.imageProfile}}" height="200" width="200" alt="Avatar">
                 </div>
                 <div class="well">
                     <p id="nomeattuale">{{profile.nome}}</p>
@@ -93,23 +96,23 @@
                         <div class="well">
                             <img ng-src="{{story.imageOfCreator}}" class="img-circle" height="55" width="55" alt="Avatar">
                             <br>
-                            <p><a href="selectedAuthor.html" ng-click="getTheAuthor($index)" style="color: black">{{story.autore}}</a></p>
+                            <p><a href="selectedAuthor.html" ng-click="getTheAuthor($index)" id="authorListInUser">{{story.autore}}</a></p>
                         </div>
                     </div>
                     <div class="col-sm-9">
                         <div class="well">
                             <p>Ho scritto una nuova storia</p>
-                            <p><a style="color: black" href="selectedStory.html" ng-click="getTheStory($index)">{{story.titolo}}- {{story.sottotitolo}}</a></p>
+                            <p><a id="storyListInUser" href="selectedStory.html" ng-click="getTheStory($index)">{{story.titolo}}- {{story.sottotitolo}}</a></p>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="col-sm-3" ng-controller="UserListCtrl" style="background-color: white">
-                <h3 style="color: lightgrey">Utenti del sito</h3>
+            <div class="col-sm-3" ng-controller="UserListCtrl" id="colonnaUtenti">
+                <h3 id="titoloColonnaUtenti">Utenti del sito</h3>
                 <div class="row" ng-repeat="user in filterUsers track by $index">
                     <div class="well">
-                        <p><a style="color: black" href="selectedAuthor.html" ng-click="getTheAuthor($index)">{{user.nome}} {{user.cognome}}</a></p>
+                        <p><a id="allUserList" href="selectedAuthor.html" ng-click="getTheAuthor($index)">{{user.nome}} {{user.cognome}}</a></p>
                     </div>
                 </div>
             </div>

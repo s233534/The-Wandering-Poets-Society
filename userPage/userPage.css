@@ -1,0 +1,146 @@
+body{
+    background-color: darkred;
+}
+
+#TWPSTasto{
+    color: white;
+    font-family: "Times New Roman", Georgia, Serif;
+}
+
+#logoutButton{
+    color: white;
+}
+
+#logoutButtonSpan{
+    margin-right: 5px
+}
+
+#listaStoriaButton{
+    color: black;
+}
+
+#listaFumettiButton{
+    color:black;
+}
+
+#listaProgettiButton{
+    color: black;
+}
+
+#etichettaSearch{
+    color:lightgrey;
+}
+
+#searchCarat{
+    width: 300px
+}
+
+#searchCampo{
+    width: 500px;
+    margin-left: 20px
+}
+
+#selectedAuthorContent{
+    display: none;
+}
+
+#storieAutoreSelezionato{
+    display: none;
+}
+
+#storieAutoreSelezionatoTitolo{
+    color: black;
+}
+
+#fumettiAutoreSelezionato{
+    display: none;
+}
+
+#fumettiAutoreSelezionatoTitolo{
+    color: black;
+}
+
+#progettiAutoreSelezionato{
+    display: none;
+}
+
+#progettiAutoreSelezionatoTitolo{
+    color: black;
+}
+
+#userPageContent{
+    display: none;
+}
+
+#authorListInUser{
+    color: black;
+}
+
+#storyListInUser{
+    color: black;
+}
+
+#titoloColonnaUtenti{
+    color: black;
+}
+
+#allUserList{
+    color: black;
+    background-color: white;
+}
+
+#colonnaUtenti{
+    background-color: white;
+}
+
+#nuovaStoriaWork{
+    margin-top: 20px;
+    width: 400px
+}
+
+#nuovoProgettoWork{
+    margin-top: 20px;
+    width: 400px
+}
+
+#nuovoFumettoWork{
+    margin-top: 20px;
+    width: 400px
+}
+
+#nuovoProgettoWorkSpan{
+    margin-left: 30px
+}
+
+#nuovoFumettoWorkSpan{
+    margin-left: 30px
+}
+
+#nuovaStoriaWorkSpan{
+    margin-left: 30px
+}
+
+#userStoriesDiv{
+    display: none;
+}
+
+#titoloUserStoriesDiv{
+    color: lightgrey;
+}
+
+#userProjectsDiv{
+    display: none;
+}
+
+#titoloUserProjectsDiv{
+    color: lightgrey;
+}
+
+#userComicsDiv{
+    display: none;
+}
+
+#titoloUserComicsDiv{
+    color: lightgrey;
+}
+

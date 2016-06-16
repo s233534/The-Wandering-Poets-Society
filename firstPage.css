@@ -7,7 +7,7 @@ body{
 
 }
 
-.btn-default{
+#buttonEntra{
     border-style: solid;
     border-radius: 4px;
     border-color: goldenrod;
@@ -18,21 +18,52 @@ body{
     height: 100px;
     font-family: "Times New Roman";
     font-size: 50px;
-    margin-left: 480px;
-    margin-top: 325px;
+    margin-left: 100px;
+    margin-top: 425px;
     position: relative;
-    transition: 0,4s;
+    transition-duration: 0.4s;
 }
 
-.btn-default:hover{
+#buttonEntra:hover{
     background-color: goldenrod;
     border-color: goldenrod;
     color: saddlebrown;
 }
 
-.btn-default:focus{
+#buttonEntra:focus{
     background-color: goldenrod;
     border-color: goldenrod;
     color: saddlebrown;
     outline: none; !important;
 }
+
+#buttonInfo{
+    border-style: solid;
+    border-radius: 4px;
+    border-color: goldenrod;
+    border-width: 5px;
+    color: goldenrod;
+    background: transparent;
+    width: 200px;
+    height: 100px;
+    font-family: "Times New Roman";
+    font-size: 50px;
+    margin-left: 550px;
+    margin-top: 425px;
+    position: relative;
+    transition-duration: 0.4s;
+}
+
+#buttonInfo:hover{
+    background-color: goldenrod;
+    border-color: goldenrod;
+    color: saddlebrown;
+}
+
+#buttonInfo:focus{
+    background-color: goldenrod;
+    border-color: goldenrod;
+    color: saddlebrown;
+    outline: none; !important;
+}
+

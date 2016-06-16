@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>TWPS- Fumetto attuale</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="userPage.css">
     <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
     <script src="../lib/jquery-3.0.0.js"></script>
     <script src="../lib/jquery-2.x-git.js"></script>
@@ -15,6 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="../lib/angular.min.js"></script>
+    <script src="../lib/angularfire.min.js"></script>
     <script src="../lib/ng-file-upload-shim.min.js"></script>
     <script src="../lib/ng-file-upload.min.js"></script>
     <link rel="stylesheet" type="text/css" href="selectedStory.css">
@@ -23,14 +26,8 @@
     <script src="../TWPSapp.js"></script>
 </head>
 <style>
-    /* Set black background color, white text and some padding */
     body{
         background-color: darkred;
-    }
-    footer {
-        background-color: #555;
-        color: white;
-        padding: 15px;
     }
 </style>
 <script>
@@ -49,7 +46,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
+                    <a class="navbar-brand" href="../index.html" id="TWPSTasto">TWPS</a>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -60,8 +57,8 @@
                         <li><a href="Archivio.html">Archivio</a></li>
                     </ul>
                     <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
-                        <button class="btn btn-link" style="color: white" ng-click="logout()">
-                            <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                        <button class="btn btn-link" id="logoutButton" ng-click="logout()">
+                            <span class="glyphicon glyphicon-off" id="logoutButtonSpan"></span>
                             Logout
                         </button>
                     </form>
@@ -70,48 +67,48 @@
         </nav>
 
     </header>
-    <div class="container text-center" style="background-color: white; min-height: 650px">
+    <div class="container text-center" id="containerAttComic">
         <div>
-            <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black" ng-click="getTheAuthor()">{{attComic.autore}}</a></h2>
-            <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attComic.titolo}}</h2>
-            <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attComic.sottotitolo}}</h3>
+            <h2 id="autoreStory"><a href="selectedAuthor.html" id="autoreStoryLink" ng-click="getTheAuthor()">{{attComic.autore}}</a></h2>
+            <h2 id="titoloStory">{{attComic.titolo}}</h2>
+            <h3 id="sottotitoloStory">{{attComic.sottotitolo}}</h3>
         </div>
         <div>
-            <div id="attComicPage1" style="display: none">
+            <div id="attComicPage1">
                 <img ng-src="{{attComic.pagina1}}">
             </div>
-            <div id="attComicPage2" style="display: none">
+            <div id="attComicPage2">
                 <img ng-src="{{attComic.pagina2}}">
             </div>
-            <div id="attComicPage3" style="display: none">
+            <div id="attComicPage3">
                 <img ng-src="{{attComic.pagina3}}">
             </div>
-            <div id="attComicPage4" style="display: none">
+            <div id="attComicPage4">
                 <img ng-src="{{attComic.pagina4}}">
             </div>
-            <div id="attComicPage5" style="display: none">
+            <div id="attComicPage5">
                 <img ng-src="{{attComic.pagina5}}">
             </div>
-            <div id="attComicPage6" style="display: none">
+            <div id="attComicPage6">
                 <img ng-src="{{attComic.pagina6}}">
             </div>
-            <div id="attComicPage7" style="display: none">
+            <div id="attComicPage7">
                 <img ng-src="{{attComic.pagina7}}">
             </div>
-            <div id="attComicPage8" style="display: none">
+            <div id="attComicPage8">
                 <img ng-src="{{attComic.pagina8}}">
             </div>
-            <div id="attComicPage9" style="display: none">
+            <div id="attComicPage9">
                 <img ng-src="{{attComic.pagina9}}">
             </div>
-            <div id="attComicPage10" style="display: none">
+            <div id="attComicPage10">
                 <img ng-src="{{attComic.paginaFinale}}">
             </div>
         </div>
     </div>
 
     <div class="container">
-        <div class="rating" id="ratingComicContainer" style="margin-top: 50px; display: none">
+        <div class="rating" id="ratingComicContainer">
             <form id="rate" name="rate">
                 <div class="stars">
                     <input type="radio" name="star" class="star-1" id="star-1" value="1" ng-click="check(1)"/>
@@ -131,12 +128,12 @@
             <button class="btn btn-default" ng-click="updateRating()">Conferma voto</button>
         </div>
         <br>
-        <div id="votoMedio" style="color: lightgrey">
+        <div id="votoMedio">
             <h5>Il voto medio degli utenti è: {{attComic.rating.value}}. Basato su: {{attComic.rating.votes}} voti</h5>
         </div>
     </div>
     <br><br><br>
-    <div class="container" id="reviewComicContainer" ng-controller="newReviewComicCtrl" style="display: none">
+    <div class="container" id="reviewComicContainer" ng-controller="newReviewComicCtrl">
         <form role="form">
             <div class="form-group">
                 <input class="form-control" data-toggle="tooltip" title="Non deve contenere questi caratteri: ., #, $, [ o ]" id="titoloReview" placeholder="Titolo">
@@ -150,8 +147,8 @@
     <div class="container" ng-controller="attComicReviewCtrl">
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="review in filterReviews track by $index">
-                <h6 style="color: black">{{review.autore}}: {{review.titolo}}</h6>
-                <p style="color: black">{{review.testo}}</p>
+                <h6 id="intestazioneRecensione">{{review.autore}}: {{review.titolo}}</h6>
+                <p id="testoRecensione">{{review.testo}}</p>
             </li>
         </ul>
     </div>

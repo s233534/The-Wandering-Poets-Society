@@ -69,3 +69,140 @@ form .stars span {
     transition: width 0.5s;
 }
 
+#containerAttComic{
+    background-color: white;
+    min-height: 650px
+}
+
+#autoreStory{
+    font-family: "Times New Roman", Georgia, Serif;
+    color: black;
+}
+
+#titoloStory{
+    font-family: "Times New Roman", Georgia, Serif;
+}
+
+#sottotitoloStory{
+    font-family: "Times New Roman", Georgia, Serif;
+}
+
+#attComicPage1{
+    display: none;
+}
+
+#attComicPage2{
+    display: none;
+}
+
+#attComicPage3{
+    display: none;
+}
+
+#attComicPage4{
+    display: none;
+}
+
+#attComicPage5{
+    display: none;
+}
+
+#attComicPage6{
+    display: none;
+}
+
+#attComicPage7{
+    display: none;
+}
+
+#attComicPage8{
+    display: none;
+}
+
+#attComicPage9{
+    display: none;
+}
+
+#attComicPage10{
+    display: none;
+}
+
+#ratingComicContainer{
+    margin-top: 50px;
+    display: none
+}
+
+#votoMedio{
+    color: lightgrey;
+}
+
+#reviewComicContainer{
+    display: none;
+}
+
+#intestazioneRecensione{
+    color: black;
+}
+
+#testoRecensione{
+    color: black;
+}
+
+#selectedProjectContent{
+    display: none;
+}
+
+#selectedProjectContainer{
+    background-color: white;
+    min-height: 650px;
+}
+
+#motiviProject{
+    text-align: justify;
+    margin-top: 50px;
+    font-family: "Times New Roman", Georgia, Serif;
+    font-size: 18px
+}
+
+#testoProject{
+    text-align: justify;
+    margin-top: 50px;
+    font-family: "Times New Roman", Georgia, Serif;
+    font-size: 18px
+}
+
+#partecipantiContainer{
+    background-color: white;
+}
+
+#ratingContainer{
+    margin-top: 50px;
+    display: none
+}
+
+#reviewContainer{
+    display: none;
+}
+
+#selectedStoryContent{
+    display: none;
+}
+
+#selectedStoryContainer{
+    background-color: white;
+    min-height: 650px
+}
+
+#testoStory{
+    text-align: justify;
+    margin-top: 50px;
+    font-family: "Times New Roman", Georgia, Serif;
+    font-size: 18px
+}
+
+#autoreStoryLink{
+    color: black;
+}
+
+
+

@@ -15,9 +15,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script src="../lib/angular.min.js"></script>
+    <script src="../lib/angularfire.min.js"></script>
     <script src="../lib/ng-file-upload-shim.min.js"></script>
     <script src="../lib/ng-file-upload.min.js"></script>
     <link rel="stylesheet" type="text/css" href="selectedStory.css">
+    <link rel="stylesheet" type="text/css" href="userPage.css">
     <script src="../login/login.js"></script>
     <script src="../createText/textEditor.js"></script>
     <script src="../TWPSapp.js"></script>
@@ -26,11 +29,6 @@
     /* Set black background color, white text and some padding */
     body{
         background-color: darkred;
-    }
-    footer {
-        background-color: #555;
-        color: white;
-        padding: 15px;
     }
 </style>
 <script>
@@ -48,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="../index.html" style="color: white; font-family: 'Times New Roman'">TWPS</a>
+                <a class="navbar-brand" href="../index.html" id="TWPSTasto">TWPS</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
@@ -59,8 +57,8 @@
                     <li><a href="Archivio.html">Archivio</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" ng-controller="AuthCtrl">
-                    <button class="btn btn-link" style="color: white" ng-click="logout()">
-                        <span class="glyphicon glyphicon-off" style="margin-right: 5px"></span>
+                    <button class="btn btn-link" id="logoutButton" ng-click="logout()">
+                        <span class="glyphicon glyphicon-off" id="logoutButtonSpan"></span>
                         Logout
                     </button>
                 </form>
@@ -69,19 +67,19 @@
     </nav>
 
 </header>
-<article id="selectedStoryContent" style="display: none">
-    <div class="container text-center" style="background-color: white; min-height: 650px">
+<article id="selectedStoryContent">
+    <div class="container text-center" id="selectedStoryContainer">
         <div>
-            <h2 id="autoreStory" style="font-family: 'Times New Roman'"><a href="selectedAuthor.html" style="color: black" ng-click="getTheAuthor()">{{attStory.autore}}</a></h2>
-            <h2 id="titoloStory" style="font-family: 'Times New Roman'">{{attStory.titolo}}</h2>
-            <h3 id="sottotitoloStory" style="font-family: 'Times New Roman'">{{attStory.sottotitolo}}</h3>
+            <h2 id="autoreStory"><a href="selectedAuthor.html" id="autoreStoryLink" ng-click="getTheAuthor()">{{attStory.autore}}</a></h2>
+            <h2 id="titoloStory">{{attStory.titolo}}</h2>
+            <h3 id="sottotitoloStory">{{attStory.sottotitolo}}</h3>
         </div>
         <div>
-            <p id="testoStory" style="text-align: justify; margin-top: 50px; font-family: 'Times New Roman'; font-size: 18px"></p>
+            <p id="testoStory"></p>
         </div>
     </div>
     <div class="container">
-        <div class="rating" id="ratingContainer" style="margin-top: 50px; display: none">
+        <div class="rating" id="ratingContainer">
             <form id="rate" name="rate">
                 <div class="stars">
                     <input type="radio" name="star" class="star-1" id="star-1" value="1" ng-click="check(1)"/>
@@ -101,12 +99,12 @@
             <button class="btn btn-default" ng-click="updateRating()">Conferma voto</button>
         </div>
         <br>
-        <div id="votoMedio" style="color: lightgrey">
+        <div id="votoMedio">
             <h5>Il voto medio degli utenti è: {{attStory.rating.value}}. Basato su: {{attStory.rating.votes}} voti</h5>
         </div>
     </div>
     <br><br><br>
-    <div class="container" id="reviewContainer" ng-controller="newReviewCtrl" style="display: none">
+    <div class="container" id="reviewContainer" ng-controller="newReviewCtrl">
         <form role="form">
             <div class="form-group">
                 <input class="form-control" id="titoloReview" data-toggle="tooltip" title="Non deve contenere questi caratteri: ., #, $, [ o ]" placeholder="Titolo">
@@ -120,8 +118,8 @@
     <div class="container" ng-controller="attStoryReviewCtrl">
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="review in filterReviews track by $index">
-                <h6 style="color: black">{{review.autore}}: {{review.titolo}}</h6>
-                <p style="color: black">{{review.testo}}</p>
+                <h6 id="intestazioneRecensione">{{review.autore}}: {{review.titolo}}</h6>
+                <p id="testoRecensione">{{review.testo}}</p>
             </li>
         </ul>
     </div>

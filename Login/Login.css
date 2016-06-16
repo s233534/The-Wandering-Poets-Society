@@ -19,3 +19,82 @@ h2{
     color: lightgrey;
     font-size: 20px;
 }
+
+#loginContainer{
+    margin-top: 80px;
+}
+
+#logMail{
+    width: 300px;
+}
+
+#logPwd{
+    width: 300px;
+    margin-left: 20px;
+}
+
+#oppureContainer{
+    margin-top: 50px;
+}
+
+#oppure{
+    color: lightgrey;
+    font-family: "Times New Roman", Georgia, Serif;
+    font-size: 20px;
+}
+
+#iscrivitiLink{
+    color: lightgrey;
+    font-family: "Times New Roman", Georgia, Serif;
+    font-size: 20px;
+}
+
+#iscrizioneFallita{
+    display: none;
+}
+
+#passwordSbagliata{
+    display: none;
+}
+
+#nom{
+    width: 300px;
+}
+
+#cog{
+    width: 300px;
+    margin-left: 20px;
+}
+
+#mail{
+    width: 620px;
+}
+
+#pass{
+    width: 620px;
+}
+
+#confpass{
+    width: 620px;
+}
+
+#usCat{
+    width: 620px;
+}
+
+#DOB{
+    border-style: none;
+    color: black;
+    width: 620px;
+}
+
+#imageProfile{
+    color: lightgrey;
+}
+
+#accediLink{
+    color: lightgrey;
+    font-family: "Times New Roman", Georgia, Serif;
+    font-size: 20px;
+}
+

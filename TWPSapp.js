@@ -70,7 +70,22 @@ app.controller("CreateUserCtrl", ["$scope", "Auth", "Upload",
                             dateOfBirth: dob,
                             imageProfile: imgP
                         }).then(function(){
-                            location.href = "login.html";
+                            $scope.authData = null;
+                            $scope.error = null;
+
+                            Auth.$authWithPassword({
+                                email: Email,
+                                password: pwd
+                            }).then(function(authData) {
+                                $scope.authData = authData;
+                                console.log("Logged in as:", authData.uid);
+                                localStorage.UID=authData.uid;
+                                console.log(localStorage.UID);
+                                location.href="../userPage/userPage.html";
+                            }).catch(function(error) {
+                                $scope.error = error;
+                                console.error("Authentication failed:", error);
+                            });
                         });
 
                     });
@@ -916,6 +931,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina1: imgData
                 }).then(function () {
                     document.getElementById("formPagina2").style.display="block";
+                    document.getElementById("tastiPagina1").style.display="none";
                 });
             });
 
@@ -935,6 +951,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina2: imgData
                 }).then(function () {
                     document.getElementById("formPagina3").style.display="block";
+                    document.getElementById("tastiPagina2").style.display="none";
                 });
             });
 
@@ -954,6 +971,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina3: imgData
                 }).then(function () {
                     document.getElementById("formPagina4").style.display="block";
+                    document.getElementById("tastiPagina3").style.display="none";
                 });
             });
 
@@ -973,6 +991,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina4: imgData
                 }).then(function () {
                     document.getElementById("formPagina5").style.display="block";
+                    document.getElementById("tastiPagina4").style.display="none";
                 });
             });
 
@@ -992,6 +1011,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina5: imgData
                 }).then(function () {
                     document.getElementById("formPagina6").style.display="block";
+                    document.getElementById("tastiPagina5").style.display="none";
                 });
             });
 
@@ -1011,6 +1031,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina6: imgData
                 }).then(function () {
                     document.getElementById("formPagina7").style.display="block";
+                    document.getElementById("tastiPagina6").style.display="none";
                 });
             });
 
@@ -1030,6 +1051,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina7: imgData
                 }).then(function () {
                     document.getElementById("formPagina8").style.display="block";
+                    document.getElementById("tastiPagina7").style.display="none";
                 });
             });
 
@@ -1049,6 +1071,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina8: imgData
                 }).then(function () {
                     document.getElementById("formPagina9").style.display="block";
+                    document.getElementById("tastiPagina8").style.display="none";
                 });
             });
 
@@ -1067,6 +1090,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
                     pagina9: imgData
                 }).then(function () {
                     document.getElementById("formPagina10").style.display="block";
+                    document.getElementById("tastiPagina9").style.display="none";
                 });
             });
 
@@ -1080,6 +1104,7 @@ app.controller("addComicPagesCtrl", ["$scope", "Upload",
             Upload.base64DataUrl($scope.user.img).then(function (base64Url) {
                 var imgData = base64Url;
                 var ref=new Firebase("https://twps.firebaseio.com/comics");
+                var CID=localStorage.comicInProgressID;
                 var path=ref.child(CID);
                 path.update({
                     paginaFinale: imgData

@@ -2,6 +2,109 @@ body{
     background-color: darkred;
 }
 
-#view_text {
-    width: 500px;
+#TWPSTasto{
+    color: white;
+    font-family: "Times New Roman", Georgia, Serif;
 }
+
+#logoutButton{
+    color: white;
+}
+
+#logoutButtonSpan{
+    margin-right: 5px
+}
+
+#myText{
+    height: 650px;
+}
+
+#motivazioniProgetto{
+    min-height: 200px;
+}
+
+#soggettoProgetto{
+    min-height: 400px;
+}
+
+#imagesInputContainer{
+    display: none;
+}
+
+#Pagina1{
+    color: lightgrey;
+}
+
+#Pagina2{
+    color: lightgrey;
+}
+
+#Pagina3{
+    color: lightgrey;
+}
+
+#Pagina4{
+    color: lightgrey;
+}
+
+#Pagina5{
+    color: lightgrey;
+}
+
+#Pagina6{
+    color: lightgrey;
+}
+
+#Pagina7{
+    color: lightgrey;
+}
+
+#Pagina8{
+    color: lightgrey;
+}
+
+#Pagina9{
+    color: lightgrey;
+}
+
+#Pagina10{
+    color: lightgrey;
+}
+
+#formPagina2{
+    display: none;
+}
+
+#formPagina3{
+    display: none;
+}
+
+#formPagina4{
+    display: none;
+}
+
+#formPagina5{
+    display: none;
+}
+
+#formPagina6{
+    display: none;
+}
+
+#formPagina7{
+    display: none;
+}
+
+#formPagina8{
+    display: none;
+}
+
+#formPagina9{
+    display: none;
+}
+
+#formPagina10{
+    display: none;
+}
+
+

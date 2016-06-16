@@ -1,0 +1,61 @@
+#TWPSTasto{
+    color: white;
+    font-family: "Times New Roman", Georgia, Serif
+}
+
+#logoutButton{
+    color: white;
+}
+
+#logoutButtonSpan{
+    margin-right: 5px;
+}
+
+#titoloModificaDati{
+    color: lightgrey;
+}
+
+#modnom{
+    width: 300px;
+}
+
+#modcog{
+    width: 300px;
+    margin-left: 20px;
+}
+
+#modTOP{
+    width: 620px;
+}
+
+#modDOB{
+    border-style: none;
+    color: black;
+    width: 620px
+}
+
+#titoloModificaFoto{
+    color: lightgrey;
+}
+
+#newImageProfile{
+    color: lightgrey;
+}
+
+#titoloModificaMail{
+    color: lightgrey;
+}
+
+#titoloModificaPassword{
+    color: lightgrey;
+}
+
+#titoloEliminaProfilo{
+    color: lightgrey;
+}
+
+
+
+
+
+
